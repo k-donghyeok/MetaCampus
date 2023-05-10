@@ -4,16 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Camera))]
 public class CaptureManager : MonoBehaviour
 {
     public static int ImageIndex { get; private set; } = 0;
 
     private RenderTexture RT;
+    private Camera cam;
     public RawImage rawImage;
 
     private void Awake()
     {
         RT = Resources.Load("Textures/CaptureRenderTexture") as RenderTexture;
+        cam = GetComponent<Camera>();
     }
 
     private void SaveImage()
@@ -44,5 +47,8 @@ public class CaptureManager : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.C)) SaveImage();
+        
+        if (Input.mouseScrollDelta.y != 0f)
+            cam.fieldOfView = Mathf.Clamp(cam.fieldOfView - Input.mouseScrollDelta.y * 2f, 10f, 60f);
     }
 }
