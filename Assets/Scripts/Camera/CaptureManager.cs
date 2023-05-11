@@ -4,14 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 핸드폰의 촬영 기능을 관리
+/// </summary>
 [RequireComponent(typeof(Camera))]
 public class CaptureManager : MonoBehaviour
 {
+    /// <summary>
+    /// 다음에 촬영할 사진 인덱스값
+    /// </summary>
     public static int ImageIndex { get; private set; } = 0;
 
     private RenderTexture RT;
     private Camera cam;
-    public RawImage rawImage;
 
     private void Awake()
     {
@@ -19,6 +24,9 @@ public class CaptureManager : MonoBehaviour
         cam = GetComponent<Camera>();
     }
 
+    /// <summary>
+    /// 사진을 촬영하고 저장
+    /// </summary>
     private void SaveImage()
     {
         Texture2D texture = new(RT.width, RT.height, TextureFormat.ARGB32, false);
@@ -31,19 +39,33 @@ public class CaptureManager : MonoBehaviour
         ++ImageIndex;
     }
 
-    private void LoadImage(int index)
+    /// <summary>
+    /// 저장된 이미지를 불러옴
+    /// </summary>
+    /// <param name="index">불러올 이미지 인덱스</param>
+    /// <returns>불러온 이미지 텍스쳐</returns>
+    /// <exception cref="FileNotFoundException">존재하지 않는 인덱스를 사용</exception>
+    private Texture2D LoadImage(int index)
     {
         Texture2D texture = new(RT.width, RT.height, TextureFormat.ARGB32, false);
-        var bytes = File.ReadAllBytes(GetPath(index));
+        string path = GetPath(index);
+        if (!File.Exists(path)) throw new FileNotFoundException("이 인덱스의 이미지는 존재하지 않습니다.");
+        var bytes = File.ReadAllBytes(path);
 
         texture.LoadImage(bytes);
         texture.Apply();
-        rawImage.texture = texture;
+        return texture;
     }
 
+    /// <summary>
+    /// 저장된 이미지의 파일 위치를 생성
+    /// </summary>
+    /// <param name="index">원하는 이미지 인덱스</param>
+    /// <returns>파일 경로</returns>
     private static string GetPath(int index)
         => $"{Application.persistentDataPath}/Capture{index}.png";
 
+    
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.C)) SaveImage();
