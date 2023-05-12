@@ -35,6 +35,8 @@ public class PhoneManager : MonoBehaviour
         hideTimer = 1f;
     }
 
+    private bool lastTrigger = false;
+
     private void Update()
     {
         if (!Held)
@@ -43,7 +45,18 @@ public class PhoneManager : MonoBehaviour
             if (hideTimer <= 0f) gameObject.SetActive(false);
             return;
         }
+        if (!heldDevice.isValid) return;
 
+        if (heldDevice.TryGetFeatureValue(CommonUsages.trigger, out var triggerValue))
+        {
+            if (triggerValue > 0.9f)
+            {
+                if (!lastTrigger) captureManager.SaveImage();
+                lastTrigger = true;
+            }
+            else lastTrigger = false;
+        }
+        else lastTrigger = false;
 
     }
 

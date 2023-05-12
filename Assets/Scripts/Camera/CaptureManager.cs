@@ -27,7 +27,7 @@ public class CaptureManager : MonoBehaviour
     /// <summary>
     /// 사진을 촬영하고 저장
     /// </summary>
-    private void SaveImage()
+    public void SaveImage()
     {
         Texture2D texture = new(RT.width, RT.height, TextureFormat.ARGB32, false);
         RenderTexture.active = RT;
