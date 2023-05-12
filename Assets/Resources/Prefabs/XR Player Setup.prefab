@@ -63,6 +63,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabActionHandler: {fileID: 3968210195551132522}
   phone: {fileID: 4283217986729005860}
+  directInteractors:
+  - {fileID: 1196738849017221176}
+  - {fileID: 7112917706051396045}
 --- !u!1 &2969104182258197491
 GameObject:
   m_ObjectHideFlags: 0

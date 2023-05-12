@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
+using static UnityEngine.Rendering.DebugUI;
 
 public class PhoneManager : MonoBehaviour
 {
@@ -14,16 +16,35 @@ public class PhoneManager : MonoBehaviour
     /// <summary>
     /// 이것이 플레이어 손에 들려있고, 상호작용이 가능한지 여부
     /// </summary>
-    public bool Held
+    public bool Held { get; private set; }
+
+    private float hideTimer = 1f;
+
+    private InputDevice heldDevice;
+
+    public void SetHeld(InputDevice device)
     {
-        get => _held;
-        set { if (_held == value) return; _held = value; }
+        SetHeld(true);
+        heldDevice = device;
     }
-    private bool _held;
+
+    public void SetHeld(bool held = false)
+    {
+        if (Held == held) return;
+        Held = held;
+        hideTimer = 1f;
+    }
 
     private void Update()
     {
-        if (!Held) return;
+        if (!Held)
+        {
+            hideTimer -= Time.deltaTime;
+            if (hideTimer <= 0f) gameObject.SetActive(false);
+            return;
+        }
+
+
     }
 
 }

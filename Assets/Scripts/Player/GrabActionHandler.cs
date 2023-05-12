@@ -27,17 +27,16 @@ public class GrabActionHandler : MonoBehaviour
     /// </summary>
     private void InitDevices()
     {
-        lastGrabs[0] = false; lastGrabs[1] = false;
+        for (int i = 0; i < 2; ++i)
+        {
+            lastGrabs[i] = false;
 
-        List<InputDevice> devices = new();
-        InputDevices.GetDevicesWithCharacteristics(InputDeviceCharacteristics.Left, devices);
-        if (devices.Count < 1) return;
-        targetDevices[0] = devices[0];
-
-        devices = new();
-        InputDevices.GetDevicesWithCharacteristics(InputDeviceCharacteristics.Right, devices);
-        if (devices.Count < 1) return;
-        targetDevices[1] = devices[0];
+            List<InputDevice> devices = new();
+            InputDevices.GetDevicesWithCharacteristics(i == 0 ?
+                InputDeviceCharacteristics.Left : InputDeviceCharacteristics.Right, devices);
+            if (devices.Count < 1) continue;
+            targetDevices[i] = devices[0];
+        }
     }
 
     /// <summary>
@@ -55,8 +54,8 @@ public class GrabActionHandler : MonoBehaviour
             bool grab = false;
             if (targetDevices[i].TryGetFeatureValue(CommonUsages.grip, out float grip))
                 grab = grip > gripThreshold;
-
-            if (grab && !lastGrabs[i] && !directInteractors[i].attachTransform) OnGrabbed?.Invoke(i == 0, targetDevices[i]);
+            // && !directInteractors[i].attachTransform
+            if (grab && !lastGrabs[i]) OnGrabbed?.Invoke(i == 0, targetDevices[i]);
             else if (!grab && lastGrabs[i]) OnGrabReleased?.Invoke(i == 0, targetDevices[i]);
 
             lastGrabs[i] = grab;
