@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
-using static UnityEngine.Rendering.DebugUI;
 
+/// <summary>
+/// 핸드폰의 전반적인 행동 관리
+/// </summary>
 public class PhoneManager : MonoBehaviour
 {
     private CaptureManager captureManager = null;
@@ -22,12 +24,20 @@ public class PhoneManager : MonoBehaviour
 
     private InputDevice heldDevice;
 
+    /// <summary>
+    /// 핸드폰을 잡은 컨트롤러 설정
+    /// </summary>
+    /// <param name="device"></param>
     public void SetHeld(InputDevice device)
     {
         SetHeld(true);
         heldDevice = device;
     }
 
+    /// <summary>
+    /// 핸드폰을 놓기
+    /// </summary>
+    /// <param name="held">핸드폰을 놓음 여부</param>
     public void SetHeld(bool held = false)
     {
         if (Held == held) return;

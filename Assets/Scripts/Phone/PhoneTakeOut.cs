@@ -3,6 +3,9 @@ using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
+/// <summary>
+/// 핸드폰을 꺼내는 행동 처리하는 컴포넌트
+/// </summary>
 public class PhoneTakeOut : MonoBehaviour
 {
     [SerializeField]
