@@ -16,20 +16,21 @@ public class PhoneTakeOut : MonoBehaviour
             throw new ArgumentNullException(nameof(grabActionHandler));
         if (!phone)
             throw new ArgumentNullException(nameof(phone));
+        phoneHand = null;
 
         grabActionHandler.OnGrabbed += (left, device) =>
         {
-            if (phoneHand.HasValue) return;
-
+            //if (phoneHand.HasValue) return;
+            Debug.Log("Grabbed!");
             if (!device.TryGetFeatureValue(CommonUsages.devicePosition, out var pos)) return;
             Debug.Log(pos);
 
-            TakeOutPhone(left);
+            //TakeOutPhone(left);
         };
         grabActionHandler.OnGrabReleased += (left, device) =>
         {
-            if (phoneHand != left) return;
-            ReleasePhone();
+            //if (phoneHand != left) return;
+            //ReleasePhone();
         };
     }
 

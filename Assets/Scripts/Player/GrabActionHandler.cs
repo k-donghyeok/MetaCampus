@@ -1,17 +1,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
+using UnityEngine.XR.Interaction.Toolkit;
 
 /// <summary>
 /// 인벤토리에서 꺼내는 잡기 액션 처리
 /// </summary>
 public class GrabActionHandler : MonoBehaviour
 {
+    [SerializeField]
+    private XRDirectInteractor[] directInteractors = new XRDirectInteractor[2]; 
+
     [Header("Controller Settings")]
     [SerializeField, Range(0.0f, 1.0f)]
     private float gripThreshold = 0.9f;
 
-    private InputDevice[] targetDevices;
+    private readonly InputDevice[] targetDevices = new InputDevice[2];
 
     private void Start()
     {
@@ -52,7 +56,7 @@ public class GrabActionHandler : MonoBehaviour
             if (targetDevices[i].TryGetFeatureValue(CommonUsages.grip, out float grip))
                 grab = grip > gripThreshold;
 
-            if (grab && !lastGrabs[i]) OnGrabbed?.Invoke(i == 0, targetDevices[i]);
+            if (grab && !lastGrabs[i] && !directInteractors[i].attachTransform) OnGrabbed?.Invoke(i == 0, targetDevices[i]);
             else if (!grab && lastGrabs[i]) OnGrabReleased?.Invoke(i == 0, targetDevices[i]);
 
             lastGrabs[i] = grab;
