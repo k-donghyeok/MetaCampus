@@ -76,14 +76,19 @@ public class MapPaperMeshHandler
 
         // Lerp b/w two ropes to get vertices
         #region GetVertices
+        var dists = new float[SEG_HORZ, SEG_VERT];
         var vertsTop = ropeTop.GetSegmentsPos();
         for (int i = 0; i < SEG_HORZ; ++i) points[i, 0] = vertsTop[i];
         var vertsBtm = ropeBtm.GetSegmentsPos();
         for (int i = 0; i < SEG_HORZ; ++i) points[i, SEG_VERT - 1] = vertsBtm[i];
-        for (int j = 1; j < SEG_VERT - 1; ++j)
+        for (int j = 0; j < SEG_VERT; ++j)
         {
             float ratio = (float)j / (SEG_VERT - 1);
-            for (int i = 0; i < SEG_HORZ; ++i) points[i, j] = Vector3.Lerp(points[i, 0], points[i, SEG_VERT - 1], ratio);
+            for (int i = 0; i < SEG_HORZ; ++i)
+            {
+                if (j > 0 && j < SEG_VERT - 1) points[i, j] = Vector3.Lerp(points[i, 0], points[i, SEG_VERT - 1], ratio);
+                if (i > 0) dists[i, j] = dists[i - 1, j] + Vector3.Distance(points[i - 1, j], points[i, j]) / (halfHeight * 2f);
+            }
         }
         #endregion GetVertices
 
@@ -97,10 +102,12 @@ public class MapPaperMeshHandler
                 verts.Add(points[u, v]); verts.Add(points[u + 1, v]); verts.Add(points[u, v + 1]);
                 verts.Add(points[u + 1, v]); verts.Add(points[u, v + 1]); verts.Add(points[u + 1, v + 1]);
 
-                float u0 = (float)u / (SEG_HORZ - 1), u1 = (float)(u + 1) / (SEG_HORZ - 1);
-                float v0 = (float)v / (SEG_VERT - 1), v1 = (float)(v + 1) / (SEG_VERT - 1);
-                uvs.Add(new(u0, v0)); uvs.Add(new(u1, v0)); uvs.Add(new(u0, v1));
-                uvs.Add(new(u1, v0)); uvs.Add(new(u0, v1)); uvs.Add(new(u1, v1));
+                float um0 = dists[SEG_HORZ - 1, v] * 0.5f, um1 = dists[SEG_HORZ - 1, v + 1] * 0.5f,
+                    u00 = dists[u, v] - um0, u01 = dists[u + 1, v] - um0,
+                    u10 = dists[u, v + 1] - um1, u11 = dists[u + 1, v + 1] - um1;
+                float v0 = 1f - (float)v / (SEG_VERT - 1), v1 = 1f - (float)(v + 1) / (SEG_VERT - 1);
+                uvs.Add(new(u00, v0)); uvs.Add(new(u01, v0)); uvs.Add(new(u10, v1));
+                uvs.Add(new(u01, v0)); uvs.Add(new(u10, v1)); uvs.Add(new(u11, v1));
             }
         }
         mesh.SetVertices(verts);

@@ -607,7 +607,7 @@ MonoBehaviour:
   paperHeight: 0.5
   paperSegsHorz: 5
   paperSegsVert: 5
-  paperMaterial: {fileID: 2100000, guid: 9e20f5c77996ffb42bbe1f6885819b4b, type: 2}
+  paperMaterial: {fileID: 2100000, guid: a892dafd3387d2b488faf6ddf83cb8e6, type: 2}
 --- !u!1 &1345331016
 GameObject:
   m_ObjectHideFlags: 0
