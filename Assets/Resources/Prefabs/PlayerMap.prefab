@@ -284,7 +284,7 @@ MonoBehaviour:
     tension: 0.9
     gravity: 0.02
     velClamp: 0.3
-    mapMaterial: {fileID: 2100000, guid: a892dafd3387d2b488faf6ddf83cb8e6, type: 2}
+  mapMaterial: {fileID: 2100000, guid: a892dafd3387d2b488faf6ddf83cb8e6, type: 2}
 --- !u!1 &5566618216797933852
 GameObject:
   m_ObjectHideFlags: 0

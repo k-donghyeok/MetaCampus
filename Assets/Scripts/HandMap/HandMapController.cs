@@ -12,11 +12,15 @@ public class HandMapController : MonoBehaviour
     [SerializeField]
     private MapPaperMeshHandler.PaperInfo paperInitStats;
 
+    [SerializeField]
+    private Material mapMaterial;
+
     private MapPaperMeshHandler paperHandler;
 
     private void Start()
     {
         paperHandler = new MapPaperMeshHandler(this, handleLeft, handleRight, paperInitStats);
+        paperHandler.SetMaterial(mapMaterial);
     }
 
     private void Update()

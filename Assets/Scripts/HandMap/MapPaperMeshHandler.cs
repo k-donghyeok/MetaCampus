@@ -28,7 +28,6 @@ public class MapPaperMeshHandler
         public float gravity;
         [Range(0f, 10f)]
         public float velClamp;
-        public Material mapMaterial;
     }
 
     public MapPaperMeshHandler(HandMapController controller, Transform handleLeft, Transform handleRight, PaperInfo info)
@@ -55,7 +54,6 @@ public class MapPaperMeshHandler
         var meshFilter = paperObject.AddComponent<MeshFilter>();
         meshFilter.mesh = mesh;
         renderer = paperObject.AddComponent<MeshRenderer>();
-        renderer.material = info.mapMaterial;
         InitializeMesh();
     }
 
@@ -71,6 +69,8 @@ public class MapPaperMeshHandler
     private readonly Mesh mesh;
     private readonly MeshRenderer renderer;
     private readonly Vector3[,] points;
+
+    public void SetMaterial(Material material) => renderer.material = material;
 
     private void InitializeMesh()
     {
