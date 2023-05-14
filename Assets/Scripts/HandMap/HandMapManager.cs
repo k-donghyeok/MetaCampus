@@ -51,13 +51,13 @@ public class HandMapManager : MonoBehaviour
     {
         if (!dissappearing)
         {
-            paperHeight = Mathf.Lerp(paperHeight, paperFullHeight, 0.1f);
+            paperHeight = Mathf.Lerp(paperHeight, paperFullHeight, 5f * Time.deltaTime);
             if (paperHeight > paperFullHeight * 0.999f) paperHeight = paperFullHeight;
         }
         else
         {
-            paperHeight = Mathf.Lerp(paperHeight, 0f, 0.1f);
-            if (paperHeight < 0.01f) DisableMap();
+            paperHeight -= (1.1f - paperHeight) * 3f * Time.deltaTime;
+            if (paperHeight < 0.01f) { paperHeight = 0f; DisableMap(); }
         }
         handleLeft.localScale = new(1f, paperHeight, 1f);
         handleRight.localScale = new(1f, paperHeight, 1f);
