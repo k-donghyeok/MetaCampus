@@ -37,12 +37,12 @@ public class MapPaperMeshHandler
 
         // 종이가 들어갈 GameObject 생성
         paperObject = new GameObject("MapPaper");
-        paperObject.transform.SetParent(this.controller.transform);
+        //paperObject.transform.SetParent(this.controller.transform);
         paperObject.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
 
         // 위와 아래 로프 생성
-        ropeTop = new Rope(this.handleLeft.localPosition, this.handleRight.localPosition, SEG_HORZ);
-        ropeBtm = new Rope(this.handleLeft.localPosition, this.handleRight.localPosition, SEG_HORZ);
+        ropeTop = new Rope(this.handleLeft.position, this.handleRight.position, SEG_HORZ);
+        ropeBtm = new Rope(this.handleLeft.position, this.handleRight.position, SEG_HORZ);
 
         // 메쉬 초기화
         points = new Vector3[SEG_HORZ, SEG_VERT];
@@ -137,8 +137,8 @@ public class MapPaperMeshHandler
     public void FixedUpdate(float height)
     {
         float halfHeight = height * 0.5f;
-        ropeTop.Simulate(handleLeft.localPosition + handleLeft.up * halfHeight, handleRight.localPosition + handleRight.up * halfHeight);
-        ropeBtm.Simulate(handleLeft.localPosition - handleLeft.up * halfHeight, handleRight.localPosition - handleRight.up * halfHeight);
+        ropeTop.Simulate(handleLeft.position + handleLeft.up * halfHeight, handleRight.position + handleRight.up * halfHeight);
+        ropeBtm.Simulate(handleLeft.position - handleLeft.up * halfHeight, handleRight.position - handleRight.up * halfHeight);
     }
 
 
