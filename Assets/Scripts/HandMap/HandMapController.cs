@@ -9,13 +9,19 @@ public class HandMapController : MonoBehaviour
     [SerializeField]
     private Transform handleRight = null;
 
+    [Header("Paper")]
     [SerializeField]
     private MapPaperMeshHandler.PaperInfo paperInitStats;
+
+    [SerializeField, Range(0f, 2f)]
+    private float paperFullHeight = 0.5f;
 
     [SerializeField]
     private Material mapMaterial;
 
     private MapPaperMeshHandler paperHandler;
+
+    private float paperHeight = 0f;
 
     private void Start()
     {
@@ -25,11 +31,12 @@ public class HandMapController : MonoBehaviour
 
     private void Update()
     {
-        paperHandler.Update();
+        paperHeight = Mathf.Lerp(paperHeight, paperFullHeight, 0.1f);
+        paperHandler.Update(paperHeight);
     }
 
     private void FixedUpdate()
     {
-        paperHandler.FixedUpdate();
+        paperHandler.FixedUpdate(paperHeight);
     }
 }

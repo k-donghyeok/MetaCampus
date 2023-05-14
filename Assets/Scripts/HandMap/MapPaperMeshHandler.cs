@@ -7,7 +7,6 @@ using UnityEngine;
 /// </summary>
 public class MapPaperMeshHandler
 {
-    private readonly float halfHeight;
     private readonly int SEG_HORZ = 5;
     private readonly int SEG_VERT = 5;
 
@@ -18,8 +17,6 @@ public class MapPaperMeshHandler
         public int segHorz;
         [Range(2, 50)]
         public int segVert;
-        [Range(0f, 2f)]
-        public float height;
         [Range(0.5f, 1.5f)]
         public float loseness;
         [Range(0f, 1f)]
@@ -33,7 +30,6 @@ public class MapPaperMeshHandler
     public MapPaperMeshHandler(HandMapController controller, Transform handleLeft, Transform handleRight, PaperInfo info)
     {
         SEG_HORZ = info.segHorz; SEG_VERT = info.segVert;
-        halfHeight = info.height * 0.5f;
         Rope.tension = info.tension; Rope.loseness = info.loseness; Rope.gravity = info.gravity / SEG_HORZ; Rope.velClamp = info.velClamp;
         this.controller = controller;
         this.handleLeft = handleLeft;
@@ -45,8 +41,8 @@ public class MapPaperMeshHandler
         paperObject.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
 
         // 위와 아래 로프 생성
-        ropeTop = new Rope(this.handleLeft.localPosition + this.handleLeft.up * halfHeight, this.handleRight.localPosition + this.handleRight.up * halfHeight, SEG_HORZ);
-        ropeBtm = new Rope(this.handleLeft.localPosition - this.handleLeft.up * halfHeight, this.handleRight.localPosition - this.handleRight.up * halfHeight, SEG_HORZ);
+        ropeTop = new Rope(this.handleLeft.localPosition, this.handleRight.localPosition, SEG_HORZ);
+        ropeBtm = new Rope(this.handleLeft.localPosition, this.handleRight.localPosition, SEG_HORZ);
 
         // 메쉬 초기화
         points = new Vector3[SEG_HORZ, SEG_VERT];
@@ -83,14 +79,14 @@ public class MapPaperMeshHandler
                 tris.Add(i + 4); tris.Add(i + 3); tris.Add(i + 5);
                 i += 6;
             }
-        Update(); // this sets vertices and uvs
+        Update(0f); // this sets vertices and uvs
         mesh.SetTriangles(tris, 0);
     }
 
     /// <summary>
     /// 지도의 메쉬 업데이트
     /// </summary>
-    public void Update()
+    public void Update(float height)
     {
         // Debug.DrawLine(handleLeft.position, handleRight.position);
 
@@ -107,7 +103,7 @@ public class MapPaperMeshHandler
             for (int i = 0; i < SEG_HORZ; ++i)
             {
                 if (j > 0 && j < SEG_VERT - 1) points[i, j] = Vector3.Lerp(points[i, 0], points[i, SEG_VERT - 1], ratio);
-                if (i > 0) dists[i, j] = dists[i - 1, j] + Vector3.Distance(points[i - 1, j], points[i, j]) / (halfHeight * 2f);
+                if (i > 0) dists[i, j] = dists[i - 1, j] + Vector3.Distance(points[i - 1, j], points[i, j]) / height;
             }
         }
         #endregion GetVertices
@@ -138,8 +134,9 @@ public class MapPaperMeshHandler
     /// <summary>
     /// 로프 수동 물리 연산
     /// </summary>
-    public void FixedUpdate()
+    public void FixedUpdate(float height)
     {
+        float halfHeight = height * 0.5f;
         ropeTop.Simulate(handleLeft.localPosition + handleLeft.up * halfHeight, handleRight.localPosition + handleRight.up * halfHeight);
         ropeBtm.Simulate(handleLeft.localPosition - handleLeft.up * halfHeight, handleRight.localPosition - handleRight.up * halfHeight);
     }
