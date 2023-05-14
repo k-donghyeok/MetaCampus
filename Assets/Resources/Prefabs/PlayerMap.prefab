@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 5566618215209564232}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.05, y: 0.3, z: 0.05}
+  m_LocalScale: {x: 0.05, y: 0.6, z: 0.05}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5566618216797933853}
@@ -158,7 +158,7 @@ Transform:
   m_GameObject: {fileID: 5566618216475401396}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.05, y: 0.3, z: 0.05}
+  m_LocalScale: {x: 0.05, y: 0.6, z: 0.05}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5566618216359639693}
@@ -279,12 +279,14 @@ MonoBehaviour:
   paperInitStats:
     segHorz: 10
     segVert: 10
-    height: 0.5
     loseness: 0.9
     tension: 0.9
     gravity: 0.02
     velClamp: 0.3
+  paperFullHeight: 0.5
   mapMaterial: {fileID: 2100000, guid: a892dafd3387d2b488faf6ddf83cb8e6, type: 2}
+  prefabParticleEffect: {fileID: 1823892110347214462, guid: fa917246eb1046342aeecbd73948d51a,
+    type: 3}
 --- !u!1 &5566618216797933852
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,7 +25,7 @@ public class PhoneTakeOut : MonoBehaviour
 
         grabActionHandler.OnGrabbed += (left, device) =>
         {
-            if (phoneHand.HasValue) return;
+            if (phoneHand.HasValue || grabActionHandler.GrabOccupied(left)) return;
             if (!device.TryGetFeatureValue(CommonUsages.devicePosition, out var pos)) return;
             if (pos.y > 0.5f) return; // too high
 

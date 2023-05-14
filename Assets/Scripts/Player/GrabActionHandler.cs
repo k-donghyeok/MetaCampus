@@ -61,11 +61,24 @@ public class GrabActionHandler : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 손에 들고 있는게 있는지 확인
+    /// </summary>
+    /// <param name="grasp">왼손: 0, 오른손: 1</param>
+    /// <returns>손에 뭔가 있으면 true, 아니면 false</returns>
+    /// <exception cref="System.IndexOutOfRangeException">grasp에 0이나 1이 아닌 수를 집어넣은 경우</exception>
     public bool GrabOccupied(int grasp)
     {
         if (!directInteractors[grasp].attachTransform) return true;
         return directInteractors[grasp].attachTransform.childCount > 0;
     }
+
+    /// <summary>
+    /// 손에 들고 있는게 있는지 확인
+    /// </summary>
+    /// <param name="left">왼손: true, 오른손: false</param>
+    /// <returns>손에 뭔가 있으면 true, 아니면 false</returns>
+    public bool GrabOccupied(bool left) => GrabOccupied(left ? 0 : 1);
 
     /// <summary>
     /// 잡기 행동의 이벤트

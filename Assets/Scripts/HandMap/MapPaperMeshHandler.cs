@@ -38,7 +38,7 @@ public class MapPaperMeshHandler
         // 종이가 들어갈 GameObject 생성
         paperObject = new GameObject("MapPaper");
         //paperObject.transform.SetParent(this.controller.transform);
-        paperObject.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        paperObject.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
 
         // 위와 아래 로프 생성
         ropeTop = new Rope(this.handleLeft.position, this.handleRight.position, SEG_HORZ);

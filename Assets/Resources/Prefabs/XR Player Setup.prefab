@@ -76,6 +76,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 7534199657441293995}
+  expandThreshold: 0.3
+  retractSpeed: 3
 --- !u!1 &2969104182258197491
 GameObject:
   m_ObjectHideFlags: 0
