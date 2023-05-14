@@ -6,23 +6,21 @@ using UnityEngine.XR.Interaction.Toolkit;
 /// <summary>
 /// 핸드폰을 꺼내는 행동 처리하는 컴포넌트
 /// </summary>
+[RequireComponent(typeof(GrabActionHandler))]
 public class PhoneTakeOut : MonoBehaviour
 {
     [SerializeField]
-    private GrabActionHandler grabActionHandler = null;
-
-    [SerializeField]
     private PhoneManager phone = null;
 
-    [SerializeField]
-    private XRDirectInteractor[] directInteractors = new XRDirectInteractor[2];
+    private GrabActionHandler grabActionHandler = null;
+
+    private XRDirectInteractor[] DirectInteractors => grabActionHandler.directInteractors;
 
     private void Start()
     {
-        if (!grabActionHandler)
-            throw new ArgumentNullException(nameof(grabActionHandler));
         if (!phone)
             throw new ArgumentNullException(nameof(phone));
+        grabActionHandler = GetComponent<GrabActionHandler>();
         phoneHand = null;
 
         grabActionHandler.OnGrabbed += (left, device) =>
@@ -47,7 +45,7 @@ public class PhoneTakeOut : MonoBehaviour
         phoneHand = left;
         phone.gameObject.SetActive(true);
         phone.SetHeld(device);
-        phone.transform.SetParent(directInteractors[left ? 0 : 1].attachTransform);
+        phone.transform.SetParent(DirectInteractors[left ? 0 : 1].attachTransform);
         phone.transform.SetLocalPositionAndRotation(Vector3.zero, left ? Quaternion.identity : Quaternion.Euler(0f, 180f, 0f));
         phone.GetComponent<Rigidbody>().useGravity = false;
         phone.GetComponent<Rigidbody>().velocity = Vector3.zero;

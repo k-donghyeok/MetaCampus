@@ -27,7 +27,7 @@ public class MapPaperMeshHandler
         public float velClamp;
     }
 
-    public MapPaperMeshHandler(HandMapController controller, Transform handleLeft, Transform handleRight, PaperInfo info)
+    public MapPaperMeshHandler(HandMapManager controller, Transform handleLeft, Transform handleRight, PaperInfo info)
     {
         SEG_HORZ = info.segHorz; SEG_VERT = info.segVert;
         Rope.tension = info.tension; Rope.loseness = info.loseness; Rope.gravity = info.gravity / SEG_HORZ; Rope.velClamp = info.velClamp;
@@ -53,7 +53,7 @@ public class MapPaperMeshHandler
         InitializeMesh();
     }
 
-    private readonly HandMapController controller;
+    private readonly HandMapManager controller;
 
     private readonly Transform handleLeft;
     private readonly Transform handleRight;
@@ -82,6 +82,8 @@ public class MapPaperMeshHandler
         Update(0f); // this sets vertices and uvs
         mesh.SetTriangles(tris, 0);
     }
+
+    public void SetActive(bool enable) => paperObject.SetActive(enable);
 
     /// <summary>
     /// 지도의 메쉬 업데이트

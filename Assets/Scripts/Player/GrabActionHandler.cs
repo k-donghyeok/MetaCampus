@@ -9,7 +9,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class GrabActionHandler : MonoBehaviour
 {
     [SerializeField]
-    private XRDirectInteractor[] directInteractors = new XRDirectInteractor[2]; 
+    internal XRDirectInteractor[] directInteractors = new XRDirectInteractor[2]; 
 
     [Header("Controller Settings")]
     [SerializeField, Range(0.0f, 1.0f)]
@@ -54,12 +54,17 @@ public class GrabActionHandler : MonoBehaviour
             bool grab = false;
             if (targetDevices[i].TryGetFeatureValue(CommonUsages.grip, out float grip))
                 grab = grip > gripThreshold;
-            // && !directInteractors[i].attachTransform
-            if (grab && !lastGrabs[i]) OnGrabbed?.Invoke(i == 0, targetDevices[i]);
+            if (grab && !lastGrabs[i] && !GrabOccupied(i)) OnGrabbed?.Invoke(i == 0, targetDevices[i]);
             else if (!grab && lastGrabs[i]) OnGrabReleased?.Invoke(i == 0, targetDevices[i]);
 
             lastGrabs[i] = grab;
         }
+    }
+
+    public bool GrabOccupied(int grasp)
+    {
+        if (!directInteractors[grasp].attachTransform) return true;
+        return directInteractors[grasp].attachTransform.childCount > 0;
     }
 
     /// <summary>

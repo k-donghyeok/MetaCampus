@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandMapController : MonoBehaviour
+public class HandMapManager : MonoBehaviour
 {
     [SerializeField]
     private Transform handleLeft = null;
@@ -23,6 +23,20 @@ public class HandMapController : MonoBehaviour
 
     private float paperHeight = 0f;
 
+    private bool dissappearing = false;
+
+    private void OnEnable()
+    {
+        paperHeight = 0f;
+        dissappearing = false;
+        paperHandler.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        paperHandler.SetActive(false);
+    }
+
     private void Start()
     {
         paperHandler = new MapPaperMeshHandler(this, handleLeft, handleRight, paperInitStats);
@@ -31,7 +45,18 @@ public class HandMapController : MonoBehaviour
 
     private void Update()
     {
-        paperHeight = Mathf.Lerp(paperHeight, paperFullHeight, 0.1f);
+        if (!dissappearing)
+        {
+            paperHeight = Mathf.Lerp(paperHeight, paperFullHeight, 0.1f);
+            if (paperHeight > paperFullHeight * 0.999f) paperHeight = paperFullHeight;
+        }
+        else
+        {
+            paperHeight = Mathf.Lerp(paperHeight, 0f, 0.1f);
+            if (paperHeight < 0.001f) gameObject.SetActive(false);
+        }
+        handleLeft.localScale = new(1f, paperHeight, 1f);
+        handleRight.localScale = new(1f, paperHeight, 1f);
         paperHandler.Update(paperHeight);
     }
 
