@@ -121,8 +121,8 @@ public class MapPaperMeshHandler
                 verts.Add(points[u + 1, v]); verts.Add(points[u, v + 1]); verts.Add(points[u + 1, v + 1]);
 
                 float um0 = dists[SEG_HORZ - 1, v] * 0.5f, um1 = dists[SEG_HORZ - 1, v + 1] * 0.5f,
-                    u00 = dists[u, v] - um0 - 0.5f, u01 = dists[u + 1, v] - um0 - 0.5f,
-                    u10 = dists[u, v + 1] - um1 - 0.5f, u11 = dists[u + 1, v + 1] - um1 - 0.5f;
+                    u00 = dists[u, v] - um0 + 0.5f, u01 = dists[u + 1, v] - um0 + 0.5f,
+                    u10 = dists[u, v + 1] - um1 + 0.5f, u11 = dists[u + 1, v + 1] - um1 + 0.5f;
                 float v0 = 1f - (float)v / (SEG_VERT - 1), v1 = 1f - (float)(v + 1) / (SEG_VERT - 1);
                 uvs.Add(new(u00, v0)); uvs.Add(new(u01, v0)); uvs.Add(new(u10, v1));
                 uvs.Add(new(u01, v0)); uvs.Add(new(u10, v1)); uvs.Add(new(u11, v1));
