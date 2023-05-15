@@ -135,6 +135,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: XR Player Setup
       objectReference: {fileID: 0}
+    - target: {fileID: 2969104182258197491, guid: 4f87504e9e62a3440a8bf96a719fc17f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8442991377406544493, guid: 4f87504e9e62a3440a8bf96a719fc17f,
         type: 3}
       propertyPath: m_RootOrder
