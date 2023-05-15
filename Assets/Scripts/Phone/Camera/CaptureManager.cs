@@ -27,7 +27,7 @@ public class CaptureManager : MonoBehaviour
     /// <summary>
     /// 사진을 촬영하고 저장
     /// </summary>
-    private void SaveImage()
+    public void SaveImage()
     {
         Texture2D texture = new(RT.width, RT.height, TextureFormat.ARGB32, false);
         RenderTexture.active = RT;
@@ -66,6 +66,7 @@ public class CaptureManager : MonoBehaviour
         => $"{Application.persistentDataPath}/Capture{index}.png";
 
     
+    /*
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.C)) SaveImage();
@@ -73,4 +74,15 @@ public class CaptureManager : MonoBehaviour
         if (Input.mouseScrollDelta.y != 0f)
             cam.fieldOfView = Mathf.Clamp(cam.fieldOfView - Input.mouseScrollDelta.y * 2f, 10f, 60f);
     }
+    */
+
+    /// <summary>
+    /// 카메라의 줌을 조절
+    /// </summary>
+    /// <param name="adjust">양이 클로즈업</param>
+    public void AdjustZoom(float adjust)
+    {
+        cam.fieldOfView = Mathf.Clamp(cam.fieldOfView - adjust, 10f, 60f);
+    }
+
 }

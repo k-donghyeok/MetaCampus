@@ -1,0 +1,92 @@
+using System;
+using UnityEngine;
+using UnityEngine.XR;
+using UnityEngine.XR.Interaction.Toolkit;
+
+[RequireComponent(typeof(GrabActionHandler))]
+public class HandMapExpand : MonoBehaviour
+{
+    [SerializeField]
+    private HandMapManager map = null;
+
+    [SerializeField, Range(0f, 5f)]
+    private float expandThreshold = 1f;
+    [SerializeField, Range(0f, 5f)]
+    private float retractSpeed = 1f;
+
+    private GrabActionHandler grabActionHandler = null;
+
+    private XRDirectInteractor[] DirectInteractors => grabActionHandler.directInteractors;
+
+    private void Start()
+    {
+        if (!map)
+            throw new ArgumentNullException(nameof(map));
+        grabActionHandler = GetComponent<GrabActionHandler>();
+
+        grabActionHandler.OnGrabbed += (left, device) =>
+        {
+            if (map.gameObject.activeSelf || grabActionHandler.GrabOccupied(left)) return;
+            if (!device.TryGetFeatureValue(CommonUsages.devicePosition, out var pos)) return;
+            if (pos.y < 0.8f) return; // 너무 낮음
+            var posL = DirectInteractors[0].attachTransform.position; posL.y = 0f;
+            var posR = DirectInteractors[1].attachTransform.position; posR.y = 0f;
+            if (Vector3.Distance(posL, posR) > expandThreshold) return; //너무 멈  
+            handFlags |= 1 << (left ? 0 : 1); // 잡기 플래그 켜기
+        };
+        grabActionHandler.OnGrabReleased += (left, device) =>
+        {
+            handFlags &= ~(1 << (left ? 0 : 1)); // 잡기 플래그 끄기
+        };
+    }
+
+    private int handFlags = 0;
+
+    private void Update()
+    {
+        if (handFlags == 3) // 양손을 쥐고 있는 경우, 지도를 펼칠 준비가 됨
+        {
+            if (map.gameObject.activeSelf) return; // 이미 들고 있음
+            var posL = DirectInteractors[0].attachTransform.position; posL.y = 0f;
+            var posR = DirectInteractors[1].attachTransform.position; posR.y = 0f;
+            if (Vector3.Distance(posL, posR) > expandThreshold) EnableMap(); // 수평으로 충분히 멀면, 지도를 펼치기
+        }
+        else if (map.gameObject.activeSelf)
+        {
+            // 지도를 손에서 떨어뜨리기
+            if ((handFlags & (1 << 0)) == 0) map.handleLeft.transform.SetParent(map.transform);
+            if ((handFlags & (1 << 1)) == 0) map.handleRight.transform.SetParent(map.transform);
+
+            var leftToRight = map.handleRight.position - map.handleLeft.position;
+            leftToRight = Vector3.ClampMagnitude(leftToRight, retractSpeed * Time.deltaTime);
+            if (handFlags > 0)
+            { // 한 손을 놓고 있으면 놓은 쪽부터 지도가 말려들어감
+                if ((handFlags & (1 << 0)) > 0) map.handleRight.transform.Translate(-leftToRight);
+                else map.handleLeft.transform.Translate(leftToRight);
+            }
+            else
+            { // 양 손을 놓고 있으면 가운데로 지도가 말려들어감
+                leftToRight *= 0.5f;
+                map.handleRight.transform.Translate(-leftToRight);
+                map.handleLeft.transform.Translate(leftToRight);
+            }
+
+            if (!map.dissappearing && Vector3.Distance(map.handleLeft.position, map.handleRight.position) < expandThreshold)
+                map.dissappearing = true; // 지도가 어느정도 말려들어가면 사라지는 애니메이션 실행
+        }
+    }
+
+    private void EnableMap()
+    {
+        map.gameObject.SetActive(true);
+
+        map.handleLeft.transform.SetParent(DirectInteractors[0].attachTransform);
+        map.handleLeft.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        map.handleRight.transform.SetParent(DirectInteractors[1].attachTransform);
+        map.handleRight.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+
+        map.CreateToggleEffect();
+    }
+
+
+}
