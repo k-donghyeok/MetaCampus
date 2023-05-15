@@ -20,6 +20,7 @@ public class Timetable : MonoBehaviour
         for(int d = 0; d < 5; d++)
         {
             string lastHour = string.Empty;
+            TableHour lastScript = null;
             for (int h = 0; h < 8; h++)
             {
                 if (string.IsNullOrEmpty(timetableData[h, d]))
@@ -28,17 +29,21 @@ public class Timetable : MonoBehaviour
                 }
                 else
                 {
-                    if(lastHour == timetableData[h, d])
+                    if (lastHour == timetableData[h, d])
                     {
                         // 이전 TableHour를 늘린다
+                        lastScript.AddSize();
                     }
                     else
                     {
                         lastHour = timetableData[h, d];
                         //새 TableHour를 만든다
                         var go = Instantiate(prefabTableHour, transform);
-                        var script = go.GetComponent<TableHour>();
-                        script.UpdateText(timetableData[h, d]);
+                        lastScript = go.GetComponent<TableHour>();
+                        lastScript.UpdateText(timetableData[h, d]);
+
+                        (go.transform as RectTransform).position 
+                            = new Vector3(d * lastScript.hourWidth, (7 - h) * lastScript.hourHeight, 0f);
                     }
                 }
             }
