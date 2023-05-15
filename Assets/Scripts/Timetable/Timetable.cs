@@ -17,7 +17,7 @@ public class Timetable : MonoBehaviour
         LoadCSVData();
         string[,] timetableData = ConvertDataTo2DArray();
 
-        for(int d = 0; d < 5; d++)
+        for (int d = 0; d < 5; d++)
         {
             string lastHour = string.Empty;
             TableHour lastScript = null;
@@ -42,8 +42,8 @@ public class Timetable : MonoBehaviour
                         lastScript = go.GetComponent<TableHour>();
                         lastScript.UpdateText(timetableData[h, d]);
 
-                        (go.transform as RectTransform).position 
-                            = new Vector3(d * lastScript.hourWidth, (7 - h) * lastScript.hourHeight, 0f);
+                        (go.transform as RectTransform).position
+                            = new Vector3((2 - d) * lastScript.hourWidth, (3 - h) * lastScript.hourHeight, 900f);
                     }
                 }
             }
