@@ -9,16 +9,46 @@ public class Timetable : MonoBehaviour
     public string csvFileName = "TimetableTest";
     private List<Dictionary<string, object>> csvData;
 
-    // 시간표를 출력할 UI 텍스트를 저장할 변수를 선언
-    public Text timetableText;
+    [SerializeField]
+    private GameObject prefabTableHour = null;
 
     void Start()
     {
-        // CSVReader 스크립트를 사용하여 CSV 파일을 읽어옴
-        csvData = CSVReader.Read(csvFileName);
+        LoadCSVData();
+        string[,] timetableData = ConvertDataTo2DArray();
 
-        // csvData 리스트 변수를 "교시" 컬럼 값을 기준으로 오름차순으로 정렬
-        csvData = csvData.OrderBy(row => (int)row["교시"]).ToList();
+        for(int d = 0; d < 5; d++)
+        {
+            string lastHour = string.Empty;
+            for (int h = 0; h < 8; h++)
+            {
+                if (string.IsNullOrEmpty(timetableData[h, d]))
+                {
+                    lastHour = string.Empty;
+                }
+                else
+                {
+                    if(lastHour == timetableData[h, d])
+                    {
+                        // 이전 TableHour를 늘린다
+                    }
+                    else
+                    {
+                        lastHour = timetableData[h, d];
+                        //새 TableHour를 만든다
+                        var go = Instantiate(prefabTableHour, transform);
+                        var script = go.GetComponent<TableHour>();
+                        script.UpdateText(timetableData[h, d]);
+                    }
+                }
+            }
+        }
+
+
+    }
+
+    private string[,] ConvertDataTo2DArray()
+    {
 
         // 시간표 데이터를 저장할 2차원 문자열 배열을 선언
         string[,] timetableData = new string[8, 5];
@@ -39,22 +69,16 @@ public class Timetable : MonoBehaviour
             }
         }
 
-        // 시간표 데이터를 문자열 형태로 저장할 timetableString 변수를 선언
-        string timetableString = "";
-        // timetableData 배열의 값을 하나씩 문자열에 추가
-        for (int i = 0; i < 8; i++)
-        {
-            for (int j = 0; j < 5; j++)
-            {
-                // timetableData 배열의 값과 일정한 간격을 두고 timetableString에 추가
-                timetableString += timetableData[i, j] + "         ";
-            }
-            // 한 줄을 출력한 뒤 다음 줄로 이동
-            timetableString += "\n";
-        }
+        return timetableData;
+    }
 
-        // timetableText UI 텍스트의 값을 timetableString으로 설정
-        timetableText.text = timetableString;
+    private void LoadCSVData()
+    {
+        // CSVReader 스크립트를 사용하여 CSV 파일을 읽어옴
+        csvData = CSVReader.Read(csvFileName);
+
+        // csvData 리스트 변수를 "교시" 컬럼 값을 기준으로 오름차순으로 정렬
+        csvData = csvData.OrderBy(row => (int)row["교시"]).ToList();
     }
 
     // 요일을 나타내는 정수 값을 문자열로 변환하는 GetDayOfWeek 함수를 정의

@@ -1,18 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class TableHour : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private TMP_Text text;
+
+    private int hour = 1;
+
+    private void Awake()
     {
-        
+        text = GetComponentInChildren<TMP_Text>();
+    }
+    
+    public void UpdateText(string text)
+    {
+        this.text.text = text;
+        hour = 1;
+        // 크기 리셋
     }
 
-    // Update is called once per frame
-    void Update()
+    public void AddSize()
     {
-        
+        hour++;
+        // 실제로 크기를 아래로 늘리기
     }
 }
