@@ -43,7 +43,7 @@ public class Timetable : MonoBehaviour
                         lastScript.UpdateText(timetableData[h, d]);
 
                         (go.transform as RectTransform).position
-                            = new Vector3((2 - d) * lastScript.hourWidth, (3 - h) * lastScript.hourHeight, 900f);
+                            = new Vector3((d - 1.54f) * lastScript.hourWidth, (3 - h) * lastScript.hourHeight, 900f);
                     }
                 }
             }
@@ -56,7 +56,7 @@ public class Timetable : MonoBehaviour
     {
 
         // 시간표 데이터를 저장할 2차원 문자열 배열을 선언
-        string[,] timetableData = new string[8];
+        string[,] timetableData = new string[8, 5];
 
         // csvData 리스트 변수를 반복하여 시간표 데이터를 timetableData 배열에 저장
         foreach (var row in csvData)
