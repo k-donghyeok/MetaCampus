@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2691040755319049950}
   m_Layer: 0
-  m_Name: I Shape-Window
+  m_Name: CorridorI-Window
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
