@@ -29,8 +29,22 @@ public class player : MonoBehaviour
     {
         CalculateVector();
         ChangeCameraAngleWithMouse();
-        
-      
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            GameManager.Instance().Yeil.YeilTaken(YeilManager.HowToGetYeil.TakenApplePhoto);
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            GameManager.Instance().Yeil.YeilTaken(YeilManager.HowToGetYeil.TakenPondPhoto);
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            PlayerPrefs.DeleteAll();
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Debug.Log(GameManager.Instance().Yeil.Score);
+        }
 
     }
 

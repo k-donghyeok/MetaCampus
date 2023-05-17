@@ -9,7 +9,12 @@ public class YeilManager
 
     public YeilManager()
     {
-      
+        Debug.Log($"생성자 작동 {PlayerPrefs.GetInt("score")}");
+        if (PlayerPrefs.HasKey("score"))
+        {
+            Debug.Log($"생성자 작동후 저장파일이 있을떄{PlayerPrefs.GetInt("score")}");
+            score = PlayerPrefs.GetInt("score");
+        }
     }
 
     public int Score
@@ -17,8 +22,10 @@ public class YeilManager
         get { return score; }
         private set
         {
-            if (score == value) return;
-            score = value;
+           
+               
+            
+            Debug.Log($"프로퍼티작동");
             PlayerPrefs.SetInt("score", score);
         }
     }
@@ -26,9 +33,17 @@ public class YeilManager
 
     public void YeilTaken(HowToGetYeil id)
     {
-       
-        // 만약 id의 Yeil을 이미 먹었다면 return
+        string strid = Convert.ToString(id);
+       if(PlayerPrefs.HasKey(strid)) // 만약 id의 Yeil을 이미 먹었다면 return
+        {
+            return;
+        }
         // score ++, 그리고 id의 Yeil을 먹었음으로 하고 저장
+        ++score;
+        Score = score;
+        PlayerPrefs.SetInt(strid, 1);
+        
+      
         
         //example
         //PlayerPrefs.SetInt(id.ToString(), 1);
