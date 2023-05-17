@@ -46,7 +46,10 @@ public class PhoneTakeOut : MonoBehaviour
         phone.gameObject.SetActive(true);
         phone.SetHeld(device);
         phone.transform.SetParent(DirectInteractors[left ? 0 : 1].attachTransform);
-        phone.transform.SetLocalPositionAndRotation(Vector3.zero, left ? Quaternion.identity : Quaternion.Euler(0f, 180f, 0f));
+        if (left)
+            phone.transform.SetLocalPositionAndRotation(Vector3.right * 0.2f, Quaternion.Euler(0f, 90f, 30f));
+        else
+            phone.transform.SetLocalPositionAndRotation(Vector3.left * 0.2f, Quaternion.Euler(0f, 90f, 30f));
         phone.GetComponent<Rigidbody>().useGravity = false;
         phone.GetComponent<Rigidbody>().velocity = Vector3.zero;
     }

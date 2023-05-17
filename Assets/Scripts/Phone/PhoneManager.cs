@@ -19,11 +19,13 @@ public class PhoneManager : MonoBehaviour
 
     public Canvas Canvas() => canvas;
 
-    private CaptureBehaviour captureManager = null;
+    public PhotoManager PhotoMgr { get; private set; } = null;
+    public CaptureBehaviour CaptureBehav { get; private set; } = null;
 
     private void Awake()
     {
-        captureManager = new CaptureBehaviour(this, cam);
+        PhotoMgr = new PhotoManager(this);
+        CaptureBehav = new CaptureBehaviour(this, cam);
     }
 
     /// <summary>
@@ -67,7 +69,7 @@ public class PhoneManager : MonoBehaviour
         }
         if (!heldDevice.isValid) return;
 
-        captureManager.Update(heldDevice);
+        CaptureBehav.Update(heldDevice);
 
         
 

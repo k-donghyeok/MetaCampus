@@ -15,9 +15,12 @@ public class PhotoManager
 
     private readonly RenderTexture RT;
 
-    public PhotoManager(int imageIndex)
+    private readonly PhoneManager owner;
+
+    public PhotoManager(PhoneManager owner)
     {
-        ImageIndex = imageIndex;
+        this.owner = owner;
+        ImageIndex = 0; // TODO: load from save
         RT = Resources.Load("Textures/CaptureRenderTexture") as RenderTexture;
     }
 

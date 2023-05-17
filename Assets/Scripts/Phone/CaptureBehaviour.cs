@@ -13,6 +13,8 @@ public class CaptureBehaviour
     private readonly PhoneManager owner;
     private readonly Camera cam;
 
+    private PhotoManager PhotoMgr => owner.PhotoMgr;
+
     public CaptureBehaviour(PhoneManager owner, Camera cam)
     {
         this.owner = owner;
@@ -27,24 +29,16 @@ public class CaptureBehaviour
         {
             if (triggerValue > 0.9f)
             {
-                //if (!lastTrigger) GameManager.Instance().photoManager.SaveImage();
+                if (!lastTrigger) PhotoMgr.SaveImage();
                 lastTrigger = true;
             }
             else lastTrigger = false;
         }
         else lastTrigger = false;
-    }
 
-
-    /*
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.C)) SaveImage();
-        
-        if (Input.mouseScrollDelta.y != 0f)
-            cam.fieldOfView = Mathf.Clamp(cam.fieldOfView - Input.mouseScrollDelta.y * 2f, 10f, 60f);
+        //if (Input.mouseScrollDelta.y != 0f)
+        //    cam.fieldOfView = Mathf.Clamp(cam.fieldOfView - Input.mouseScrollDelta.y * 2f, 10f, 60f);
     }
-    */
 
     /// <summary>
     /// 카메라의 줌을 조절
