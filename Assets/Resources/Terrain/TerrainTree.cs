@@ -18,5 +18,6 @@ public class TerrainTree : MonoBehaviour
         if(! Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out var info)) return;
         if (info.collider != myCollider) return;
         gameObject.SetActive(false);
+
     }
 }

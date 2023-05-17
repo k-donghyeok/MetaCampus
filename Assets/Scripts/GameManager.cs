@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance = null;
 
+   
     public static GameManager Instance() => instance;
 
     private void Awake()
@@ -19,12 +20,14 @@ public class GameManager : MonoBehaviour
         else if (instance != this) Destroy(gameObject);
     }
 
-    private YeilManager yeil;
-    public YeilManager Yeil() => yeil;
+    public YeilManager Yeil { get; private set; } = null;
+    public SaveManager Save { get; private set; } = null;
 
     private void Initiate()
     {
-        yeil = new YeilManager();
+        Yeil = new YeilManager();
+        Save = new SaveManager();
+       
     }
 
 }
