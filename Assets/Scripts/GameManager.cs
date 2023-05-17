@@ -5,12 +5,13 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance = null;
-
+   
    
     public static GameManager Instance() => instance;
 
     private void Awake()
     {
+        
         if (instance == null)
         {
             instance = this;
@@ -21,12 +22,12 @@ public class GameManager : MonoBehaviour
     }
 
     public YeilManager Yeil { get; private set; } = null;
-    public SaveManager Save { get; private set; } = null;
+    
 
     private void Initiate()
     {
         Yeil = new YeilManager();
-        Save = new SaveManager();
+        
        
     }
 
