@@ -36,6 +36,7 @@ public class YeilManager
         string strid = Convert.ToString(id);
        if(PlayerPrefs.HasKey(strid)) // 만약 id의 Yeil을 이미 먹었다면 return
         {
+            Debug.Log($"{strid} 이거는 이미 먹음");
             return;
         }
         // score ++, 그리고 id의 Yeil을 먹었음으로 하고 저장
