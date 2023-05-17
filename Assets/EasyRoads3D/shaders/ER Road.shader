@@ -1,4 +1,4 @@
-// ?2021 EasyRoads3D
+// © 2021 EasyRoads3D
 // This is a standard road shader  
 // Standard 3D Project Usage: Set Material Render Queue to AlphaTest 2450 
 
@@ -46,7 +46,7 @@ Shader "EasyRoads3D/ER Road"
 
 		
 
-		Tags { "RenderPipeline"="UniversalPipeline" "RenderType"="Opaque" "Queue"="transparent" }
+		Tags { "RenderPipeline"="UniversalPipeline" "RenderType"="Transparent" "Queue"="Transparent" }
 		Cull Back
 		AlphaToMask Off
 		HLSLINCLUDE
