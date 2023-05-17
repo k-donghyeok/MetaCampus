@@ -46,6 +46,7 @@ public class PhoneTakeOut : MonoBehaviour
         phone.gameObject.SetActive(true);
         phone.SetHeld(device);
         phone.transform.SetParent(DirectInteractors[left ? 0 : 1].attachTransform);
+        grabActionHandler.RequestHandAnimation(left, HandAnimator.SpecialAnimation.GripPhone);
         if (left)
             phone.transform.SetLocalPositionAndRotation(Vector3.right * 0.2f, Quaternion.Euler(0f, 90f, 30f));
         else
@@ -56,6 +57,7 @@ public class PhoneTakeOut : MonoBehaviour
 
     private void ReleasePhone()
     {
+        grabActionHandler.RequestHandAnimation(phoneHand.Value, HandAnimator.SpecialAnimation.None);
         phoneHand = null;
         phone.transform.SetParent(null);
         phone.GetComponent<Rigidbody>().useGravity = true;
