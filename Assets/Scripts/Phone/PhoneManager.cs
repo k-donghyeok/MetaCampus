@@ -8,11 +8,22 @@ using UnityEngine.XR;
 /// </summary>
 public class PhoneManager : MonoBehaviour
 {
-    private CaptureManager captureManager = null;
+    [SerializeField]
+    private Camera cam = null;
+
+    [SerializeField]
+    private MeshRenderer screen = null;
+
+    [SerializeField]
+    private Canvas canvas = null;
+
+    public Canvas Canvas() => canvas;
+
+    private CaptureBehaviour captureManager = null;
 
     private void Awake()
     {
-        captureManager = GetComponentInChildren<CaptureManager>();
+        captureManager = new CaptureBehaviour(this, cam);
     }
 
     /// <summary>
@@ -45,7 +56,6 @@ public class PhoneManager : MonoBehaviour
         hideTimer = 1f;
     }
 
-    private bool lastTrigger = false;
 
     private void Update()
     {
@@ -57,16 +67,9 @@ public class PhoneManager : MonoBehaviour
         }
         if (!heldDevice.isValid) return;
 
-        if (heldDevice.TryGetFeatureValue(CommonUsages.trigger, out var triggerValue))
-        {
-            if (triggerValue > 0.9f)
-            {
-                if (!lastTrigger) captureManager.SaveImage();
-                lastTrigger = true;
-            }
-            else lastTrigger = false;
-        }
-        else lastTrigger = false;
+        captureManager.Update(heldDevice);
+
+        
 
     }
 
