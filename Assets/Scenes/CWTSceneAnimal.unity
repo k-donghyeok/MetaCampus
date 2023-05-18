@@ -1147,27 +1147,27 @@ PrefabInstance:
     - target: {fileID: 4672394341891279384, guid: 3e38101b70b569841b0520274c51db69,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.495
       objectReference: {fileID: 0}
     - target: {fileID: 4672394341891279384, guid: 3e38101b70b569841b0520274c51db69,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4672394341891279384, guid: 3e38101b70b569841b0520274c51db69,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.495
       objectReference: {fileID: 0}
     - target: {fileID: 4672394342528772625, guid: 3e38101b70b569841b0520274c51db69,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.495
       objectReference: {fileID: 0}
     - target: {fileID: 4672394342528772625, guid: 3e38101b70b569841b0520274c51db69,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6437176898967953012, guid: 3e38101b70b569841b0520274c51db69,
         type: 3}
@@ -2220,7 +2220,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1836981454
 Transform:
   m_ObjectHideFlags: 0
