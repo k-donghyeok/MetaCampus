@@ -8,8 +8,8 @@ public class TableHour : MonoBehaviour
 {
     private TMP_Text text;
 
-    public float hourWidth = 200f;
-    public float hourHeight = 100f;
+    public float hourWidth = 260f;
+    public float hourHeight = 96f;
 
     private int hour = 1;
 
@@ -17,7 +17,7 @@ public class TableHour : MonoBehaviour
     {
         text = GetComponentInChildren<TMP_Text>();
     }
-    
+
     public void UpdateText(string text)
     {
         this.text.text = text;

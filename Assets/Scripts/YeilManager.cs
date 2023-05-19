@@ -3,52 +3,59 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 점수 관리
+/// </summary>
 public class YeilManager
 {
-    private int score=0;
-
     public YeilManager()
     {
-        Debug.Log($"생성자 작동 {PlayerPrefs.GetInt("score")}");
-        if (PlayerPrefs.HasKey("score"))
-        {
-            Debug.Log($"생성자 작동후 저장파일이 있을떄{PlayerPrefs.GetInt("score")}");
-            score = PlayerPrefs.GetInt("score");
-        }
+        score = Save.LoadValue(SCOREKEY, 0);
+        Save.OnSaveReset += OnNewSave;
     }
 
+    private SaveManager Save => GameManager.Instance().Save;
+
+    private void OnNewSave(SaveManager save)
+    {
+        save.SaveValue(SCOREKEY, 0);
+    }
+
+    private const string SCOREKEY = "score";
+
+    /// <summary>
+    /// 점수
+    /// </summary>
     public int Score
     {
         get { return score; }
         private set
         {
-           
-               
-            
-            Debug.Log($"프로퍼티작동");
-            PlayerPrefs.SetInt("score", score);
+            if (score == value) return;
+            Debug.Log($"프로퍼티 작동 {score} <- {value}");
+            score = value;
+            Save.SaveValue(SCOREKEY, score);
         }
     }
-  
+    private int score = 0;
 
-    public void YeilTaken(HowToGetYeil id)
+    /// <summary>
+    /// 점수 먹었음 통보
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>점수 추가 성공 여부</returns>
+    public bool YeilTaken(HowToGetYeil id)
     {
         string strid = Convert.ToString(id);
-       if(PlayerPrefs.HasKey(strid)) // 만약 id의 Yeil을 이미 먹었다면 return
+        
+        if (Save.LoadValue(strid, 0) != 0)
         {
             Debug.Log($"{strid} 이거는 이미 먹음");
-            return;
+            return false;
         }
-        // score ++, 그리고 id의 Yeil을 먹었음으로 하고 저장
-        ++score;
-        Score = score;
-        PlayerPrefs.SetInt(strid, 1);
-        
-      
-        
-        //example
-        //PlayerPrefs.SetInt(id.ToString(), 1);
-        //int save = PlayerPrefs.GetInt(id.ToString(), 0);
+        ++Score;
+        Save.SaveValue(strid, 1);
+        return true;
     }
 
    
@@ -61,6 +68,5 @@ public class YeilManager
         TaKenTestPhoto2,
         TaKenTestPhoto3,
         TaKenTestPhoto4
-
     }
 }
