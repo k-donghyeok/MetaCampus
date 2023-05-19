@@ -22,12 +22,12 @@ public class GameManager : MonoBehaviour
     }
 
     public YeilManager Yeil { get; private set; } = null;
-    
 
+    public LockManager Lock { get; private set; } = null;
     private void Initiate()
     {
         Yeil = new YeilManager();
-        
+        Lock = new LockManager(); 
        
     }
 
