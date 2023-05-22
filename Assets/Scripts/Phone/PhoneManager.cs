@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 
@@ -8,26 +6,36 @@ using UnityEngine.XR;
 /// </summary>
 public class PhoneManager : MonoBehaviour
 {
-    [SerializeField]
-    private Camera cam = null;
-
-    [SerializeField]
-    private MeshRenderer screen = null;
-
-    [SerializeField]
-    private Canvas canvas = null;
 
     [SerializeField]
     private HandMapManager map = null;
 
-    public Canvas Canvas() => canvas;
+    [Header("Capture")]
+    [SerializeField]
+    private GameObject captureGO = null;
+    [SerializeField]
+    private Camera cam = null;
+    [SerializeField]
+    private MeshRenderer screen = null;
+
+    [Header("Attach")]
+    [SerializeField]
+    private GameObject attachGO = null;
+    [SerializeField]
+    internal Transform[] stretchers = new Transform[2];
+    [SerializeField]
+    internal MeshRenderer photoScreen = null;
 
     public CaptureBehaviour CaptureBehav { get; private set; } = null;
     public AttachBehaviour AttachBehav { get; private set; } = null;
 
     public Texture2D Photo { get; private set; } = null;
 
-    public void UpdatePhoto(Texture2D newPhoto) => Photo = newPhoto;
+    public void UpdatePhoto(Texture2D newPhoto)
+    {
+        Photo = newPhoto;
+        AttachBehav.UpdatePhoto(Photo);
+    }
 
     private void Awake()
     {
@@ -63,7 +71,7 @@ public class PhoneManager : MonoBehaviour
         if (Held == held) return;
         Held = held;
         hideTimer = 1f;
-        if (held) CurMode = Mode.Capture;
+        if (held) ChangeMode(Mode.Capture);
     }
 
 
@@ -96,15 +104,31 @@ public class PhoneManager : MonoBehaviour
         switch (CurMode)
         {
             case Mode.Capture:
+                cam.gameObject.SetActive(false);
+                captureGO.SetActive(false);
                 break;
             case Mode.Attach:
+                attachGO.SetActive(false);
                 break;
         }
         switch (newMode)
         {
             case Mode.Capture:
+                cam.gameObject.SetActive(true);
+                captureGO.SetActive(true);
                 break;
             case Mode.Attach:
+                map.LaydownMap();
+                attachGO.SetActive(true);
+                attachGO.transform.localScale = Vector3.one;
+                foreach (var s in stretchers) s.gameObject.SetActive(false);
+                if (heldDevice.isValid)
+                {
+                    if (heldDevice.characteristics == InputDeviceCharacteristics.Left)
+                        stretchers[1].gameObject.SetActive(true);
+                    else if (heldDevice.characteristics == InputDeviceCharacteristics.Right)
+                        stretchers[0].gameObject.SetActive(true);
+                }
                 break;
         }
 

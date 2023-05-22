@@ -14,8 +14,19 @@ public class AttachBehaviour
         this.owner = owner;
     }
 
+    private Texture2D photo = null;
+
+    /// <summary>
+    /// 저장된 사진 갱신
+    /// </summary>
+    public void UpdatePhoto(Texture2D photo)
+    {
+        this.photo = photo;
+        owner.photoScreen.material.mainTexture = this.photo;
+    }
+
     public void Update()
     {
-
+        
     }
 }

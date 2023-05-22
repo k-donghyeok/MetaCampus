@@ -1,9 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HandMapManager : MonoBehaviour
 {
+    [SerializeField]
+    internal Transform xrOrigin = null;
+
     [SerializeField]
     internal Transform handleLeft = null;
     [SerializeField]
@@ -28,6 +29,8 @@ public class HandMapManager : MonoBehaviour
 
     internal bool dissappearing = false;
 
+    internal bool layDown = false;
+
     private void Awake()
     {
         paperHandler = new MapPaperMeshHandler(this, handleLeft, handleRight, paperInitStats);
@@ -46,9 +49,30 @@ public class HandMapManager : MonoBehaviour
         paperHandler.SetActive(false);
     }
 
-    public void SetHeld(bool held)
+    public void SetLaydown(bool held)
     {
+        layDown = !held;
         paperHandler.TogglePhysics(held);
+    }
+
+    public void LaydownMap()
+    {
+        gameObject.SetActive(true);
+        SetLaydown(false);
+        CreateToggleEffect();
+        handleLeft.transform.SetParent(xrOrigin);
+        handleLeft.transform.SetLocalPositionAndRotation(
+            new Vector3(-0.6f, 0.5f, 0.5f),
+            Quaternion.Euler(60f, 0f, 0f));
+        handleRight.transform.SetParent(xrOrigin);
+        handleRight.transform.SetLocalPositionAndRotation(
+            new Vector3(0.6f, 0.5f, 0.5f),
+            Quaternion.Euler(60f, 0f, 0f));
+    }
+
+    public void FoldLaydownMap()
+    {
+        layDown = false; // HandMapExpand의 접히는 애니메이션 허용
     }
 
     private void Update()
