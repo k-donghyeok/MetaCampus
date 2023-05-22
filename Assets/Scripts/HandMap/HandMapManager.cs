@@ -70,12 +70,12 @@ public class HandMapManager : MonoBehaviour
         CreateToggleEffect();
         handleLeft.transform.SetParent(xrOrigin);
         handleLeft.transform.SetLocalPositionAndRotation(
-            new Vector3(-0.6f, 1.2f, 0.5f),
-            Quaternion.Euler(40f, 0f, 0f));
+            new Vector3(-0.35f, 0.8f, 0.5f),
+            Quaternion.Euler(50f, 0f, 0f));
         handleRight.transform.SetParent(xrOrigin);
         handleRight.transform.SetLocalPositionAndRotation(
-            new Vector3(0.6f, 1.2f, 0.5f),
-            Quaternion.Euler(40f, 0f, 0f));
+            new Vector3(0.35f, 0.8f, 0.5f),
+            Quaternion.Euler(50f, 0f, 0f));
     }
 
     public void FoldLaydownMap()
