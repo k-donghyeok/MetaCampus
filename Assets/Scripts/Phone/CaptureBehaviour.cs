@@ -12,13 +12,13 @@ public class CaptureBehaviour
 {
     private readonly PhoneManager owner;
     private readonly Camera cam;
-
-    private PhotoManager PhotoMgr => owner.PhotoMgr;
+    private readonly RenderTexture RT;
 
     public CaptureBehaviour(PhoneManager owner, Camera cam)
     {
         this.owner = owner;
         this.cam = cam;
+        RT = Resources.Load("Textures/CaptureRenderTexture") as RenderTexture;
     }
 
     private bool lastTrigger = false;
@@ -29,7 +29,12 @@ public class CaptureBehaviour
         {
             if (triggerValue > 0.9f)
             {
-                if (!lastTrigger) PhotoMgr.SaveImage();
+                if (!lastTrigger)
+                {
+                    SaveImage();
+                    owner.UpdatePhoto(photo);
+                    owner.ChangeMode(PhoneManager.Mode.Attach);
+                }
                 lastTrigger = true;
             }
             else lastTrigger = false;
@@ -38,6 +43,19 @@ public class CaptureBehaviour
 
         //if (Input.mouseScrollDelta.y != 0f)
         //    cam.fieldOfView = Mathf.Clamp(cam.fieldOfView - Input.mouseScrollDelta.y * 2f, 10f, 60f);
+    }
+
+    private Texture2D photo = null;
+
+    /// <summary>
+    /// 사진을 촬영하고 저장
+    /// </summary>
+    public void SaveImage()
+    {
+        photo = new(RT.width, RT.height, TextureFormat.ARGB32, false);
+        RenderTexture.active = RT;
+        photo.ReadPixels(new(0f, 0f, RT.width, RT.height), 0, 0);
+        photo.Apply();
     }
 
     /// <summary>
