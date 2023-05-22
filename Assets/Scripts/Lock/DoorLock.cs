@@ -9,16 +9,21 @@ public abstract class DoorLock : MonoBehaviour, IHaveLockID
     private int lockID = 0;
 
     public int LockID => lockID;
-
-    private void OnCollisionEnter(Collision collision)
+    public abstract void Unlock(DoorKey _collision);
+   
+    
+    private void OnTriggerEnter(Collider collision)
     {
-        DoorKey a = collision.gameObject.GetComponent<DoorKey>();
-        if (a.LockID == LockID)
+        DoorKey go = collision.gameObject.GetComponent<DoorKey>();
+        if(go==null)
         {
-            Destroy(collision.gameObject);
+            Debug.Log("Ãæµ¹µÈ°Ô ¿­¼è°¡ ¾Æ´Ô");
+            return;
         }
+        Debug.Log("Ãæµ¹µÊ");
+        Unlock(go);
     }
 
-    
+  
 
 }
