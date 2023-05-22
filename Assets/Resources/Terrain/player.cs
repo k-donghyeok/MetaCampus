@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class player : MonoBehaviour
@@ -22,10 +23,28 @@ public class player : MonoBehaviour
         playerCamera = GetComponentInChildren<Camera>();
         characterController = GetComponent<CharacterController>();
     }
+
+    
     private void Update()
     {
         CalculateVector();
         ChangeCameraAngleWithMouse();
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            GameManager.Instance().Yeil.YeilTaken(YeilManager.HowToGetYeil.TakenApplePhoto);
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            GameManager.Instance().Yeil.YeilTaken(YeilManager.HowToGetYeil.TakenPondPhoto);
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            PlayerPrefs.DeleteAll();
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Debug.Log(GameManager.Instance().Yeil.Score);
+        }
 
     }
 
