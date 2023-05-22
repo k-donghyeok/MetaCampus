@@ -46,6 +46,10 @@ public class HandMapManager : MonoBehaviour
         paperHandler.SetActive(false);
     }
 
+    public void SetHeld(bool held)
+    {
+        paperHandler.TogglePhysics(held);
+    }
 
     private void Update()
     {

@@ -68,6 +68,9 @@ public class MapPaperMeshHandler
 
     public void SetMaterial(Material material) => renderer.material = material;
 
+    public void TogglePhysics(bool physics) => usePhysics = physics;
+    private bool usePhysics = true;
+
     private void InitializeMesh()
     {
         List<int> tris = new();
@@ -140,8 +143,21 @@ public class MapPaperMeshHandler
     public void FixedUpdate(float height)
     {
         float halfHeight = height * 0.5f;
-        ropeTop.Simulate(handleLeft.position + handleLeft.up * halfHeight, handleRight.position + handleRight.up * halfHeight);
-        ropeBtm.Simulate(handleLeft.position - handleLeft.up * halfHeight, handleRight.position - handleRight.up * halfHeight);
+        Vector3 topLeft = handleLeft.position + handleLeft.up * halfHeight,
+            topRight = handleRight.position + handleRight.up * halfHeight,
+            btmLeft = handleLeft.position - handleLeft.up * halfHeight,
+            btmRight = handleRight.position - handleRight.up * halfHeight;
+
+        if (usePhysics)
+        {
+            ropeTop.Simulate(topLeft, topRight);
+            ropeBtm.Simulate(btmLeft, btmRight);
+        }
+        else
+        {
+            ropeTop.Reset(topLeft, topRight);
+            ropeBtm.Reset(btmLeft, btmRight);
+        }
     }
 
 

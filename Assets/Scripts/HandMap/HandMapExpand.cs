@@ -86,6 +86,7 @@ public class HandMapExpand : MonoBehaviour
         map.handleRight.transform.SetLocalPositionAndRotation(Vector3.left * 0.1f, Quaternion.Euler(20f, 0f, 0f));
 
         map.CreateToggleEffect();
+        map.SetHeld(true);
     }
 
 
