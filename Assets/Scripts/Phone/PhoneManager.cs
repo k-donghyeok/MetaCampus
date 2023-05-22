@@ -72,6 +72,7 @@ public class PhoneManager : MonoBehaviour
         Held = held;
         hideTimer = 1f;
         if (held) ChangeMode(Mode.Capture);
+        else if (CurMode == Mode.Attach) map.FoldLaydownMap(); // 사진 놓음
     }
 
 

@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class HandMapManager : MonoBehaviour
@@ -31,11 +32,18 @@ public class HandMapManager : MonoBehaviour
 
     internal bool layDown = false;
 
+    public PlanTextureManager PlanMgr { get; private set; } = null;
+
     private void Awake()
     {
+        PlanMgr = new PlanTextureManager(this);
+
         paperHandler = new MapPaperMeshHandler(this, handleLeft, handleRight, paperInitStats);
         paperHandler.SetMaterial(mapMaterial);
     }
+
+    internal void UpdateTexture(Texture2D texture)
+        => mapMaterial.SetTexture("MapTexture", texture);
 
     private void OnEnable()
     {
@@ -62,12 +70,12 @@ public class HandMapManager : MonoBehaviour
         CreateToggleEffect();
         handleLeft.transform.SetParent(xrOrigin);
         handleLeft.transform.SetLocalPositionAndRotation(
-            new Vector3(-0.6f, 0.5f, 0.5f),
-            Quaternion.Euler(60f, 0f, 0f));
+            new Vector3(-0.6f, 1.2f, 0.5f),
+            Quaternion.Euler(40f, 0f, 0f));
         handleRight.transform.SetParent(xrOrigin);
         handleRight.transform.SetLocalPositionAndRotation(
-            new Vector3(0.6f, 0.5f, 0.5f),
-            Quaternion.Euler(60f, 0f, 0f));
+            new Vector3(0.6f, 1.2f, 0.5f),
+            Quaternion.Euler(40f, 0f, 0f));
     }
 
     public void FoldLaydownMap()
