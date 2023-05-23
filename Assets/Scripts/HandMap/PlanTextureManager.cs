@@ -28,7 +28,11 @@ public class PlanTextureManager
         public float scale;
     }
 
-    public void OverlayPhoto(Texture2D photo, PhotoTransform transform)
+    /// <summary>
+    /// offset, rotation, scale 모두 사용해 텍스쳐를 그림.
+    /// <para>사진을 붙이는 데 사용.</para>
+    /// </summary>
+    public void PastePhoto(Texture2D photo, PhotoTransform transform)
     {
         transform.offset += new Vector2(PlanTexture.width, PlanTexture.height) * 0.5f;
 
@@ -80,5 +84,41 @@ public class PlanTextureManager
         PlanTexture.Apply();
 
         owner.UpdateTexture(PlanTexture);
+    }
+
+    /// <summary>
+    /// offset만 사용해 텍스쳐를 그림.
+    /// <para>펜툴에 사용.</para>
+    /// </summary>
+    public void PastePhoto(Texture2D photo, Vector2 offset)
+    {
+        int photoWidth = photo.width;
+        int photoHeight = photo.height;
+
+        Color32[] planPixels = PlanTexture.GetPixels32();
+        Color32[] photoPixels = photo.GetPixels32();
+
+        int planWidth = PlanTexture.width;
+        int planHeight = PlanTexture.height;
+
+        for (int y = 0; y < photoHeight; y++)
+        {
+            for (int x = 0; x < photoWidth; x++)
+            {
+                int planX = Mathf.RoundToInt(x + offset.x);
+                int planY = Mathf.RoundToInt(y + offset.y);
+
+                if (planX >= 0 && planX < planWidth && planY >= 0 && planY < planHeight)
+                {
+                    int planIndex = planY * planWidth + planX;
+                    int photoIndex = y * photoWidth + x;
+
+                    planPixels[planIndex] = photoPixels[photoIndex];
+                }
+            }
+        }
+
+        PlanTexture.SetPixels32(planPixels);
+        PlanTexture.Apply();
     }
 }

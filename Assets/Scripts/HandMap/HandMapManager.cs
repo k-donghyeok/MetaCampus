@@ -189,7 +189,7 @@ public class HandMapManager : MonoBehaviour
 
         Vector3 centerPos = Vector3.Lerp(handleLeft.position, handleRight.position, 0.5f);
         if (Vector3.Distance(centerPos, photoTF.position) > 0.2f) return false;
-        PlanMgr.OverlayPhoto(photo, photoTransform);
+        PlanMgr.PastePhoto(photo, photoTransform);
         return true;
     }
 
