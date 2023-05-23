@@ -38,10 +38,6 @@ public class HandMapManager : MonoBehaviour
 
     internal bool dissappearing = false;
 
-    internal bool layDown = false;
-
-    private Transform XROrigin => player.xrOrigin;
-
     public PlanTextureManager PlanMgr { get; private set; } = null;
 
     private void Awake()
@@ -68,33 +64,6 @@ public class HandMapManager : MonoBehaviour
         paperHandler.SetActive(false);
     }
 
-    public void SetLaydown(bool held)
-    {
-        layDown = !held;
-        paperHandler.TogglePhysics(held);
-        canvas.gameObject.SetActive(true);
-    }
-
-    public void LaydownMap()
-    {
-        gameObject.SetActive(true);
-        SetLaydown(false);
-        CreateToggleEffect();
-        handleLeft.transform.SetParent(XROrigin);
-        handleLeft.transform.SetLocalPositionAndRotation(
-            new Vector3(-0.35f, 0.8f, 0.5f),
-            Quaternion.Euler(50f, 0f, 0f));
-        handleRight.transform.SetParent(XROrigin);
-        handleRight.transform.SetLocalPositionAndRotation(
-            new Vector3(0.35f, 0.8f, 0.5f),
-            Quaternion.Euler(50f, 0f, 0f));
-    }
-
-    public void FoldLaydownMap()
-    {
-        layDown = false; // HandMapExpand의 접히는 애니메이션 허용
-        canvas.gameObject.SetActive(false);
-    }
 
     private void Update()
     {
@@ -132,5 +101,48 @@ public class HandMapManager : MonoBehaviour
         effect.transform.SetPositionAndRotation(Vector3.Lerp(handleLeft.transform.position, handleRight.transform.position, 0.5f), Quaternion.identity);
         Destroy(effect, 1f);
     }
+
+    #region LayDown
+
+    internal bool layDown = false;
+
+    private Transform XROrigin => player.xrOrigin;
+
+
+    public void SetLaydown(bool held)
+    {
+        layDown = !held;
+        paperHandler.TogglePhysics(held);
+        canvas.gameObject.SetActive(true);
+    }
+
+    public void LaydownMap()
+    {
+        gameObject.SetActive(true);
+        SetLaydown(false);
+        CreateToggleEffect();
+        handleLeft.transform.SetParent(XROrigin);
+        handleLeft.transform.SetLocalPositionAndRotation(
+            new Vector3(-0.35f, 0.8f, 0.5f),
+            Quaternion.Euler(50f, 0f, 0f));
+        handleRight.transform.SetParent(XROrigin);
+        handleRight.transform.SetLocalPositionAndRotation(
+            new Vector3(0.35f, 0.8f, 0.5f),
+            Quaternion.Euler(50f, 0f, 0f));
+    }
+
+    public void FoldLaydownMap()
+    {
+        layDown = false; // HandMapExpand의 접히는 애니메이션 허용
+        canvas.gameObject.SetActive(false);
+    }
+
+    public void UpdatePhotoProjection(Transform photo)
+    {
+        
+
+    }
+
+    #endregion LayDown
 
 }

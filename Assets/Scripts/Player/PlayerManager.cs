@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 플레이어의 서브시스템 간 상호작용을 위한 홀더
+/// </summary>
 public class PlayerManager : MonoBehaviour
 {
     public Transform xrOrigin = null;

@@ -27,6 +27,8 @@ public class AttachBehaviour
 
     public void Update()
     {
-        
+        owner.Map.UpdatePhotoProjection(owner.transform);
+
+        // allow stretch
     }
 }
