@@ -2872,21 +2872,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3095168364238845489, guid: 29e4ff2943e4847489871431c8fc0093,
-        type: 3}
-      propertyPath: color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3095168364238845489, guid: 29e4ff2943e4847489871431c8fc0093,
-        type: 3}
-      propertyPath: color.g
-      value: 0.12783766
-      objectReference: {fileID: 0}
-    - target: {fileID: 3095168364238845489, guid: 29e4ff2943e4847489871431c8fc0093,
-        type: 3}
-      propertyPath: color.r
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3095168364238845490, guid: 29e4ff2943e4847489871431c8fc0093,
         type: 3}
       propertyPath: m_Name
@@ -3080,30 +3065,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5080620407253151450, guid: 5080e7dd9147db4449079a5f32ef79e3,
-        type: 3}
-      propertyPath: color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5080620407253151450, guid: 5080e7dd9147db4449079a5f32ef79e3,
-        type: 3}
-      propertyPath: color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5080620407253151450, guid: 5080e7dd9147db4449079a5f32ef79e3,
-        type: 3}
-      propertyPath: color.r
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5080620407253151451, guid: 5080e7dd9147db4449079a5f32ef79e3,
         type: 3}
       propertyPath: m_Name
       value: OneTimeDoor
-      objectReference: {fileID: 0}
-    - target: {fileID: 6251202005118759740, guid: 5080e7dd9147db4449079a5f32ef79e3,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5080e7dd9147db4449079a5f32ef79e3, type: 3}

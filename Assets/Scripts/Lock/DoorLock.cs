@@ -21,6 +21,7 @@ public abstract class DoorLock : MonoBehaviour, IHaveLockID
     protected virtual void Start()
     {
         SetColors(color);
+        
     }
     private void OnTriggerEnter(Collider collision)
     {
@@ -33,6 +34,7 @@ public abstract class DoorLock : MonoBehaviour, IHaveLockID
         Debug.Log("Ãæµ¹µÊ");
         Unlock(go);
     }
+   
 
     private void SetColors(Color color)
     {

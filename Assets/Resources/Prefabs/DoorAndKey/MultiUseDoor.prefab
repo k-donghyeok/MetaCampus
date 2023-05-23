@@ -145,6 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lockID: 1
+  color: {r: 0, g: 0.12783766, b: 1, a: 0}
 --- !u!54 &3095168364238845492
 Rigidbody:
   m_ObjectHideFlags: 0
