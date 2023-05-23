@@ -6,9 +6,9 @@ using UnityEngine.XR;
 /// </summary>
 public class PhoneManager : MonoBehaviour
 {
+    internal PlayerManager player = null;
 
-    [SerializeField]
-    private HandMapManager map = null;
+    internal HandMapManager Map => player.Map();
 
     [Header("Capture")]
     [SerializeField]
@@ -72,7 +72,7 @@ public class PhoneManager : MonoBehaviour
         Held = held;
         hideTimer = 1f;
         if (held) ChangeMode(Mode.Capture);
-        else if (CurMode == Mode.Attach) map.FoldLaydownMap(); // 사진 놓음
+        else if (CurMode == Mode.Attach) Map.FoldLaydownMap(); // 사진 놓음
     }
 
 
@@ -119,7 +119,7 @@ public class PhoneManager : MonoBehaviour
                 captureGO.SetActive(true);
                 break;
             case Mode.Attach:
-                map.LaydownMap();
+                Map.LaydownMap();
                 attachGO.SetActive(true);
                 attachGO.transform.localScale = Vector3.one;
                 foreach (var s in stretchers) s.gameObject.SetActive(false);

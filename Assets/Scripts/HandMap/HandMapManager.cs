@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class HandMapManager : MonoBehaviour
 {
-    [SerializeField]
-    internal Transform xrOrigin = null;
+    internal PlayerManager player = null;
+
+    internal PhoneManager Phone => player.Phone();
 
     [SerializeField]
     internal Transform handleLeft = null;
@@ -24,6 +25,13 @@ public class HandMapManager : MonoBehaviour
     [SerializeField]
     private GameObject prefabParticleEffect = null;
 
+    [Header("Canvas")]
+    [SerializeField]
+    private Canvas canvas;
+
+    [SerializeField]
+    private RectTransform photoOverlay;
+
     private MapPaperMeshHandler paperHandler;
 
     private float paperHeight = 0f;
@@ -31,6 +39,8 @@ public class HandMapManager : MonoBehaviour
     internal bool dissappearing = false;
 
     internal bool layDown = false;
+
+    private Transform XROrigin => player.xrOrigin;
 
     public PlanTextureManager PlanMgr { get; private set; } = null;
 
@@ -50,6 +60,7 @@ public class HandMapManager : MonoBehaviour
         paperHeight = 0f;
         dissappearing = false;
         paperHandler.SetActive(true);
+        canvas.gameObject.SetActive(false);
     }
 
     private void OnDisable()
@@ -61,6 +72,7 @@ public class HandMapManager : MonoBehaviour
     {
         layDown = !held;
         paperHandler.TogglePhysics(held);
+        canvas.gameObject.SetActive(true);
     }
 
     public void LaydownMap()
@@ -68,11 +80,11 @@ public class HandMapManager : MonoBehaviour
         gameObject.SetActive(true);
         SetLaydown(false);
         CreateToggleEffect();
-        handleLeft.transform.SetParent(xrOrigin);
+        handleLeft.transform.SetParent(XROrigin);
         handleLeft.transform.SetLocalPositionAndRotation(
             new Vector3(-0.35f, 0.8f, 0.5f),
             Quaternion.Euler(50f, 0f, 0f));
-        handleRight.transform.SetParent(xrOrigin);
+        handleRight.transform.SetParent(XROrigin);
         handleRight.transform.SetLocalPositionAndRotation(
             new Vector3(0.35f, 0.8f, 0.5f),
             Quaternion.Euler(50f, 0f, 0f));
@@ -81,6 +93,7 @@ public class HandMapManager : MonoBehaviour
     public void FoldLaydownMap()
     {
         layDown = false; // HandMapExpand의 접히는 애니메이션 허용
+        canvas.gameObject.SetActive(false);
     }
 
     private void Update()

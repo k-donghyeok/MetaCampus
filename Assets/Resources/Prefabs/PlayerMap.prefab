@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 640, y: 360}
+  m_SizeDelta: {x: 1280, y: 720}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5329178491803592187
 CanvasRenderer:
@@ -456,6 +456,8 @@ MonoBehaviour:
   mapMaterial: {fileID: 2100000, guid: 338ef0dd4c77894488f1b0d32a59ab7f, type: 2}
   prefabParticleEffect: {fileID: 1823892110347214462, guid: fa917246eb1046342aeecbd73948d51a,
     type: 3}
+  canvas: {fileID: 2324675426888787747}
+  photoOverlay: {fileID: 7772310559558549416}
 --- !u!1 &5566618216797933852
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,7 +517,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6912573960074039890}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.01}
   m_LocalScale: {x: 0.0005, y: 0.0005, z: 0.0005}
   m_ConstrainProportionsScale: 0
   m_Children:
