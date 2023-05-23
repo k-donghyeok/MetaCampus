@@ -77,8 +77,8 @@ public class HandMapManager : MonoBehaviour
             paperHeight -= (1.1f - paperHeight) * 3f * Time.deltaTime;
             if (paperHeight < 0.01f) { paperHeight = 0f; DisableMap(); }
         }
-        handleLeft.localScale = new(1f, paperHeight, 1f);
-        handleRight.localScale = new(1f, paperHeight, 1f);
+        handleLeft.localScale = new(1f, paperHeight / paperFullHeight, 1f);
+        handleRight.localScale = new(1f, paperHeight / paperFullHeight, 1f);
         paperHandler.Update(paperHeight);
     }
 
@@ -113,7 +113,8 @@ public class HandMapManager : MonoBehaviour
     {
         layDown = !held;
         paperHandler.TogglePhysics(held);
-        canvas.gameObject.SetActive(true);
+        canvas.gameObject.SetActive(layDown);
+        photoOverlay.gameObject.SetActive(false);
     }
 
     public void LaydownMap()
@@ -139,8 +140,30 @@ public class HandMapManager : MonoBehaviour
 
     public void UpdatePhotoProjection(Transform photo)
     {
-        
+        #region Position
+        Vector3 centerPos = Vector3.Lerp(handleLeft.position, handleRight.position, 0.5f);
+        Vector3 localPos = photo.position - centerPos;
 
+        Vector2 offset2D = new(Vector3.Dot(localPos, handleLeft.right), Vector3.Dot(localPos, handleLeft.up));
+
+        photoOverlay.localPosition = offset2D / canvas.transform.localScale.x;
+        #endregion
+
+        #region Rotation
+        Vector3 planeNormal = handleLeft.rotation * Vector3.up;
+        Quaternion projRot = Quaternion.FromToRotation(handleLeft.forward, planeNormal);
+        Quaternion photoRot = Quaternion.LookRotation(photo.forward, planeNormal);
+        Quaternion relativeRotation = projRot * photoRot;
+
+        float projDegree = relativeRotation.eulerAngles.y;
+        projDegree = Mathf.Repeat(projDegree + 90f, 360f) - 180f;
+
+        photoOverlay.localRotation = Quaternion.Euler(0f, 0f, projDegree);
+        #endregion Rotation
+
+        photoOverlay.localScale = 0.8f * photo.localScale.x * Vector3.one;
+
+        photoOverlay.gameObject.SetActive(true);
     }
 
     #endregion LayDown
