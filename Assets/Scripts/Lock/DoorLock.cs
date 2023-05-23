@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,8 +11,17 @@ public abstract class DoorLock : MonoBehaviour, IHaveLockID
 
     public int LockID => lockID;
     public abstract void Unlock(DoorKey _collision);
-   
-    
+
+    [SerializeField]
+    private Color color = Color.magenta;
+
+    protected virtual void Awake()
+    {
+    }
+    protected virtual void Start()
+    {
+        SetColors(color);
+    }
     private void OnTriggerEnter(Collider collision)
     {
         DoorKey go = collision.gameObject.GetComponent<DoorKey>();
@@ -24,6 +34,14 @@ public abstract class DoorLock : MonoBehaviour, IHaveLockID
         Unlock(go);
     }
 
-  
+    private void SetColors(Color color)
+    {
+        MeshRenderer[] ren = GetComponentsInChildren<MeshRenderer>();
+        for (int i=0;i<ren.Length;++i)
+        {
+            Debug.Log($"{i}: {ren[i].material.name}, {ren[i].material.GetColor("_BaseColor")}");
+            ren[i].material.SetColor("_BaseColor", color);
+        }
+    }
 
 }
