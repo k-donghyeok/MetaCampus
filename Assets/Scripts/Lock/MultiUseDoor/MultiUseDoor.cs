@@ -15,7 +15,7 @@ public class MultiUseDoor : DoorLock
 
     public override void Unlock(DoorKey _collision)
     {
-       if(_collision.LockID == LockID)
+       if(_collision.LockColorID == LockColorID && _collision.LockTypeID ==LockTypeID )
        {
             //문이열린다
             animator.SetTrigger("isOpen");

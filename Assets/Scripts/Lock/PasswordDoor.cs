@@ -12,13 +12,7 @@ public class PasswordDoor : DoorLock
     [SerializeField, Range(-10f, 10f)] private float rotateSpeed = 1f;
     public override void Unlock(DoorKey _collision)
     {
-        if (_collision.LockID == LockID)
-        {
-           
-            Debug.Log("일회용 열쇠 사용 문이열림");
-
-            isOpen = true;
-        }
+        
     }
 
     private void Update()

@@ -24,8 +24,8 @@ public class OneTimeDoor : DoorLock
     }
     public override void Unlock(DoorKey _collision)
     {
-       if(_collision.LockID == LockID)
-       {
+       if(_collision.LockColorID == LockColorID && _collision.LockTypeID == LockTypeID)
+        {
             Destroy(_collision.gameObject);
             Debug.Log("일회용 열쇠 사용 문이열림");
 
