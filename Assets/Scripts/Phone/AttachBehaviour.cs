@@ -30,5 +30,11 @@ public class AttachBehaviour
         owner.Map.UpdatePhotoProjection(owner.transform);
 
         // allow stretch
+
+
     }
+
+    public bool AttemptAttach()
+        => owner.Map.RequestPhotoAttach(photo, owner.transform);
+
 }

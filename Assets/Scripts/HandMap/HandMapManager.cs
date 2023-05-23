@@ -1,5 +1,6 @@
 using System.Linq;
 using UnityEngine;
+using static PlanTextureManager;
 
 public class HandMapManager : MonoBehaviour
 {
@@ -49,7 +50,7 @@ public class HandMapManager : MonoBehaviour
     }
 
     internal void UpdateTexture(Texture2D texture)
-        => mapMaterial.SetTexture("MapTexture", texture);
+        => mapMaterial.SetTexture("_MapTexture", texture);
 
     private void OnEnable()
     {
@@ -132,21 +133,33 @@ public class HandMapManager : MonoBehaviour
             Quaternion.Euler(50f, 0f, 0f));
     }
 
-    public void FoldLaydownMap()
+    /// <summary>
+    /// delay 초 뒤 지도를 접음
+    /// </summary>
+    public void RequestFoldLaydownMap(float delay = 0f)
+    {
+        if (delay == 0f) FoldLaydownMap();
+        else Invoke(nameof(FoldLaydownMap), delay);
+    }
+
+    private void FoldLaydownMap()
     {
         layDown = false; // HandMapExpand의 접히는 애니메이션 허용
         canvas.gameObject.SetActive(false);
     }
 
+    #region PhonePhoto
+
     public void UpdatePhotoProjection(Transform photo)
     {
+        photoTransform = new PhotoTransform();
+
         #region Position
         Vector3 centerPos = Vector3.Lerp(handleLeft.position, handleRight.position, 0.5f);
         Vector3 localPos = photo.position - centerPos;
 
-        Vector2 offset2D = new(Vector3.Dot(localPos, handleLeft.right), Vector3.Dot(localPos, handleLeft.up));
-
-        photoOverlay.localPosition = offset2D / canvas.transform.localScale.x;
+        photoTransform.offset = new Vector2(Vector3.Dot(localPos, handleLeft.right), Vector3.Dot(localPos, handleLeft.up)) / canvas.transform.localScale.x;
+        photoOverlay.localPosition = photoTransform.offset;
         #endregion
 
         #region Rotation
@@ -156,15 +169,31 @@ public class HandMapManager : MonoBehaviour
         Quaternion relativeRotation = projRot * photoRot;
 
         float projDegree = relativeRotation.eulerAngles.y;
-        projDegree = Mathf.Repeat(projDegree + 90f, 360f) - 180f;
+        photoTransform.rotation = Mathf.Repeat(projDegree + 90f, 360f) - 180f;
 
-        photoOverlay.localRotation = Quaternion.Euler(0f, 0f, projDegree);
+        photoOverlay.localRotation = Quaternion.Euler(0f, 0f, photoTransform.rotation);
         #endregion Rotation
 
-        photoOverlay.localScale = 0.8f * photo.localScale.x * Vector3.one;
+        photoTransform.scale = 0.8f * photo.localScale.x;
+        photoOverlay.localScale = photoTransform.scale * Vector3.one;
 
         photoOverlay.gameObject.SetActive(true);
     }
+
+    private PhotoTransform photoTransform;
+
+    public bool RequestPhotoAttach(Texture2D photo, Transform photoTF)
+    {
+        UpdatePhotoProjection(photoTF);
+        photoOverlay.gameObject.SetActive(false);
+
+        Vector3 centerPos = Vector3.Lerp(handleLeft.position, handleRight.position, 0.5f);
+        if (Vector3.Distance(centerPos, photoTF.position) > 0.2f) return false;
+        PlanMgr.OverlayPhoto(photo, photoTransform);
+        return true;
+    }
+
+    #endregion PhonePhoto
 
     #endregion LayDown
 
