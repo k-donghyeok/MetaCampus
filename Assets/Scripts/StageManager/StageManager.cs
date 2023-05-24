@@ -6,6 +6,8 @@ public class StageManager : MonoBehaviour
 
     public static StageManager Instance() => instance;
 
+
+    
     /// <summary>
     /// 타이머 관리
     /// </summary>
