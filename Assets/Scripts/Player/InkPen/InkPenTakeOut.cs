@@ -50,9 +50,9 @@ public class InkPenTakeOut : MonoBehaviour
         pen.transform.SetParent(DirectInteractors[left ? 0 : 1].attachTransform);
         grabActionHandler.RequestHandAnimation(left, HandAnimator.SpecialAnimation.GripPhone);
         if (left)
-            pen.transform.SetLocalPositionAndRotation(Vector3.right * 0f, Quaternion.Euler(0f, 0f, 0f));
+            pen.transform.SetLocalPositionAndRotation(Vector3.right * 0.05f, Quaternion.identity);
         else
-            pen.transform.SetLocalPositionAndRotation(Vector3.left * 0f, Quaternion.Euler(0f, 0f, 0f));
+            pen.transform.SetLocalPositionAndRotation(Vector3.left * 0.05f, Quaternion.identity);
         pen.GetComponent<Rigidbody>().useGravity = false;
         pen.GetComponent<Rigidbody>().velocity = Vector3.zero;
     }
