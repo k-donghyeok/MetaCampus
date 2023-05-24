@@ -9,7 +9,10 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class GrabActionHandler : MonoBehaviour
 {
     [SerializeField]
-    internal XRDirectInteractor[] directInteractors = new XRDirectInteractor[2]; 
+    internal XRDirectInteractor[] directInteractors = new XRDirectInteractor[2];
+
+    private HandAnimator GetHandAnimator(int grasp) =>
+        directInteractors[grasp].transform.parent.GetComponentInChildren<HandAnimator>();
 
     [Header("Controller Settings")]
     [SerializeField, Range(0.0f, 1.0f)]
@@ -97,4 +100,15 @@ public class GrabActionHandler : MonoBehaviour
     /// </summary>
     public GrabHandler OnGrabReleased;
 
+    /// <summary>
+    /// 손 애니메이션을 설정
+    /// </summary>
+    public void RequestHandAnimation(int grasp, HandAnimator.SpecialAnimation anim)
+        => GetHandAnimator(grasp).SetSpecialAnimation(anim);
+
+    /// <summary>
+    /// 손 애니메이션을 설정
+    /// </summary>
+    public void RequestHandAnimation(bool left, HandAnimator.SpecialAnimation anim)
+        => RequestHandAnimation(left ? 0 : 1, anim);
 }

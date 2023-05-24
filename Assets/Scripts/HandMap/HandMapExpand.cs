@@ -53,6 +53,8 @@ public class HandMapExpand : MonoBehaviour
         }
         else if (map.gameObject.activeSelf)
         {
+            if (map.layDown) return; // 놓여진 상태에서는 접지 않음
+
             // 지도를 손에서 떨어뜨리기
             if ((handFlags & (1 << 0)) == 0) map.handleLeft.transform.SetParent(map.transform);
             if ((handFlags & (1 << 1)) == 0) map.handleRight.transform.SetParent(map.transform);
@@ -81,11 +83,12 @@ public class HandMapExpand : MonoBehaviour
         map.gameObject.SetActive(true);
 
         map.handleLeft.transform.SetParent(DirectInteractors[0].attachTransform);
-        map.handleLeft.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        map.handleLeft.transform.SetLocalPositionAndRotation(Vector3.right * 0.1f, Quaternion.Euler(20f, 0f, 0f));
         map.handleRight.transform.SetParent(DirectInteractors[1].attachTransform);
-        map.handleRight.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        map.handleRight.transform.SetLocalPositionAndRotation(Vector3.left * 0.1f, Quaternion.Euler(20f, 0f, 0f));
 
         map.CreateToggleEffect();
+        map.SetLaydown(true);
     }
 
 

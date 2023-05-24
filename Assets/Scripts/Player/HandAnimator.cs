@@ -45,4 +45,21 @@ public class HandAnimator : MonoBehaviour
         else
             anim.SetFloat("Grip", 0f);
     }
+
+    public void SetSpecialAnimation(SpecialAnimation newAnim)
+    {
+        if (newAnim == curAnim) return;
+        if (curAnim != SpecialAnimation.None) anim.SetBool(curAnim.ToString(), false);
+        if (newAnim != SpecialAnimation.None) anim.SetBool(newAnim.ToString(), true);
+        curAnim = newAnim;
+    }
+
+    private SpecialAnimation curAnim = SpecialAnimation.None;
+
+    public enum SpecialAnimation
+    {
+        None = -1,
+        GripPhone,
+        GripMap
+    }
 }
