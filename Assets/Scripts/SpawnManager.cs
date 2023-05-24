@@ -1,38 +1,30 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnManager
 {
-    private const string SPAWN_POINT_KEY = "SpawnPoint";
+    private const string SPAWN_POINT_PREFIX = "SpawnPoint_";
 
-    private Dictionary<string, Vector3> spawnPoints = new Dictionary<string, Vector3>();
-
-    public SpawnManager()
+    public void SaveSpawnPoint(int spawnPointID, Vector3 position)
     {
+        string spawnPointKey = SPAWN_POINT_PREFIX + spawnPointID.ToString();
+        PlayerPrefs.SetFloat(spawnPointKey + "X", position.x);
+        PlayerPrefs.SetFloat(spawnPointKey + "Y", position.y);
+        PlayerPrefs.SetFloat(spawnPointKey + "Z", position.z);
+        PlayerPrefs.Save();
     }
 
-    public void Initialize()
+    public Vector3 LoadSpawnPoint(int spawnPointID)
     {
-        LoadSpawnPoints();
+        string spawnPointKey = SPAWN_POINT_PREFIX + spawnPointID.ToString();
+        float x = PlayerPrefs.GetFloat(spawnPointKey + "X", 0f);
+        float y = PlayerPrefs.GetFloat(spawnPointKey + "Y", 0f);
+        float z = PlayerPrefs.GetFloat(spawnPointKey + "Z", 0f);
+        return new Vector3(x, y, z);
     }
 
-    public void SaveSpawnPoints(Dictionary<string, Vector3> points)
+    public void SpawnPlayerToSavedLocation(int spawnPointID)
     {
-        spawnPoints = points;
-        SaveManager.Instance().SaveValue(SPAWN_POINT_KEY, points);
-    }
-
-    public void LoadSpawnPoints()
-    {
-        spawnPoints = SaveManager.Instance().LoadValue<Dictionary<string, Vector3>>(SPAWN_POINT_KEY, new Dictionary<string, Vector3>());
-    }
-
-    public void PlacePlayerAtSpawnPoint(GameObject player, string id)
-    {
-        if (spawnPoints.ContainsKey(id))
-        {
-            Vector3 spawnPoint = spawnPoints[id];
-            player.transform.position = spawnPoint;
-        }
+        Vector3 spawnPoint = LoadSpawnPoint(spawnPointID);
+        Debug.Log("½ºÆù: " + spawnPoint);
     }
 }

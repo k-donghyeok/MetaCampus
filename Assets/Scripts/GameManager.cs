@@ -12,8 +12,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static GameManager Instance() => instance;
 
-    private SaveManager saveManager;
-
     private void Awake()
     {
         if (instance == null)
@@ -53,14 +51,4 @@ public class GameManager : MonoBehaviour
         Save.Initialize();
     }
 
-    private void Start()
-    {
-        // Place the player at a random spawn point when the game starts
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-    }
-
-    public SaveManager GetSaveManager()
-    {
-        return saveManager;
-    }
 }
