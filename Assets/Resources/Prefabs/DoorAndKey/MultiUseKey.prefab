@@ -111,6 +111,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d574ebf928193eb43aea15b3ac238da6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lockID: 1
+  lockTypeID: 0
+  lockColorID: 0
   floatspeed: 1
   height: 1
+  colors:
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0, g: 1, b: 0, a: 1}
+  - {r: 0, g: 0, b: 1, a: 1}
+  - {r: 1, g: 0.92, b: 0.16, a: 1}
+  - {r: 0, g: 1, b: 1, a: 1}

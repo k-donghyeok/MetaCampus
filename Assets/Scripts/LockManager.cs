@@ -21,7 +21,7 @@ public class LockManager
         // 중복되지 않는 값을 받는 HashSet을 초기화
         HashSet<int> ids = new HashSet<int>();
         // 이 장면의 모든 IHaveLockID 인터페이스에 있는 ID를 받아옴
-        foreach (var i in interfaces) ids.Add(i.LockID);
+        foreach (var i in interfaces) ids.Add(i.LockColorID); //수정됨 LockID에서 지금으로
 
         string sceneName = SceneManager.GetActiveScene().name;
         string path = $"Assets/Resources/{GetIDPath(sceneName)}.txt";
@@ -64,5 +64,6 @@ public class LockManager
 public interface IHaveLockID
 {
 
-    public int LockID { get; }
+    public int LockTypeID { get; }
+    public int LockColorID { get; }
 }
