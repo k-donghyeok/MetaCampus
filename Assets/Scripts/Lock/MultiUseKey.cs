@@ -6,4 +6,9 @@ using System.Threading.Tasks;
 
 public class MultiUseKey : DoorKey
 {
+    private void Awake()
+    {
+        lockTypeID = IHaveLockID.TypeID.MultiUse;
+    }
+
 }

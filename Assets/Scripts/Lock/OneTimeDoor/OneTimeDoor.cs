@@ -19,7 +19,7 @@ public class OneTimeDoor : DoorLock
     protected override void Awake()
     {
         base.Awake();
-
+        lockTypeID = IHaveLockID.TypeID.OneTime;
         animator = GetComponent<Animator>();    
     }
     public override void Unlock(DoorKey _collision)

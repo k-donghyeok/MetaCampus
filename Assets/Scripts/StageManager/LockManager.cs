@@ -124,6 +124,7 @@ public interface IHaveLockID
     {
         None = -1,
         OneTime,
-        MultiUse
+        MultiUse,
+        Password
     }
 }

@@ -9,6 +9,7 @@ public class MultiUseDoor : DoorLock
     protected override void Awake()
     {
         base.Awake();
+        lockTypeID = IHaveLockID.TypeID.MultiUse;
 
         animator = GetComponent<Animator>();
     }

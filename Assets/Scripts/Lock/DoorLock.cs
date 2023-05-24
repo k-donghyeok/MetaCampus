@@ -6,7 +6,7 @@ public abstract class DoorLock : MonoBehaviour, IHaveLockID
     [SerializeField]
     private ColorID lockColorID = 0;
 
-    private TypeID lockTypeID = 0;
+    protected TypeID lockTypeID = TypeID.None;
 
     public TypeID LockTypeID => lockTypeID;
 
