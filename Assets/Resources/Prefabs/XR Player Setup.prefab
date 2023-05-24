@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3968210195551132522}
   - component: {fileID: 8481917000213743928}
   - component: {fileID: 7969991442355342096}
+  - component: {fileID: 9159857098120217553}
   m_Layer: 0
   m_Name: CampusActionManager
   m_TagString: Untagged
@@ -50,6 +51,7 @@ MonoBehaviour:
   xrOrigin: {fileID: 2775505189119933495}
   phone: {fileID: 4283217986729005860}
   map: {fileID: 7534199657441293995}
+  pen: {fileID: 8552453673126236383}
 --- !u!114 &3968210195551132522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,6 +96,19 @@ MonoBehaviour:
   map: {fileID: 7534199657441293995}
   expandThreshold: 0.3
   retractSpeed: 3
+--- !u!114 &9159857098120217553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1724458806260888642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5513110b008bfd647a10b5a77bae184c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pen: {fileID: 8552453673126236383}
 --- !u!1 &2969104182258197491
 GameObject:
   m_ObjectHideFlags: 0
@@ -496,6 +511,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 579107872565065388}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8552453673126236383 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9131343769356199539, guid: 7a7cd5fc430cfd14aa9a36a534ab1cb7,
+    type: 3}
+  m_PrefabInstance: {fileID: 579107872565065388}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65f1b1b8567d5d14f90c26c267034609, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2724188964278201935
 PrefabInstance:
   m_ObjectHideFlags: 0
