@@ -55,11 +55,20 @@ public class SaveManager
         else PlayerPrefs.SetString(key, value.ToString());
     }
 
-    public int LoadValue(string key, int defaultIntValue = default) =>
-        PlayerPrefs.GetInt(key, defaultIntValue);
-    public float LoadValue(string key, float defaultFloatValue) =>
-        PlayerPrefs.GetFloat(key, defaultFloatValue);
-    public string LoadValue(string key, string defaultStringValue) =>
-        PlayerPrefs.GetString(key, defaultStringValue);
+    /// <summary>
+    /// 값 불러오기
+    /// </summary>
+    /// <exception cref="ArgumentException">들어오는 값이 <see cref="int"/>나 <see cref="float"/>나 <see cref="string"/>이 아닌 경우</exception>
+    public T LoadValue<T>(string key, T defaultValue = default)
+    {
+        if (typeof(T) == typeof(int))
+            return (T)(object)PlayerPrefs.GetInt(key, Convert.ToInt32(defaultValue));
+        else if (typeof(T) == typeof(float))
+            return (T)(object)PlayerPrefs.GetFloat(key, Convert.ToSingle(defaultValue));
+        else if (typeof(T) == typeof(string))
+        return (T)(object)PlayerPrefs.GetString(key, Convert.ToString(defaultValue));
+
+        throw new ArgumentException("Unsupported type!");
+    }
 
 }
