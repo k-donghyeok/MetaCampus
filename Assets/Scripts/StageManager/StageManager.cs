@@ -3,7 +3,12 @@ using UnityEngine;
 public class StageManager : MonoBehaviour
 {
     [SerializeField]
-    private bool exterior = false;
+    private bool exterior = true;
+
+    public void ChangeExterior(bool _val)
+    {
+        exterior = _val;
+    }
 
     public bool IsExterior() => exterior;
 
