@@ -11,11 +11,16 @@ public class InkPenManager : MonoBehaviour
     [SerializeField]
     internal Transform point = null;
 
+    [SerializeField]
+    internal Texture2D penMark = null;
+
     public void SetHeld(bool held)
     {
         if (Held == held) return;
         Held = held;
         hideTimer = 1f;
+        if (held) Map.LaydownMap();
+        else Map.RequestFoldLaydownMap();
     }
 
     /// <summary>
@@ -34,6 +39,6 @@ public class InkPenManager : MonoBehaviour
             return;
         }
 
-
+        Map.RequestPenDraw(penMark, point);
     }
 }
