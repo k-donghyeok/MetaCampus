@@ -1,39 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
+using static IHaveLockID;
 
 public abstract class DoorLock : MonoBehaviour, IHaveLockID
 {
     [SerializeField]
-    private int lockTypeID = 0;
-    [SerializeField]
-    private int lockColorID = 0;
+    private ColorID lockColorID = 0;
 
-    public int LockTypeID => lockTypeID;
+    private TypeID lockTypeID = 0;
 
-    public int  LockColorID => lockColorID;
+    public TypeID LockTypeID => lockTypeID;
+
+    public ColorID LockColorID => lockColorID;
 
     public abstract void Unlock(DoorKey _collision);
 
-    private Color[] colors = { new Color(1f, 0f, 0f), new Color(0f, 1f, 0f), new Color(0f, 0f, 1f), new Color(1f, 0.92f, 0.16f), new Color(0f, 1f, 1f) };// 스테이지 매니저에서 가져오는게 좋아보임
-
-    [SerializeField]
-    private Color color = Color.magenta;
 
     protected virtual void Awake()
     {
     }
     protected virtual void Start()
     {
-        SetColors(colors);
-        
+        SetColors();
+
     }
     private void OnTriggerEnter(Collider collision)
     {
         DoorKey go = collision.gameObject.GetComponent<DoorKey>();
-        if(go==null)
+        if (go == null)
         {
             Debug.Log("충돌된게 열쇠가 아님");
             return;
@@ -43,14 +36,14 @@ public abstract class DoorLock : MonoBehaviour, IHaveLockID
     }
 
 
-    private void SetColors(Color[] _colors)
+    private void SetColors()
     {
-        Color color = _colors[LockColorID];
+        Color color = LockManager.GetColor(LockColorID);
 
         MeshRenderer[] ren = GetComponentsInChildren<MeshRenderer>();
         for (int i = 0; i < ren.Length; ++i)
         {
-            Debug.Log($"{i}: {ren[i].material.name}, {ren[i].material.GetColor("_BaseColor")}");
+            //Debug.Log($"{i}: {ren[i].material.name}, {ren[i].material.GetColor("_BaseColor")}");
             ren[i].material.SetColor("_BaseColor", color);
         }
     }

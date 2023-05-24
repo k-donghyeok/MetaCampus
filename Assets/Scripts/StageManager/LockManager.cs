@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEditor.SceneManagement;
+using static IHaveLockID;
 
 public class LockManager
 {
@@ -92,7 +93,11 @@ public class LockManager
     }
     */
 
+    private static readonly Color[] colors
+        = { new Color(1f, 0f, 0f), new Color(0f, 1f, 0f), new Color(0f, 0f, 1f), new Color(1f, 1f, 0.2f), new Color(0f, 1f, 1f), new Color(1f, 0.5f, 1f) };
 
+    public static Color GetColor(ColorID color)
+        => colors[(int)color];
 
 }
 
@@ -102,6 +107,23 @@ public class LockManager
 public interface IHaveLockID
 {
 
-    public int LockTypeID { get; }
-    public int LockColorID { get; }
+    public TypeID LockTypeID { get; }
+    public ColorID LockColorID { get; }
+
+    public enum ColorID : int
+    {
+        Red = 0,
+        Green = 1,
+        Blue = 2,
+        Yellow = 3,
+        Cyan = 4,
+        Pink = 5
+    }
+
+    public enum TypeID
+    {
+        None = -1,
+        OneTime,
+        MultiUse
+    }
 }
