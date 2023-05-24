@@ -7,8 +7,8 @@ public class MySceneManager
 {
     public enum SCENENAME
     {
-        Interior,
-        Exterior
+        Interior, //내부
+        Exterior //외부
        
     }
 
