@@ -26,6 +26,7 @@ public class SaveManager
     {
         PlayerPrefs.DeleteAll();
         SaveValue(SAVEEXIST, 1);
+        SaveValue(SAVESEED, (int)DateTime.Now.Ticks);
         OnSaveReset?.Invoke(this);
     }
 
@@ -35,6 +36,12 @@ public class SaveManager
 
 
     private const string SAVEEXIST = "SaveExists";
+    private const string SAVESEED = "SaveSeed";
+
+    /// <summary>
+    /// 세이브 파일의 시드값
+    /// </summary>
+    public int GetSeed() => LoadValue(SAVESEED, 0);
 
     /// <summary>
     /// 값 저장
