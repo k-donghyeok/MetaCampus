@@ -1553,7 +1553,7 @@ PrefabInstance:
     - target: {fileID: 4364673885361375942, guid: 68b73bea776972d45a22950fb150fea0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 183.13
+      value: 183.63
       objectReference: {fileID: 0}
     - target: {fileID: 4364673885361375942, guid: 68b73bea776972d45a22950fb150fea0,
         type: 3}
@@ -1890,7 +1890,7 @@ PrefabInstance:
     - target: {fileID: 7709044463471228395, guid: 2da6a850dfc2416438b8f55218ee3cd7,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 183.57
+      value: 184.07
       objectReference: {fileID: 0}
     - target: {fileID: 7709044463471228395, guid: 2da6a850dfc2416438b8f55218ee3cd7,
         type: 3}
@@ -3164,6 +3164,11 @@ PrefabInstance:
       propertyPath: lockTypeID
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4364673885361375946, guid: 68b73bea776972d45a22950fb150fea0,
+        type: 3}
+      propertyPath: lockColorID
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68b73bea776972d45a22950fb150fea0, type: 3}
 --- !u!1001 &5080620407859843925
@@ -3301,6 +3306,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: OneTimeKey
+      objectReference: {fileID: 0}
+    - target: {fileID: 7709044463471228399, guid: 2da6a850dfc2416438b8f55218ee3cd7,
+        type: 3}
+      propertyPath: lockColorID
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2da6a850dfc2416438b8f55218ee3cd7, type: 3}
