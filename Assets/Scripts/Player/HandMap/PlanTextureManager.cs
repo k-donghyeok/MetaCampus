@@ -14,7 +14,7 @@ public class PlanTextureManager
     {
         this.owner = owner;
         PlanTexture = new Texture2D(2048, 2048, TextureFormat.ARGB32, false);
-        PlanTexture.SetPixels32(Enumerable.Repeat(new Color32(0, 0, 0, 0), PlanTexture.width * PlanTexture.height).ToArray());
+        PlanTexture.SetPixels32(Enumerable.Repeat(new Color32(255, 255, 255, 0), PlanTexture.width * PlanTexture.height).ToArray());
         PlanTexture.Apply();
 
         owner.UpdateTexture(PlanTexture);
@@ -118,9 +118,10 @@ public class PlanTextureManager
                     Color32 planPixel = planPixels[planIndex];
                     Color32 photoPixel = photoPixels[photoIndex];
 
-                    byte a = (byte)(255 - photoPixel.a);
-                    planPixel.g = (byte)((planPixel.g * a) / 255);
-                    planPixel.b = (byte)((planPixel.b * a) / 255);
+                    float intensity = photoPixel.a / 255f;
+                    planPixel.g = (byte)(planPixel.g * (1f - intensity));
+                    planPixel.b = (byte)(planPixel.b * (1f - intensity));
+                    planPixel.a = (byte)Mathf.Max(planPixel.a, photoPixel.a);
 
                     planPixels[planIndex] = planPixel;
                 }

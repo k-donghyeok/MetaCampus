@@ -214,7 +214,9 @@ public class HandMapManager : MonoBehaviour
     {
         Vector3 centerPos = Vector3.Lerp(handleLeft.position, handleRight.position, 0.5f);
         Vector3 vectorToPosition = target - centerPos;
-        return Vector3.Dot(vectorToPosition, handleLeft.rotation * Vector3.up);
+
+        return Vector3.Dot(vectorToPosition,
+            Vector3.Cross(handleLeft.rotation * Vector3.up, handleRight.position - handleLeft.position));
     }
 
     #endregion LayDown

@@ -50,6 +50,7 @@ public class MapPaperMeshHandler
         var meshFilter = paperObject.AddComponent<MeshFilter>();
         meshFilter.mesh = mesh;
         renderer = paperObject.AddComponent<MeshRenderer>();
+        renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
         InitializeMesh();
     }
 
