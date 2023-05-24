@@ -11,6 +11,8 @@ public class StageManager : MonoBehaviour
     /// </summary>
     public TimeManager Time { get; private set; } = null;
 
+    public LockManager Lock { get; private set; } = null;
+
     private void Awake()
     {
         if (instance == null)
@@ -24,15 +26,23 @@ public class StageManager : MonoBehaviour
             return;
         }
     }
+
+    private void OnDestroy()
+    {
+        if (instance == this)
+            instance = null;
+    }
+
+
     private void Update()
     {
         Time?.UpdateCountdown();
     }
 
-
     private void Initiate()
     {
         Time = new TimeManager();
+        Lock = new LockManager();
 
         Time.StartCountdown();
     }

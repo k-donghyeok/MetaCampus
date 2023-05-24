@@ -33,12 +33,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public SaveManager Save { get; private set; } = null;
 
-    public LockManager Lock { get; private set; } = null;
     private void Initiate()
     {
         Save = new SaveManager();
         Yeil = new YeilManager();
-        Lock = new LockManager(); 
        
         Save.Initialize();
     }

@@ -18,6 +18,7 @@ public class GameManagerGenerateButtons : Editor
 #if UNITY_EDITOR
         // 이를 사용하면 Save LockIDs란 버튼이 추가됨
         // 그리고 버튼을 누르면 안의 내용이 한번 실행됨
+        /*
         if (GUILayout.Button("Save LockIDs"))
         {
             // 이 장면의 모든 MonoBehaviour 중 IHaveLockID 인터페이스를 구현하는 것만 가져옴
@@ -25,6 +26,7 @@ public class GameManagerGenerateButtons : Editor
             // 그리고 SaveIDs를 실행해 게임 파일로 저장
             LockManager.SaveIDs(interfaces.ToArray());
         }
+        */
 #endif
     }
 }

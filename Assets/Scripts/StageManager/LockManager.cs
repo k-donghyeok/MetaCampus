@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using Random = UnityEngine.Random;
+using UnityEditor.SceneManagement;
 
 public class LockManager
 {
@@ -13,6 +15,38 @@ public class LockManager
     {
     }
 
+    private int[] passwords = null;
+
+    public int GetPassword(int id)
+    {
+        if (passwords == null) CreatePasswords();
+        return passwords[id];
+    }
+
+    private void CreatePasswords()
+    {
+        passwords = new int[6];
+
+        // 원래 시드를 저장
+        var seedBak = Random.state;
+
+        // 스테이지에 맞는 시드를 생성
+        string stageSeed = SceneManager.GetActiveScene().name
+            + GameManager.Instance().Save.GetSeed();
+
+        // 시드를 설정
+        Random.InitState(stageSeed.GetHashCode());
+
+        // 비밀번호 생성 후 저장
+        for (int i = 0; i < passwords.Length; ++i)
+            passwords[i] = Random.Range(1000, 9999);
+
+        // 시드 복구
+        Random.state = seedBak;
+    }
+
+
+    /*
     /// <summary>
     /// 이 장면의 Lock ID를 게임 파일로 저장
     /// </summary>
@@ -56,6 +90,10 @@ public class LockManager
     {
         return $"GameData/{sceneName}-ID";
     }
+    */
+
+
+
 }
 
 /// <summary>
