@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class StageManager : MonoBehaviour
 {
+    [SerializeField]
+    private bool exterior = false;
+
+    public bool IsExterior() => exterior;
+
     private static StageManager instance = null;
 
     public static StageManager Instance() => instance;
@@ -20,7 +25,7 @@ public class StageManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            Initiate();
+            if (!IsExterior()) Initiate();
         }
         else if (instance != this)
         {
@@ -38,6 +43,7 @@ public class StageManager : MonoBehaviour
 
     private void Update()
     {
+        if (IsExterior()) return;
         Time?.UpdateCountdown();
     }
 
@@ -48,4 +54,6 @@ public class StageManager : MonoBehaviour
 
         Time.StartCountdown();
     }
+
+    
 }
