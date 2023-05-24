@@ -12,9 +12,19 @@ public class MySceneManager
        
     }
 
+    private int currentSceneID;
+
+    public int CurrentSceneID
+    {
+        get { return currentSceneID; }
+
+        private set { currentSceneID = value; } 
+    } 
+
     public void ChangeScene(SCENENAME _name)
     {
-        
+
+        CurrentSceneID = (int)_name;
         SceneManager.LoadScene((int)_name);
 
         if(_name==SCENENAME.Exterior)
@@ -22,12 +32,14 @@ public class MySceneManager
             StageManager.Instance().ChangeExterior(true);
         }
 
-        if(_name==SCENENAME.Interior)
+        if(_name!=SCENENAME.Exterior)
         {
             StageManager.Instance().ChangeExterior(false);
         }
        
     }
+
+   
 
 
 }
