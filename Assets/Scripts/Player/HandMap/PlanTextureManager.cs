@@ -101,7 +101,7 @@ public class PlanTextureManager
         int planWidth = PlanTexture.width;
         int planHeight = PlanTexture.height;
 
-        offset += new Vector2(planWidth, planHeight) * 0.5f;
+        offset.y += planHeight * 0.5f;
 
         for (int y = 0; y < penHeight; y++)
         {
@@ -118,9 +118,13 @@ public class PlanTextureManager
                     Color32 planPixel = planPixels[planIndex];
                     Color32 photoPixel = photoPixels[photoIndex];
 
-                    float intensity = photoPixel.a / 255f;
-                    planPixel.g = (byte)(planPixel.g * (1f - intensity));
-                    planPixel.b = (byte)(planPixel.b * (1f - intensity));
+                    float intensity = 1f - (photoPixel.a / 255f);
+                    planPixel.r = (byte)Mathf.Lerp(planPixel.r, 255, intensity);
+                    planPixel.g = (byte)Mathf.Lerp(planPixel.g, 0, intensity);
+                    planPixel.b = (byte)Mathf.Lerp(planPixel.b, 0, intensity);
+                    //float invertedIntensity = 1f - (photoPixel.a / 255f);
+                    //planPixel.g = (byte)(planPixel.g * invertedIntensity);
+                    //planPixel.b = (byte)(planPixel.b * invertedIntensity);
                     planPixel.a = (byte)Mathf.Max(planPixel.a, photoPixel.a);
 
                     planPixels[planIndex] = planPixel;

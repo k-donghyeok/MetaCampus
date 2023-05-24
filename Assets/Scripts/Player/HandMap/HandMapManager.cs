@@ -198,7 +198,7 @@ public class HandMapManager : MonoBehaviour
 
     public void RequestPenDraw(Texture2D mark, Transform point)
     {
-        if (GetDistanceFromMap(point.position) > 0.02f) return;
+        if (GetDistanceFromMap(point.position) > 0.1f) return;
 
         Vector3 centerPos = Vector3.Lerp(handleLeft.position, handleRight.position, 0.5f);
         Vector3 localPos = point.position - centerPos;
