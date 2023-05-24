@@ -5,7 +5,7 @@ public class SpawnManager
 {
     private const string SPAWN_POINT_KEY = "SpawnPoint";
 
-    private List<Vector3> spawnPoints = new List<Vector3>();
+    private Dictionary<string, Vector3> spawnPoints = new Dictionary<string, Vector3>();
 
     public SpawnManager()
     {
@@ -16,38 +16,23 @@ public class SpawnManager
         LoadSpawnPoints();
     }
 
-    /// <summary>
-    /// 스폰 포인트 저장
-    /// </summary>
-    public void SaveSpawnPoints(List<Vector3> points)
+    public void SaveSpawnPoints(Dictionary<string, Vector3> points)
     {
         spawnPoints = points;
         SaveManager.Instance().SaveValue(SPAWN_POINT_KEY, points);
     }
 
-    /// <summary>
-    /// 스폰 포인트 불러오기
-    /// </summary>
-    public List<Vector3> LoadSpawnPoints()
+    public void LoadSpawnPoints()
     {
-        spawnPoints = SaveManager.Instance().LoadValue<List<Vector3>>(SPAWN_POINT_KEY, new List<Vector3>());
-        return spawnPoints;
+        spawnPoints = SaveManager.Instance().LoadValue<Dictionary<string, Vector3>>(SPAWN_POINT_KEY, new Dictionary<string, Vector3>());
     }
 
-    /// <summary>
-    /// Place the player at a random spawn point.
-    /// </summary>
-    public void PlacePlayerAtRandomSpawnPoint(GameObject player)
+    public void PlacePlayerAtSpawnPoint(GameObject player, string id)
     {
-        if (spawnPoints.Count > 0)
+        if (spawnPoints.ContainsKey(id))
         {
-            int randomIndex = Random.Range(0, spawnPoints.Count);
-            Vector3 spawnPoint = spawnPoints[randomIndex];
+            Vector3 spawnPoint = spawnPoints[id];
             player.transform.position = spawnPoint;
-        }
-        else
-        {
-            Debug.LogWarning("No spawn points available.");
         }
     }
 }

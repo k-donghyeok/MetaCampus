@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance() => instance;
 
     private SaveManager saveManager;
-    private SpawnManager spawnManager;
 
     private void Awake()
     {
@@ -33,7 +32,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// 痢荐 包府
     /// </summary>
-    public YeilManager Yeil { get; private set; } = null;   
+    public YeilManager Yeil { get; private set; } = null;
 
     /// <summary>
     /// 历厘 包府
@@ -52,23 +51,16 @@ public class GameManager : MonoBehaviour
         Scene = new MySceneManager();
 
         Save.Initialize();
-        Spawn.Initialize();
     }
 
     private void Start()
     {
         // Place the player at a random spawn point when the game starts
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        spawnManager.PlacePlayerAtRandomSpawnPoint(player);
     }
 
     public SaveManager GetSaveManager()
     {
         return saveManager;
-    }
-
-    public SpawnManager GetSpawnManager()
-    {
-        return spawnManager;
     }
 }
