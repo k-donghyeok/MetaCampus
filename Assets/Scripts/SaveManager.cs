@@ -1,7 +1,6 @@
+using Newtonsoft.Json;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using UnityEngine;
 
 /// <summary>
@@ -13,10 +12,23 @@ public class SaveManager
     {
     }
 
-    public void Initialize()
+    /// <summary>
+    /// 세이브를 파일에서 불러옴
+    /// </summary>
+    public void LoadFromPrefs()
     {
-        int exists = LoadValue(SAVEEXIST, 0);
-        if (exists == 0) Reset();
+        string json = PlayerPrefs.GetString(SAVEDATAONPREFS, string.Empty);
+        if (string.IsNullOrEmpty(json)) { Reset(); return; }
+        saveData = (Dictionary<string, object>)JsonConvert.DeserializeObject(json, typeof(Dictionary<string, object>));
+    }
+
+    /// <summary>
+    /// 세이브를 파일로 저장
+    /// </summary>
+    public void SaveToPrefs()
+    {
+        string json = JsonConvert.SerializeObject(saveData);
+        PlayerPrefs.SetString(SAVEDATAONPREFS, json);
     }
 
     /// <summary>
@@ -25,18 +37,21 @@ public class SaveManager
     public void Reset()
     {
         PlayerPrefs.DeleteAll();
-        SaveValue(SAVEEXIST, 1);
+        saveData = new Dictionary<string, object>();
         SaveValue(SAVESEED, (int)DateTime.Now.Ticks);
         OnSaveReset?.Invoke(this);
+        SaveToPrefs();
     }
 
     public delegate void ResetEventHandler(SaveManager save);
 
     public ResetEventHandler OnSaveReset = null;
 
+    private Dictionary<string, object> saveData;
 
-    private const string SAVEEXIST = "SaveExists";
-    private const string SAVESEED = "SaveSeed";
+    private const string SAVEDATAONPREFS = "SaveData";
+
+    private const string SAVESEED = "Seed";
 
     /// <summary>
     /// 세이브 파일의 시드값
@@ -50,25 +65,22 @@ public class SaveManager
     /// <param name="value"></param>
     public void SaveValue<T>(string key, T value)
     {
-        if (value is int intValue) PlayerPrefs.SetInt(key, intValue);
-        else if (value is float floatValue) PlayerPrefs.SetFloat(key, floatValue);
-        else PlayerPrefs.SetString(key, value.ToString());
+        saveData.Remove(key);
+        saveData.Add(key, value);
     }
 
     /// <summary>
     /// 값 불러오기
     /// </summary>
-    /// <exception cref="ArgumentException">들어오는 값이 <see cref="int"/>나 <see cref="float"/>나 <see cref="string"/>이 아닌 경우</exception>
     public T LoadValue<T>(string key, T defaultValue = default)
     {
-        if (typeof(T) == typeof(int))
-            return (T)(object)PlayerPrefs.GetInt(key, Convert.ToInt32(defaultValue));
-        else if (typeof(T) == typeof(float))
-            return (T)(object)PlayerPrefs.GetFloat(key, Convert.ToSingle(defaultValue));
-        else if (typeof(T) == typeof(string))
-        return (T)(object)PlayerPrefs.GetString(key, Convert.ToString(defaultValue));
-
-        throw new ArgumentException("Unsupported type!");
+        if (saveData.TryGetValue(key, out var value))
+        {
+            if (value is T t) return t;
+            Debug.LogError($"Saved value is {value.GetType()}, not {typeof(T)}!");
+        }
+        SaveValue(key, defaultValue);
+        return defaultValue;
     }
 
 }
