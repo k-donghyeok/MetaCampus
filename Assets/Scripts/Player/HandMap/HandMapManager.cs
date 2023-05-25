@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static PlanTextureManager;
@@ -187,7 +188,7 @@ public class HandMapManager : MonoBehaviour
         UpdatePhotoProjection(photoTF);
         photoOverlay.gameObject.SetActive(false);
 
-        if (GetDistanceFromMap(photoTF.position) > 0.2f) return false;
+        if (GetDistanceFromMap(photoTF.position) > 0.1f) return false;
         PlanMgr.PastePhoto(photo, photoTransform);
         return true;
     }
@@ -196,18 +197,37 @@ public class HandMapManager : MonoBehaviour
 
     private Vector2 lastPenOffset = Vector2.zero;
 
-    public void RequestPenDraw(Texture2D mark, Transform point)
+    private List<Vector2> penLine = new();
+
+    public void RequestPenDraw(Transform point)
     {
-        if (GetDistanceFromMap(point.position) > 0.1f) return;
+        if (GetDistanceFromMap(point.position) > 0.02f)
+        {
+            if (penLine.Count > 0)
+            {
+                // draw line onto texture
+                // remove preview
+                //PlanMgr.PastePhoto(offset);
+                penLine.Clear();
+                lastPenOffset = Vector2.zero;
+            }
+            return;
+        }
 
         Vector3 centerPos = Vector3.Lerp(handleLeft.position, handleRight.position, 0.5f);
         Vector3 localPos = point.position - centerPos;
 
         var offset = new Vector2(Vector3.Dot(localPos, handleLeft.right), Vector3.Dot(localPos, handleLeft.up)) / canvas.transform.localScale.x;
+        
+        // update preview
+        
         if (Vector2.Distance(lastPenOffset, offset) < 2f) return;
         lastPenOffset = offset;
+
+        penLine.Add(offset);
+
+        // update preview line
         
-        PlanMgr.PastePhoto(mark, offset);
     }
 
     private float GetDistanceFromMap(Vector3 target)
