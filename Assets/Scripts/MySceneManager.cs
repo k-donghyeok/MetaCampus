@@ -27,6 +27,8 @@ public class MySceneManager
         CurrentSceneID = (int)_name;
         SceneManager.LoadScene((int)_name);
 
+        GameManager.Instance().Save.
+
         if(_name==SCENENAME.Exterior)
         {
             StageManager.Instance().ChangeExterior(true);

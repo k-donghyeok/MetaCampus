@@ -9,27 +9,32 @@ public class SpawnManager
         // 스폰 포인트 식별자를 문자열로 생성
         string spawnPointKey = SPAWN_POINT_PREFIX + spawnPointID.ToString();
 
-        // 위치의 각 좌표를 PlayerPrefs에 저장
-        PlayerPrefs.SetFloat(spawnPointKey + "X", position.x);
-        PlayerPrefs.SetFloat(spawnPointKey + "Y", position.y);
-        PlayerPrefs.SetFloat(spawnPointKey + "Z", position.z);
-
-        // PlayerPrefs 변경 사항을 저장
-        PlayerPrefs.Save();
+        // 저장
+        GameManager.Instance().Save.SaveValue(spawnPointKey + "X", position.x);
+        GameManager.Instance().Save.SaveValue(spawnPointKey + "Y", position.y);
+        GameManager.Instance().Save.SaveValue(spawnPointKey + "Z", position.z);
     }
 
-    public Vector3 LoadSpawnPoint(int spawnPointID)
+    //public Vector3 LoadSpawnPoint(int spawnPointID)
+    //{
+    //    // 스폰 포인트 식별자를 문자열로 생성
+    //    string spawnPointKey = SPAWN_POINT_PREFIX + spawnPointID.ToString();
+
+    //    // 각 좌표 값을 불러옴
+       
+    //   GameManager.Instance().Save.LoadValue(spawnPointKey + "X", 0f);
+    //   GameManager.Instance().Save.LoadValue(spawnPointKey + "Y", 0f);
+    //   GameManager.Instance().Save.LoadValue(spawnPointKey + "Z", 0f);
+
+
+    //    // 로드한 좌표 값을 Vector3로 반환함
+    //    return new Vector3(x, y, z);
+    //}
+
+    public void TestSave(int _id)
     {
-        // 스폰 포인트 식별자를 문자열로 생성
-        string spawnPointKey = SPAWN_POINT_PREFIX + spawnPointID.ToString();
-
-        // PlayerPrefs에서 각 좌표 값을 불러옴
-        float x = PlayerPrefs.GetFloat(spawnPointKey + "X", 0f);
-        float y = PlayerPrefs.GetFloat(spawnPointKey + "Y", 0f);
-        float z = PlayerPrefs.GetFloat(spawnPointKey + "Z", 0f);
-
-        // 로드한 좌표 값을 Vector3로 반환함
-        return new Vector3(x, y, z);
+        string strid = _id.ToString();
+        GameManager.Instance().Save.SaveValue(strid, _id);
     }
 
     public void SpawnPlayerToSavedLocation(int spawnPointID)

@@ -53,6 +53,8 @@ public class SaveManager
         if (value is int intValue) PlayerPrefs.SetInt(key, intValue);
         else if (value is float floatValue) PlayerPrefs.SetFloat(key, floatValue);
         else PlayerPrefs.SetString(key, value.ToString());
+
+       
     }
 
     public int LoadValue(string key, int defaultIntValue = default) =>
