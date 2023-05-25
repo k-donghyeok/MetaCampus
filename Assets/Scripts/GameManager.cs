@@ -36,23 +36,7 @@ public class GameManager : MonoBehaviour
     /// 씬에 올라와있는 플레이어를 찾아서 플레이어의 트랜스폼을 반환해줌
     /// </summary>
     /// <returns></returns>
-    public GameObject FindPlayerPosition()
-    {
-        return GameObject.FindGameObjectWithTag("Player");
-    }
-
-    public GameObject FindAreaPosition(int exitID)
-    {
-        SpawnPoint[] exits =GetComponents<SpawnPoint>();
-        foreach(var exit in exits)
-        {
-            if (exit.GetExitID() == exitID) return exit.gameObject;
-        }
-        Debug.LogError($"exitID {exitID} does not exist!");
-        return null;
-
-    }
-
+    
     /// <summary>
     /// 점수 관리
     /// </summary>
@@ -76,7 +60,7 @@ public class GameManager : MonoBehaviour
         Scene = new MySceneManager();
 
         Save.LoadFromPrefs();
-        Scene.MovePlayerToSpawn();
+        //Scene.MovePlayerToSpawn();
     }
 
 }

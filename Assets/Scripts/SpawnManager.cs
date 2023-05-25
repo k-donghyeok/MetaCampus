@@ -12,7 +12,7 @@ public class SpawnManager
 
         Debug.Log($"아이디 : {_spawnPointID}  저장");
         // 저장
-        GameManager.Instance().Save.SaveValue("ASD", _spawnPointID);
+        GameManager.Instance().Save.SaveValue(SPAWNPOINTID, _spawnPointID);
         GameManager.Instance().Save.SaveToPrefs();
     }
 
@@ -31,20 +31,38 @@ public class SpawnManager
        
     }
 
- 
+    public GameObject FindPlayerPosition()
+    {
+        return GameObject.FindGameObjectWithTag("Player");
+    }
+
+    public GameObject FindAreaPosition(int exitID)
+    {
+        SpawnPoint[] exits = GameObject.FindObjectsOfType<SpawnPoint>();
+    
+        foreach (var exit in exits)
+        {
+            if (exit.GetExitID() == exitID) return exit.gameObject;
+        }
+        Debug.LogError($"exitID {exitID} does not exist!");
+        return null;
+
+    }
+
 
     public void SpawnPlayerToSavedLocation()
     {
         // 저장된 스폰 포인트 ID를 로드함
-        int spawnPointID = GameManager.Instance().Save.LoadValue(SPAWNPOINTID, -1);
+        int spawnPointID = GameManager.Instance().Save.LoadValue(SPAWNPOINTID, -12345);
+        Debug.Log(spawnPointID);
         // 저장된 ID가 없다면 초기값으로 설정
         if (spawnPointID < 0) spawnPointID = 0;
 
 
         // 저장된 스폰 위치를 로드함
-        GameObject player = GameManager.Instance().FindPlayerPosition();
+        GameObject player = FindPlayerPosition();
         Debug.Log($"player: {player != null}");
-        var areaPosition = GameManager.Instance().FindAreaPosition(spawnPointID);
+        var areaPosition = FindAreaPosition(spawnPointID);
         Debug.Log($"areaPosition: {areaPosition != null}");
         player.transform.position = areaPosition.transform.position +new Vector3(2f,0f,2f);
 

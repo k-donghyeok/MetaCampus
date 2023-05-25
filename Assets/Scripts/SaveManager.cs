@@ -81,6 +81,7 @@ public class SaveManager
             if (CanConvertType(value, typeof(T)))
             {
                 T convertedValue = (T)Convert.ChangeType(value, typeof(T));
+                Debug.Log("로드밸류 함수 실행 " + convertedValue);
                 return convertedValue;
             }
         }

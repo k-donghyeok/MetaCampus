@@ -59,16 +59,16 @@ public class MySceneManager
     /// <summary>
     /// 플레이어를 저장된 스폰 포인트로 이동
     /// </summary>
-    public void MovePlayerToSpawn()
-    {
-            Debug.Log($"MovePlayerToSpawn 실행됨 (외부: {StageManager.Instance().IsExterior()})") ;
-        // 새로운 씬이 외부인 경우
-        if (StageManager.Instance().IsExterior())
-        {
-            // 플레이어를 저장된 스폰 포인트로 이동
-            GameManager.Instance().Spawn.SpawnPlayerToSavedLocation();
-        }
-    }
+    //public void MovePlayerToSpawn()
+    //{
+    //    Debug.Log($"MovePlayerToSpawn 실행됨 (외부: {StageManager.Instance().IsExterior()})");
+    //    // 새로운 씬이 외부인 경우
+    //    if (StageManager.Instance().IsExterior())
+    //    {
+    //        // 플레이어를 저장된 스폰 포인트로 이동
+    //        GameManager.Instance().Spawn.SpawnPlayerToSavedLocation();
+    //    }
+    //}
 
 
 }
