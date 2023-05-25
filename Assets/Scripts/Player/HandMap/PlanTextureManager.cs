@@ -96,21 +96,22 @@ public class PlanTextureManager
         int planHeight = PlanTexture.height;
 
         offset += new Vector2(planWidth, planHeight) * 0.5f;
+        lastOffset += new Vector2(planWidth, planHeight) * 0.5f;
 
-        const int PEN_SIZE = 5;
+        const int PEN_SIZE = 12;
         for (float f = 0.00f; f < 1.00f; f += 0.03f)
             DrawRect(Vector2.Lerp(offset, lastOffset, f));
 
         PlanTexture.Apply();
 
-        void DrawRect(Vector2 offset)
+        void DrawRect(Vector2 o)
         {
             for (int y = 0; y < PEN_SIZE; ++y)
             {
                 for (int x = 0; x < PEN_SIZE; ++x)
                 {
-                    int planX = Mathf.RoundToInt(x + offset.x - (PEN_SIZE >> 1));
-                    int planY = Mathf.RoundToInt(y + offset.y - (PEN_SIZE >> 1));
+                    int planX = Mathf.RoundToInt(x + o.x - (PEN_SIZE >> 1));
+                    int planY = Mathf.RoundToInt(y + o.y - (PEN_SIZE >> 1));
                     if (planX >= 0 && planX < planWidth && planY >= 0 && planY < planHeight)
                     {
                         var planPixel = PlanTexture.GetPixel(planX, planY);

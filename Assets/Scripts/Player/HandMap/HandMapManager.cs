@@ -197,13 +197,18 @@ public class HandMapManager : MonoBehaviour
 
     private Vector2 lastPenOffset = Vector2.zero;
 
-    public void RequestPenDraw(Transform pen, Transform tip)
+    public void RequestPenDraw(Transform tip)
     {
-        if (!Physics.Raycast(tip.position, tip.position - pen.position, out var info, 0.02f)) return;
+        if (GetDistanceFromMap(tip.position) > 0.05f)
+        { lastPenOffset = -Vector2.one; return; }
 
-        Vector2 offset = info.textureCoord * PlanMgr.PlanTexture.width;
+        Vector3 centerPos = Vector3.Lerp(handleLeft.position, handleRight.position, 0.5f);
+        Vector3 localPos = tip.position - centerPos;
 
+        Vector2 offset = new Vector2(Vector3.Dot(localPos, handleLeft.right), Vector3.Dot(localPos, handleLeft.up)) / canvas.transform.localScale.x;
+        
         if (Vector2.Distance(lastPenOffset, offset) < 2f) return;
+        if (lastPenOffset.x < 0f && lastPenOffset.y < 0f) lastPenOffset = offset; // new line
         PlanMgr.DrawPen(lastPenOffset, offset);
         lastPenOffset = offset;
     }

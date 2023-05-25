@@ -36,6 +36,6 @@ public class InkPenManager : MonoBehaviour
             return;
         }
 
-        Map.RequestPenDraw(transform, point);
+        Map.RequestPenDraw(point);
     }
 }
