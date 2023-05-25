@@ -76,8 +76,7 @@ public class SaveManager
     {
         if (saveData.TryGetValue(key, out var value))
         {
-            if (value is T t) return t;
-            Debug.LogError($"Saved value is {value.GetType()}, not {typeof(T)}!");
+            return (T)value ?? defaultValue;
         }
         SaveValue(key, defaultValue);
         return defaultValue;

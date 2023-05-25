@@ -232,7 +232,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   point: {fileID: 2976519698320937417}
-  penMark: {fileID: 2800000, guid: df7afa344b1fbb849b7b590b8fc27431, type: 3}
 --- !u!1 &6497108255102998418
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,7 +256,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6497108255102998418}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.16577, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.083, z: 0.1435}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
