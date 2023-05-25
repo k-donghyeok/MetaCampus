@@ -24,14 +24,20 @@ public class StageManager : MonoBehaviour
     {
         if (instance == null)
         {
+            Debug.Log("Áö±ÝÀº : "  +IsExterior());
             instance = this;
-            if (!IsExterior()) Initiate();
         }
         else if (instance != this)
         {
             Destroy(gameObject);
             return;
         }
+    }
+
+    private void Start()
+    {
+        if (!IsExterior()) InitiateInterior();
+        else InitiateExterior();
     }
 
     private void OnDestroy()
@@ -47,13 +53,17 @@ public class StageManager : MonoBehaviour
         Time?.UpdateCountdown();
     }
 
-    private void Initiate()
+    private void InitiateInterior()
     {
         Time = new TimeManager();
         Lock = new LockManager();
 
         Time.StartCountdown();
+        
+    }
+    private void InitiateExterior()
+    {
+        GameManager.Instance().Spawn.SpawnPlayerToSavedLocation();
     }
 
-    
 }

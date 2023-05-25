@@ -67,6 +67,7 @@ public class SaveManager
     {
         saveData.Remove(key);
         saveData.Add(key, value);
+       
     }
 
     /// <summary>

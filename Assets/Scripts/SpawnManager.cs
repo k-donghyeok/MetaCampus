@@ -12,7 +12,7 @@ public class SpawnManager
 
         Debug.Log($"아이디 : {_spawnPointID}  저장");
         // 저장
-        GameManager.Instance().Save.SaveValue(SPAWNPOINTID, _spawnPointID);
+        GameManager.Instance().Save.SaveValue("ASD", _spawnPointID);
         GameManager.Instance().Save.SaveToPrefs();
     }
 

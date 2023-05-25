@@ -12,6 +12,7 @@ public class SpawnPoint : MonoBehaviour
     //
     protected virtual void PassThrough()
     {
+        Debug.Log(GetExitID());
         GameManager.Instance().Spawn.SaveSpawnPoint(GetExitID());
     }
 
