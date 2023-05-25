@@ -18,9 +18,13 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            Initiate();
         }
         else if (instance != this) Destroy(gameObject);
+    }
+
+    private void Start()
+    {
+        Initiate();
     }
 
     //진행도가있는지 확인하는 함수
