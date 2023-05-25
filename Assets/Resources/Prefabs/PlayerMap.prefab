@@ -451,6 +451,7 @@ MonoBehaviour:
     tension: 0.9
     gravity: 0.02
     velClamp: 0.3
+    layer: 8
   paperFullHeight: 0.5
   mapMaterial: {fileID: 2100000, guid: 338ef0dd4c77894488f1b0d32a59ab7f, type: 2}
   prefabParticleEffect: {fileID: 1823892110347214462, guid: fa917246eb1046342aeecbd73948d51a,

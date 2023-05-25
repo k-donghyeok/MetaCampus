@@ -20,7 +20,7 @@ public class PlanTextureManager
         owner.UpdateTexture(PlanTexture);
     }
 
-    
+
     public struct PhotoTransform
     {
         public Vector2 offset;
@@ -90,49 +90,38 @@ public class PlanTextureManager
     /// offset만 사용해 텍스쳐를 그림.
     /// <para>펜툴에 사용.</para>
     /// </summary>
-    public void PastePhoto(Texture2D pen, Vector2 offset)
+    public void DrawPen(Vector2 lastOffset, Vector2 offset)
     {
-        int penWidth = pen.width;
-        int penHeight = pen.height;
-
-        Color32[] planPixels = PlanTexture.GetPixels32();
-        Color32[] photoPixels = pen.GetPixels32();
-
         int planWidth = PlanTexture.width;
         int planHeight = PlanTexture.height;
 
-        offset.y += planHeight * 0.5f;
+        offset += new Vector2(planWidth, planHeight) * 0.5f;
+        lastOffset += new Vector2(planWidth, planHeight) * 0.5f;
 
-        for (int y = 0; y < penHeight; y++)
+        const int PEN_SIZE = 12;
+        for (float f = 0.00f; f < 1.00f; f += 0.03f)
+            DrawRect(Vector2.Lerp(offset, lastOffset, f));
+
+        PlanTexture.Apply();
+
+        void DrawRect(Vector2 o)
         {
-            for (int x = 0; x < penWidth; x++)
+            for (int y = 0; y < PEN_SIZE; ++y)
             {
-                int planX = Mathf.RoundToInt(x + offset.x);
-                int planY = Mathf.RoundToInt(y + offset.y);
-
-                if (planX >= 0 && planX < planWidth && planY >= 0 && planY < planHeight)
+                for (int x = 0; x < PEN_SIZE; ++x)
                 {
-                    int planIndex = planY * planWidth + planX;
-                    int photoIndex = y * penWidth + x;
-
-                    Color32 planPixel = planPixels[planIndex];
-                    Color32 photoPixel = photoPixels[photoIndex];
-
-                    float intensity = 1f - (photoPixel.a / 255f);
-                    planPixel.r = (byte)Mathf.Lerp(planPixel.r, 255, intensity);
-                    planPixel.g = (byte)Mathf.Lerp(planPixel.g, 0, intensity);
-                    planPixel.b = (byte)Mathf.Lerp(planPixel.b, 0, intensity);
-                    //float invertedIntensity = 1f - (photoPixel.a / 255f);
-                    //planPixel.g = (byte)(planPixel.g * invertedIntensity);
-                    //planPixel.b = (byte)(planPixel.b * invertedIntensity);
-                    planPixel.a = (byte)Mathf.Max(planPixel.a, photoPixel.a);
-
-                    planPixels[planIndex] = planPixel;
+                    int planX = Mathf.RoundToInt(x + o.x - (PEN_SIZE >> 1));
+                    int planY = Mathf.RoundToInt(y + o.y - (PEN_SIZE >> 1));
+                    if (planX >= 0 && planX < planWidth && planY >= 0 && planY < planHeight)
+                    {
+                        var planPixel = PlanTexture.GetPixel(planX, planY);
+                        planPixel.g = 0f;
+                        planPixel.b = 0f;
+                        planPixel.a = 1f;
+                        PlanTexture.SetPixel(planX, planY, planPixel);
+                    }
                 }
             }
         }
-
-        PlanTexture.SetPixels32(planPixels);
-        PlanTexture.Apply();
     }
 }

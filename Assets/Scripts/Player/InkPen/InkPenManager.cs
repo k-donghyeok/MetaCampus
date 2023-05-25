@@ -11,9 +11,6 @@ public class InkPenManager : MonoBehaviour
     [SerializeField]
     internal Transform point = null;
 
-    [SerializeField]
-    internal Texture2D penMark = null;
-
     public void SetHeld(bool held)
     {
         if (Held == held) return;
@@ -39,6 +36,6 @@ public class InkPenManager : MonoBehaviour
             return;
         }
 
-        Map.RequestPenDraw(penMark, point);
+        Map.RequestPenDraw(point);
     }
 }

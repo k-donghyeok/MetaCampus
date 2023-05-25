@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static PlanTextureManager;
@@ -187,7 +188,7 @@ public class HandMapManager : MonoBehaviour
         UpdatePhotoProjection(photoTF);
         photoOverlay.gameObject.SetActive(false);
 
-        if (GetDistanceFromMap(photoTF.position) > 0.2f) return false;
+        if (GetDistanceFromMap(photoTF.position) > 0.1f) return false;
         PlanMgr.PastePhoto(photo, photoTransform);
         return true;
     }
@@ -196,18 +197,20 @@ public class HandMapManager : MonoBehaviour
 
     private Vector2 lastPenOffset = Vector2.zero;
 
-    public void RequestPenDraw(Texture2D mark, Transform point)
+    public void RequestPenDraw(Transform tip)
     {
-        if (GetDistanceFromMap(point.position) > 0.1f) return;
+        if (GetDistanceFromMap(tip.position) > 0.05f)
+        { lastPenOffset = -Vector2.one; return; }
 
         Vector3 centerPos = Vector3.Lerp(handleLeft.position, handleRight.position, 0.5f);
-        Vector3 localPos = point.position - centerPos;
+        Vector3 localPos = tip.position - centerPos;
 
-        var offset = new Vector2(Vector3.Dot(localPos, handleLeft.right), Vector3.Dot(localPos, handleLeft.up)) / canvas.transform.localScale.x;
-        if (Vector2.Distance(lastPenOffset, offset) < 2f) return;
-        lastPenOffset = offset;
+        Vector2 offset = new Vector2(Vector3.Dot(localPos, handleLeft.right), Vector3.Dot(localPos, handleLeft.up)) / canvas.transform.localScale.x;
         
-        PlanMgr.PastePhoto(mark, offset);
+        if (Vector2.Distance(lastPenOffset, offset) < 2f) return;
+        if (lastPenOffset.x < 0f && lastPenOffset.y < 0f) lastPenOffset = offset; // new line
+        PlanMgr.DrawPen(lastPenOffset, offset);
+        lastPenOffset = offset;
     }
 
     private float GetDistanceFromMap(Vector3 target)
