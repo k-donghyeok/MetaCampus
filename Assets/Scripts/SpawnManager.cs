@@ -9,8 +9,8 @@ public class SpawnManager
     public void SaveSpawnPoint(int _spawnPointID)
     {
         // 스폰 포인트 식별자를 문자열로 생성
-       
 
+        Debug.Log($"아이디 : {_spawnPointID}  저장");
         // 저장
         GameManager.Instance().Save.SaveValue(SPAWNPOINTID, _spawnPointID);
         GameManager.Instance().Save.SaveToPrefs();
@@ -36,14 +36,17 @@ public class SpawnManager
     public void SpawnPlayerToSavedLocation()
     {
         // 저장된 스폰 포인트 ID를 로드함
-        int spawnPointID = GameManager.Instance().Save.LoadValue<int>(SPAWNPOINTID, -1);
+        int spawnPointID = GameManager.Instance().Save.LoadValue(SPAWNPOINTID, -1);
         // 저장된 ID가 없다면 초기값으로 설정
         if (spawnPointID < 0) spawnPointID = 0;
 
 
         // 저장된 스폰 위치를 로드함
         GameObject player = GameManager.Instance().FindPlayerPosition();
-        player.transform.position = GameManager.Instance().FindAreaPosition(spawnPointID).transform.position +new Vector3(2f,0f,2f);
+        Debug.Log($"player: {player != null}");
+        var areaPosition = GameManager.Instance().FindAreaPosition(spawnPointID);
+        Debug.Log($"areaPosition: {areaPosition != null}");
+        player.transform.position = areaPosition.transform.position +new Vector3(2f,0f,2f);
 
         Debug.Log("스폰완료: " + spawnPointID);
     }

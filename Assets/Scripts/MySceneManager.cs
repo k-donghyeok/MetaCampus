@@ -36,7 +36,7 @@ public class MySceneManager
     public void ChangeScene(SCENENAME _name)
     {
         Debug.Log("씬변경");
-        CurrentSceneID = (int)_name;
+        
         SceneManager.LoadScene((int)_name);
 
         // exterior 값은 유니티 에디터 Inspector에서 설정하는 거라 코드에서 고칠 필요도 없고, 고쳐서도 안 됨.
@@ -61,6 +61,7 @@ public class MySceneManager
     /// </summary>
     public void MovePlayerToSpawn()
     {
+            Debug.Log($"MovePlayerToSpawn 실행됨 (외부: {StageManager.Instance().IsExterior()})") ;
         // 새로운 씬이 외부인 경우
         if (StageManager.Instance().IsExterior())
         {

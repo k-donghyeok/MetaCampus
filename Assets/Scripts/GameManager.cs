@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject FindAreaPosition(int exitID)
     {
-        ExtiDoor[] exits =GetComponents<ExtiDoor>();
+        SpawnPoint[] exits =GetComponents<SpawnPoint>();
         foreach(var exit in exits)
         {
             if (exit.GetExitID() == exitID) return exit.gameObject;
