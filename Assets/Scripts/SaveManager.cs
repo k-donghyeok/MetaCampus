@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 /// <summary>
@@ -77,10 +78,23 @@ public class SaveManager
     {
         if (saveData.TryGetValue(key, out var value))
         {
-            return (T)value ?? defaultValue;
+            if (CanConvertType(value, typeof(T)))
+            {
+                T convertedValue = (T)Convert.ChangeType(value, typeof(T));
+                return convertedValue;
+            }
         }
         SaveValue(key, defaultValue);
         return defaultValue;
+
+        static bool CanConvertType(object value, Type targetType)
+        {
+            if (value == null)
+            {
+                return !targetType.IsValueType || Nullable.GetUnderlyingType(targetType) != null;
+            }
+            return targetType.IsAssignableFrom(value.GetType()) || TypeDescriptor.GetConverter(targetType).CanConvertFrom(value.GetType());
+        }
     }
 
 }
