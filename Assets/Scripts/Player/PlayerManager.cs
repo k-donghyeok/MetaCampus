@@ -16,13 +16,20 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private HandMapManager map = null;
 
+    [SerializeField]
+    private InkPenManager pen = null;
+
     public PhoneManager Phone() => phone;
 
     public HandMapManager Map() => map;
+
+    public InkPenManager Pen() => pen;
+
 
     private void Start()
     {
         Phone().player = this;
         Map().player = this;
+        Pen().player = this;
     }
 }

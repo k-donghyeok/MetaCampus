@@ -5,11 +5,6 @@ public class StageManager : MonoBehaviour
     [SerializeField]
     private bool exterior = true;
 
-    public void ChangeExterior(bool _val)
-    {
-        exterior = _val;
-    }
-
     public bool IsExterior() => exterior;
 
     private static StageManager instance = null;

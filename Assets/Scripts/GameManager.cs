@@ -49,7 +49,8 @@ public class GameManager : MonoBehaviour
         Spawn = new SpawnManager();
         Scene = new MySceneManager();
 
-        Save.Initialize();
+        Save.LoadFromPrefs();
+        Scene.MovePlayerToSpawn();
     }
 
 }

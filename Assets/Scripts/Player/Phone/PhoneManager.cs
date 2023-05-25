@@ -74,7 +74,9 @@ public class PhoneManager : MonoBehaviour
         if (held) ChangeMode(Mode.Capture);
         else if (CurMode == Mode.Attach)
         {
-            Map.RequestFoldLaydownMap(AttachBehav.AttemptAttach() ? 2f : 0f); // 사진 놓음
+            bool attach = AttachBehav.AttemptAttach();
+            Map.RequestFoldLaydownMap(attach ? 2f : 0f); // 사진 놓음
+            if (attach) hideTimer = 0f;
         }
     }
 
