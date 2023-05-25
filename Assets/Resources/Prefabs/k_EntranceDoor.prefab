@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2831666107097296439}
   - component: {fileID: 2831666107097296432}
   - component: {fileID: 2831666107097296433}
-  - component: {fileID: 2655615207793378828}
+  - component: {fileID: 4494297520093584814}
   m_Layer: 0
   m_Name: k_EntranceDoor
   m_TagString: Untagged
@@ -98,7 +98,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2655615207793378828
+--- !u!114 &4494297520093584814
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,6 +107,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 2831666107097296434}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df2e0c5a9f5e6c046bf9f1564a98c56d, type: 3}
+  m_Script: {fileID: 11500000, guid: 38515356c90e2d849be2f0ccbc7bfb67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myID: 456
+  ExitID: 0

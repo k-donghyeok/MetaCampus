@@ -2,41 +2,70 @@ using UnityEngine;
 
 public class SpawnManager
 {
-    private const string SPAWN_POINT_PREFIX = "SpawnPoint_";
+    
 
-    public void SaveSpawnPoint(int spawnPointID, Vector3 position)
+    private const string SPAWNPOINTID = "SpawnPointID";
+
+    public void SaveSpawnPoint(int _spawnPointID)
     {
         // 스폰 포인트 식별자를 문자열로 생성
-        string spawnPointKey = SPAWN_POINT_PREFIX + spawnPointID.ToString();
 
-        // 위치의 각 좌표를 PlayerPrefs에 저장
-        PlayerPrefs.SetFloat(spawnPointKey + "X", position.x);
-        PlayerPrefs.SetFloat(spawnPointKey + "Y", position.y);
-        PlayerPrefs.SetFloat(spawnPointKey + "Z", position.z);
-
-        // PlayerPrefs 변경 사항을 저장
-        PlayerPrefs.Save();
+        Debug.Log($"아이디 : {_spawnPointID}  저장");
+        // 저장
+        GameManager.Instance().Save.SaveValue(SPAWNPOINTID, _spawnPointID);
+        GameManager.Instance().Save.SaveToPrefs();
     }
 
-    public Vector3 LoadSpawnPoint(int spawnPointID)
+    public int LoadSpawnPoint()
     {
         // 스폰 포인트 식별자를 문자열로 생성
-        string spawnPointKey = SPAWN_POINT_PREFIX + spawnPointID.ToString();
+       
 
-        // PlayerPrefs에서 각 좌표 값을 불러옴
-        float x = PlayerPrefs.GetFloat(spawnPointKey + "X", 0f);
-        float y = PlayerPrefs.GetFloat(spawnPointKey + "Y", 0f);
-        float z = PlayerPrefs.GetFloat(spawnPointKey + "Z", 0f);
+        // 각 좌표 값을 불러옴
+
+         return GameManager.Instance().Save.LoadValue(SPAWNPOINTID,-1 );
+       
+
 
         // 로드한 좌표 값을 Vector3로 반환함
-        return new Vector3(x, y, z);
+       
     }
 
-    public void SpawnPlayerToSavedLocation(int spawnPointID)
+    public GameObject FindPlayerPosition()
     {
-        // 저장된 스폰 위치를 로드함
-        Vector3 spawnPoint = LoadSpawnPoint(spawnPointID);
+        return GameObject.FindGameObjectWithTag("Player");
+    }
 
-        Debug.Log("스폰: " + spawnPoint);
+    public GameObject FindAreaPosition(int exitID)
+    {
+        SpawnPoint[] exits = GameObject.FindObjectsOfType<SpawnPoint>();
+    
+        foreach (var exit in exits)
+        {
+            if (exit.GetExitID() == exitID) return exit.gameObject;
+        }
+        Debug.LogError($"exitID {exitID} does not exist!");
+        return null;
+
+    }
+
+
+    public void SpawnPlayerToSavedLocation()
+    {
+        // 저장된 스폰 포인트 ID를 로드함
+        int spawnPointID = GameManager.Instance().Save.LoadValue(SPAWNPOINTID, -12345);
+        Debug.Log(spawnPointID);
+        // 저장된 ID가 없다면 초기값으로 설정
+        if (spawnPointID < 0) spawnPointID = 0;
+
+
+        // 저장된 스폰 위치를 로드함
+        GameObject player = FindPlayerPosition();
+        Debug.Log($"player: {player != null}");
+        var areaPosition = FindAreaPosition(spawnPointID);
+        Debug.Log($"areaPosition: {areaPosition != null}");
+        player.transform.position = areaPosition.transform.position +new Vector3(2f,0f,2f);
+
+        Debug.Log("스폰완료: " + spawnPointID);
     }
 }
