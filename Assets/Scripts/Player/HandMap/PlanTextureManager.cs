@@ -95,9 +95,9 @@ public class PlanTextureManager
         int planWidth = PlanTexture.width;
         int planHeight = PlanTexture.height;
 
-        Vector2 UGLYHARDCODEDOFFSET = new(planWidth * 0.2f, planHeight * 0.5f);
-        offset += UGLYHARDCODEDOFFSET;
-        lastOffset += UGLYHARDCODEDOFFSET;
+        Vector2 originOffset = new(planWidth * 0.5f, planHeight * 0.5f);
+        offset += originOffset;
+        lastOffset += originOffset;
 
         const int PEN_SIZE = 12;
         for (float f = 0.00f; f < 1.00f; f += 0.03f)
