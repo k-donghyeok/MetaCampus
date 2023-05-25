@@ -196,11 +196,12 @@ public class HandMapManager : MonoBehaviour
     #endregion PhonePhoto
 
     private Vector2 lastPenOffset = Vector2.zero;
+    private bool lastLine = false;
 
     public void RequestPenDraw(Transform tip)
     {
-        if (GetDistanceFromMap(tip.position) > 0.05f)
-        { lastPenOffset = -Vector2.one; return; }
+        if (GetDistanceFromMap(tip.position) > 0.1f)
+        { lastLine = false; return; }
 
         Vector3 centerPos = Vector3.Lerp(handleLeft.position, handleRight.position, 0.5f);
         Vector3 localPos = tip.position - centerPos;
@@ -208,18 +209,16 @@ public class HandMapManager : MonoBehaviour
         Vector2 offset = new Vector2(Vector3.Dot(localPos, handleLeft.right), Vector3.Dot(localPos, handleLeft.up)) / canvas.transform.localScale.x;
         
         if (Vector2.Distance(lastPenOffset, offset) < 2f) return;
-        if (lastPenOffset.x < 0f && lastPenOffset.y < 0f) lastPenOffset = offset; // new line
+        if (!lastLine) lastPenOffset = offset; // new line
         PlanMgr.DrawPen(lastPenOffset, offset);
         lastPenOffset = offset;
+        lastLine = true;
     }
 
     private float GetDistanceFromMap(Vector3 target)
     {
-        Vector3 centerPos = Vector3.Lerp(handleLeft.position, handleRight.position, 0.5f);
-        Vector3 vectorToPosition = target - centerPos;
-
-        return Vector3.Dot(vectorToPosition,
-            Vector3.Cross(handleLeft.rotation * Vector3.up, handleRight.position - handleLeft.position));
+        Vector3 localPos = target - handleLeft.position;
+        return Vector3.Dot(localPos, -handleLeft.forward);
     }
 
     #endregion LayDown
