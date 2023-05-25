@@ -35,7 +35,7 @@ public class MySceneManager
     /// </summary>
     public void ChangeScene(SCENENAME _name)
     {
-
+        Debug.Log("¾Àº¯°æ");
         CurrentSceneID = (int)_name;
         SceneManager.LoadScene((int)_name);
 
