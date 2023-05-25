@@ -78,24 +78,13 @@ public class SaveManager
     {
         if (saveData.TryGetValue(key, out var value))
         {
-            if (CanConvertType(value, typeof(T)))
-            {
-                T convertedValue = (T)Convert.ChangeType(value, typeof(T));
-                Debug.Log("로드밸류 함수 실행 " + convertedValue);
-                return convertedValue;
-            }
+            if (value is T tValue) return tValue;
+            T convertedValue = (T)Convert.ChangeType(value, typeof(T));
+            if (convertedValue != null) return convertedValue;
         }
+
         SaveValue(key, defaultValue);
         return defaultValue;
-
-        static bool CanConvertType(object value, Type targetType)
-        {
-            if (value == null)
-            {
-                return !targetType.IsValueType || Nullable.GetUnderlyingType(targetType) != null;
-            }
-            return targetType.IsAssignableFrom(value.GetType()) || TypeDescriptor.GetConverter(targetType).CanConvertFrom(value.GetType());
-        }
     }
 
 }
