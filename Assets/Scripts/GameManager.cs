@@ -27,16 +27,6 @@ public class GameManager : MonoBehaviour
         Initiate();
     }
 
-    //진행도가있는지 확인하는 함수
-
-    //지도내용 변경된게있는지 확인하는함수
-
-
-    /// <summary>
-    /// 씬에 올라와있는 플레이어를 찾아서 플레이어의 트랜스폼을 반환해줌
-    /// </summary>
-    /// <returns></returns>
-    
     /// <summary>
     /// 점수 관리
     /// </summary>
