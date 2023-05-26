@@ -14,6 +14,8 @@ public class ServerComputer : MonoBehaviour
             Debug.Log("성적수정 성공여부 : "+StageManager.Instance().IsClear);
             StageManager.Instance().IsPlayerInServerRoom=true;
 
+
+            var dataScores = StageManager.Instance().GetScoreLeaderboard();
             //서버에 저장된 리더보드값 띄우기
 
             // 이름입력 ui 활성화
@@ -30,4 +32,7 @@ public class ServerComputer : MonoBehaviour
             StageManager.Instance().IsPlayerInServerRoom = false;
         }
     }
+
+
+
 }
