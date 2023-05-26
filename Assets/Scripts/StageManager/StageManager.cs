@@ -1,4 +1,7 @@
 using UnityEngine;
+using UnityEngine.XR.Management;
+using UnityEngine.XR;
+using Unity.VisualScripting;
 
 public class StageManager : MonoBehaviour
 {
@@ -24,7 +27,6 @@ public class StageManager : MonoBehaviour
     {
         if (instance == null)
         {
-            Debug.Log("Áö±ÝÀº : "  +IsExterior());
             instance = this;
         }
         else if (instance != this)

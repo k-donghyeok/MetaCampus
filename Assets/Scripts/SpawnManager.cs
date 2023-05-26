@@ -26,15 +26,15 @@ public class SpawnManager
         return GameObject.FindGameObjectWithTag("Player");
     }
 
-    public GameObject FindAreaPosition(int spawnID)
+    public Vector3 FindAreaPosition(int spawnID)
     {
         SpawnPoint[] spawns = GameObject.FindObjectsOfType<SpawnPoint>();
         foreach (var spawn in spawns)
         {
-            if (spawn.GetID() == spawnID) return spawn.gameObject;
+            if (spawn.GetID() == spawnID) return spawn.GetSpawnPos();
         }
         Debug.LogError($"{nameof(spawnID)} {spawnID} does not exist!");
-        return spawns[0].gameObject;
+        return spawns[0].GetSpawnPos();
     }
 
 
@@ -49,8 +49,8 @@ public class SpawnManager
         GameObject player = FindPlayerPosition();
         Debug.Log($"player: {player != null}");
         var areaPosition = FindAreaPosition(spawnPointID);
-        Debug.Log($"areaPosition: {areaPosition != null}");
-        player.transform.position = areaPosition.transform.position + new Vector3(0f, 1f, 0f);
+        Debug.Log($"areaPosition: {areaPosition}");
+        player.transform.position = areaPosition + new Vector3(0f, 1f, 0f);
 
         Debug.Log("스폰완료: " + spawnPointID);
     }
