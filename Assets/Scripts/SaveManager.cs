@@ -28,6 +28,7 @@ public class SaveManager
     /// </summary>
     public void SaveToPrefs()
     {
+        OnSaveToPref?.Invoke(this);
         string json = JsonConvert.SerializeObject(saveData);
         PlayerPrefs.SetString(SAVEDATAONPREFS, json);
     }
@@ -44,9 +45,17 @@ public class SaveManager
         SaveToPrefs();
     }
 
-    public delegate void ResetEventHandler(SaveManager save);
+    public delegate void SaveEventHandler(SaveManager save);
 
-    public ResetEventHandler OnSaveReset = null;
+    /// <summary>
+    /// 새로운 세이브를 만들 때 발생
+    /// </summary>
+    public SaveEventHandler OnSaveReset = null;
+
+    /// <summary>
+    /// 파일을 세이브할 때 발생
+    /// </summary>
+    public SaveEventHandler OnSaveToPref = null;
 
     private Dictionary<string, object> saveData;
 

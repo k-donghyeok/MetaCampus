@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
+using System.IO;
+using UnityEditor.SceneManagement;
 
 public class PlanTextureManager
 {
@@ -14,25 +16,57 @@ public class PlanTextureManager
     {
         this.owner = owner;
         PlanTexture = new Texture2D(2048, 2048, TextureFormat.ARGB32, false);
-        ResetPlan();
+        LoadPlan(StageManager.Instance().GetName());
+
         owner.UpdateTexture(PlanTexture);
+        GameManager.Instance().Save.OnSaveToPref += SavePlanWithPrefSave;
+        StageManager.Instance().OnStageUnload += (stage) =>
+        {
+            SavePlan(stage.GetName());
+            GameManager.Instance().Save.OnSaveToPref -= SavePlanWithPrefSave;
+        };
     }
 
     public void ResetPlan()
     {
         if (StageManager.Instance().IsExterior())
         {
+            // 지정된 캠퍼스맵 텍스쳐를 사용
             var canvasMap = Resources.Load("Textures/Test_CampusMap") as Texture2D;
             var colors = canvasMap.GetPixels32();
             PlanTexture.SetPixels32(colors);
         }
         else
         {
-            PlanTexture.SetPixels32(Enumerable.Repeat(new Color32(255, 255, 255, 0), PlanTexture.width * PlanTexture.height).ToArray());
+            // 하얗고 투명한 색으로 채움
+            PlanTexture.SetPixels32(Enumerable.Repeat(new Color32(255, 255, 255, 0),
+                PlanTexture.width * PlanTexture.height).ToArray());
         }
         PlanTexture.Apply();
     }
 
+    private void LoadPlan(string name)
+    {
+        string path = GetPath(name);
+        if (!File.Exists(path)) { ResetPlan(); return; }
+
+        var bytes = File.ReadAllBytes(path);
+        PlanTexture.LoadImage(bytes);
+        PlanTexture.Apply();
+    }
+
+    private void SavePlanWithPrefSave(SaveManager save)
+        => SavePlan(StageManager.Instance().GetName());
+
+    private void SavePlan(string name)
+    {
+        string path = GetPath(name);
+        var bytes = PlanTexture.EncodeToPNG();
+        File.WriteAllBytes(path, bytes);
+    }
+
+    private string GetPath(string name)
+        => $"{Application.persistentDataPath}/Plan-{name}.png";
 
     public struct PhotoTransform
     {
