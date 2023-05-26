@@ -60,6 +60,7 @@ public class HandAnimator : MonoBehaviour
     {
         None = -1,
         GripPhone,
-        GripMap
+        GripMap,
+        GripPen
     }
 }

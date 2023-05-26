@@ -48,7 +48,7 @@ public class InkPenTakeOut : MonoBehaviour
         pen.gameObject.SetActive(true);
         pen.SetHeld(true);
         pen.transform.SetParent(DirectInteractors[left ? 0 : 1].attachTransform);
-        grabActionHandler.RequestHandAnimation(left, HandAnimator.SpecialAnimation.GripPhone);
+        grabActionHandler.RequestHandAnimation(left, HandAnimator.SpecialAnimation.GripPen);
         if (left)
             pen.transform.SetLocalPositionAndRotation(Vector3.right * 0.05f, Quaternion.identity);
         else
