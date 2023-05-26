@@ -59,8 +59,8 @@ public class PhoneManager : MonoBehaviour
     /// <param name="device"></param>
     public void SetHeld(InputDevice device)
     {
-        SetHeld(true);
         heldDevice = device;
+        SetHeld(true);
     }
 
     /// <summary>

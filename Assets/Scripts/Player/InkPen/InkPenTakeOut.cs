@@ -31,7 +31,7 @@ public class InkPenTakeOut : MonoBehaviour
             if (pos.y < 1.0f) return; // too low
             if (pos.z > 0.1f) return; // too front
 
-            TakeOutPen(left);
+            TakeOutPen(left, device);
         };
         grabActionHandler.OnGrabReleased += (left, device) =>
         {
@@ -42,11 +42,11 @@ public class InkPenTakeOut : MonoBehaviour
 
     private bool? penHand = null;
 
-    private void TakeOutPen(bool left)
+    private void TakeOutPen(bool left, InputDevice device)
     {
         penHand = left;
         pen.gameObject.SetActive(true);
-        pen.SetHeld(true);
+        pen.SetHeld(device);
         pen.transform.SetParent(DirectInteractors[left ? 0 : 1].attachTransform);
         grabActionHandler.RequestHandAnimation(left, HandAnimator.SpecialAnimation.GripPen);
         if (left)

@@ -206,10 +206,15 @@ public class HandMapManager : MonoBehaviour
     private Vector2 lastPenOffset = Vector2.zero;
     private bool lastLine = false;
 
+    public void PausePenDraw()
+    {
+        lastLine = false;
+    }
+
     public void RequestPenDraw(Transform tip)
     {
         var dist = GetDistanceFromMap(tip.position);
-        if (dist > 0.02f || dist < -0.04f) { lastLine = false; return; }
+        if (dist > 0.02f || dist < -0.04f) { PausePenDraw(); return; }
 
         Vector3 centerPos = Vector3.Lerp(handleLeft.position, handleRight.position, 0.5f);
         Vector3 localPos = tip.position - centerPos;

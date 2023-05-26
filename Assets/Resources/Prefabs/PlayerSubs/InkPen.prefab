@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 8656252947374727214}
   - component: {fileID: 9141551671658006292}
   - component: {fileID: 9131343769356199539}
+  - component: {fileID: 3118677475864259409}
   m_Layer: 0
   m_Name: InkPen
   m_TagString: Untagged
@@ -232,6 +233,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   point: {fileID: 2976519698320937417}
+--- !u!95 &3118677475864259409
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5490471169887999285}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7c56861361aabac4fb9c43d1ec1216ae, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6497108255102998418
 GameObject:
   m_ObjectHideFlags: 0
