@@ -83,9 +83,9 @@ public class HandMapExpand : MonoBehaviour
         map.gameObject.SetActive(true);
 
         map.handleLeft.transform.SetParent(DirectInteractors[0].attachTransform);
-        map.handleLeft.transform.SetLocalPositionAndRotation(Vector3.right * 0.1f, Quaternion.Euler(20f, 0f, 0f));
+        map.handleLeft.transform.SetLocalPositionAndRotation(Vector3.right * 0.0f, Quaternion.Euler(20f, 0f, 0f));
         map.handleRight.transform.SetParent(DirectInteractors[1].attachTransform);
-        map.handleRight.transform.SetLocalPositionAndRotation(Vector3.left * 0.1f, Quaternion.Euler(20f, 0f, 0f));
+        map.handleRight.transform.SetLocalPositionAndRotation(Vector3.left * 0.0f, Quaternion.Euler(20f, 0f, 0f));
 
         map.CreateToggleEffect();
         map.SetHeld(true);

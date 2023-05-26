@@ -27,6 +27,9 @@ public class HandMapManager : MonoBehaviour
     [SerializeField]
     private GameObject prefabParticleEffect = null;
 
+    [SerializeField]
+    private Animator[] handleAnims = new Animator[2];
+
     [Header("Canvas")]
     [SerializeField]
     private Canvas canvas;
@@ -82,6 +85,10 @@ public class HandMapManager : MonoBehaviour
         handleLeft.localScale = new(1f, paperHeight / paperFullHeight, 1f);
         handleRight.localScale = new(1f, paperHeight / paperFullHeight, 1f);
         paperHandler.Update(paperHeight);
+        float used = Vector3.Distance(handleLeft.position, handleRight.position) / (paperFullHeight * 1.5f);
+        used = Mathf.Clamp01(used);
+        foreach (var handleAnim in handleAnims)
+            handleAnim.SetFloat("Used", used);
     }
 
     private void FixedUpdate()
