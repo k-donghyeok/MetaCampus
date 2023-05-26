@@ -111,7 +111,7 @@ public class HandMapManager : MonoBehaviour
     private Transform XROrigin => player.xrOrigin;
 
 
-    public void SetLaydown(bool held)
+    public void SetHeld(bool held)
     {
         layDown = !held;
         paperHandler.TogglePhysics(held);
@@ -122,7 +122,8 @@ public class HandMapManager : MonoBehaviour
     public void LaydownMap()
     {
         gameObject.SetActive(true);
-        SetLaydown(false);
+        SetHeld(false);
+        CancelInvoke(nameof(FoldLaydownMap));
         CreateToggleEffect();
         handleLeft.transform.SetParent(XROrigin);
         handleLeft.transform.SetLocalPositionAndRotation(
@@ -183,12 +184,12 @@ public class HandMapManager : MonoBehaviour
 
     private PhotoTransform photoTransform;
 
-    public bool RequestPhotoAttach(Texture2D photo, Transform photoTF)
+    public bool RequestPhotoAttach(Texture2D photo, Transform photoTF, float leniency)
     {
         UpdatePhotoProjection(photoTF);
         photoOverlay.gameObject.SetActive(false);
 
-        if (GetDistanceFromMap(photoTF.position) > 0.1f) return false;
+        if (GetDistanceFromMap(photoTF.position) > leniency) return false;
         PlanMgr.PastePhoto(photo, photoTransform);
         return true;
     }
