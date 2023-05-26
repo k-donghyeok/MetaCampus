@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
 
 /// <summary>
 /// 찍은 사진을 계획도에 붙이는 행동 관리
@@ -25,16 +26,36 @@ public class AttachBehaviour
         owner.photoScreen.material.mainTexture = this.photo;
     }
 
-    public void Update()
+    private bool lastTrigger = false;
+
+    public void Update(InputDevice device)
     {
         owner.Map.UpdatePhotoProjection(owner.transform);
 
-        // allow stretch
+        if (device.TryGetFeatureValue(CommonUsages.trigger, out var triggerValue))
+        {
+            if (triggerValue > 0.9f)
+            {
+                if (!lastTrigger)
+                {
+                    bool attach = AttemptAttach(0.2f);
+                    if (attach)
+                    {
+                        owner.AttachAction();
+                        return;
+                    }
+                }
+                lastTrigger = true;
+            }
+            else lastTrigger = false;
+        }
+        else lastTrigger = false;
 
+        // allow stretch
 
     }
 
-    public bool AttemptAttach()
-        => owner.Map.RequestPhotoAttach(photo, owner.transform);
+    public bool AttemptAttach(float leniency)
+        => owner.Map.RequestPhotoAttach(photo, owner.transform, leniency);
 
 }

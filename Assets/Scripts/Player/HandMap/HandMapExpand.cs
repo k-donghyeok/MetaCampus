@@ -56,8 +56,16 @@ public class HandMapExpand : MonoBehaviour
             if (map.layDown) return; // 놓여진 상태에서는 접지 않음
 
             // 지도를 손에서 떨어뜨리기
-            if ((handFlags & (1 << 0)) == 0) map.handleLeft.transform.SetParent(map.transform);
-            if ((handFlags & (1 << 1)) == 0) map.handleRight.transform.SetParent(map.transform);
+            if ((handFlags & (1 << 0)) == 0)
+            {
+                map.handleLeft.transform.SetParent(map.transform);
+                grabActionHandler.RequestHandAnimation(true, HandAnimator.SpecialAnimation.None);
+            }
+            if ((handFlags & (1 << 1)) == 0)
+            {
+                map.handleRight.transform.SetParent(map.transform);
+                grabActionHandler.RequestHandAnimation(false, HandAnimator.SpecialAnimation.None);
+            }
 
             var leftToRight = map.handleRight.position - map.handleLeft.position;
             leftToRight = Vector3.ClampMagnitude(leftToRight, retractSpeed * Time.deltaTime);
@@ -74,7 +82,11 @@ public class HandMapExpand : MonoBehaviour
             }
 
             if (!map.dissappearing && Vector3.Distance(map.handleLeft.position, map.handleRight.position) < expandThreshold)
+            {
                 map.dissappearing = true; // 지도가 어느정도 말려들어가면 사라지는 애니메이션 실행
+                for (int i = 0; i < 2; ++i)
+                    grabActionHandler.RequestHandAnimation(i, HandAnimator.SpecialAnimation.None);
+            }
         }
     }
 
@@ -83,12 +95,14 @@ public class HandMapExpand : MonoBehaviour
         map.gameObject.SetActive(true);
 
         map.handleLeft.transform.SetParent(DirectInteractors[0].attachTransform);
-        map.handleLeft.transform.SetLocalPositionAndRotation(Vector3.right * 0.1f, Quaternion.Euler(20f, 0f, 0f));
+        map.handleLeft.transform.SetLocalPositionAndRotation(Vector3.right * 0.05f, Quaternion.Euler(20f, 0f, 0f));
         map.handleRight.transform.SetParent(DirectInteractors[1].attachTransform);
-        map.handleRight.transform.SetLocalPositionAndRotation(Vector3.left * 0.1f, Quaternion.Euler(20f, 0f, 0f));
+        map.handleRight.transform.SetLocalPositionAndRotation(Vector3.left * 0.05f, Quaternion.Euler(20f, 0f, 0f));
 
         map.CreateToggleEffect();
-        map.SetLaydown(true);
+        map.SetHeld(true);
+        for (int i = 0; i < 2; ++i)
+            grabActionHandler.RequestHandAnimation(i, HandAnimator.SpecialAnimation.GripMap);
     }
 
 

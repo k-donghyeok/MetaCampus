@@ -27,6 +27,9 @@ public class HandMapManager : MonoBehaviour
     [SerializeField]
     private GameObject prefabParticleEffect = null;
 
+    [SerializeField]
+    private Animator[] handleAnims = new Animator[2];
+
     [Header("Canvas")]
     [SerializeField]
     private Canvas canvas;
@@ -82,6 +85,10 @@ public class HandMapManager : MonoBehaviour
         handleLeft.localScale = new(1f, paperHeight / paperFullHeight, 1f);
         handleRight.localScale = new(1f, paperHeight / paperFullHeight, 1f);
         paperHandler.Update(paperHeight);
+        float used = Vector3.Distance(handleLeft.position, handleRight.position) / (paperFullHeight * 1.5f);
+        used = Mathf.Clamp01(used);
+        foreach (var handleAnim in handleAnims)
+            handleAnim.SetFloat("Used", used);
     }
 
     private void FixedUpdate()
@@ -111,7 +118,7 @@ public class HandMapManager : MonoBehaviour
     private Transform XROrigin => player.xrOrigin;
 
 
-    public void SetLaydown(bool held)
+    public void SetHeld(bool held)
     {
         layDown = !held;
         paperHandler.TogglePhysics(held);
@@ -122,7 +129,8 @@ public class HandMapManager : MonoBehaviour
     public void LaydownMap()
     {
         gameObject.SetActive(true);
-        SetLaydown(false);
+        SetHeld(false);
+        CancelInvoke(nameof(FoldLaydownMap));
         CreateToggleEffect();
         handleLeft.transform.SetParent(XROrigin);
         handleLeft.transform.SetLocalPositionAndRotation(
@@ -183,12 +191,12 @@ public class HandMapManager : MonoBehaviour
 
     private PhotoTransform photoTransform;
 
-    public bool RequestPhotoAttach(Texture2D photo, Transform photoTF)
+    public bool RequestPhotoAttach(Texture2D photo, Transform photoTF, float leniency)
     {
         UpdatePhotoProjection(photoTF);
         photoOverlay.gameObject.SetActive(false);
 
-        if (GetDistanceFromMap(photoTF.position) > 0.1f) return false;
+        if (GetDistanceFromMap(photoTF.position) > leniency) return false;
         PlanMgr.PastePhoto(photo, photoTransform);
         return true;
     }

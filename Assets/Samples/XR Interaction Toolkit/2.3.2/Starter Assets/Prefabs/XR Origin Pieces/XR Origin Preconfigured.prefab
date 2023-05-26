@@ -272,7 +272,6 @@ MonoBehaviour:
   m_StartingGroupMembers:
   - {fileID: 4343660526480754339}
   - {fileID: 2434299456458490401}
-  - {fileID: 285389467476424711}
 --- !u!1 &1670256624
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,7 +335,7 @@ MonoBehaviour:
     type: 3}
   m_Move: {fileID: -8198699208435500284, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   m_SmoothMotionEnabled: 0
-  m_SmoothTurnEnabled: 0
+  m_SmoothTurnEnabled: 1
 --- !u!114 &1670256628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -545,7 +544,6 @@ MonoBehaviour:
   m_StartingGroupMembers:
   - {fileID: 2141651114331267770}
   - {fileID: 6045481230268494804}
-  - {fileID: 19064736505062540}
 --- !u!1 &1680501586
 GameObject:
   m_ObjectHideFlags: 0
