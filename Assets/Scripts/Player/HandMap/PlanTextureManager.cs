@@ -14,10 +14,23 @@ public class PlanTextureManager
     {
         this.owner = owner;
         PlanTexture = new Texture2D(2048, 2048, TextureFormat.ARGB32, false);
-        PlanTexture.SetPixels32(Enumerable.Repeat(new Color32(255, 255, 255, 0), PlanTexture.width * PlanTexture.height).ToArray());
-        PlanTexture.Apply();
-
+        ResetPlan();
         owner.UpdateTexture(PlanTexture);
+    }
+
+    public void ResetPlan()
+    {
+        if (StageManager.Instance().IsExterior())
+        {
+            var canvasMap = Resources.Load("Textures/Test_CampusMap") as Texture2D;
+            var colors = canvasMap.GetPixels32();
+            PlanTexture.SetPixels32(colors);
+        }
+        else
+        {
+            PlanTexture.SetPixels32(Enumerable.Repeat(new Color32(255, 255, 255, 0), PlanTexture.width * PlanTexture.height).ToArray());
+        }
+        PlanTexture.Apply();
     }
 
 
