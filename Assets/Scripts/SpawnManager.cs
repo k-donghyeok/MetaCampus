@@ -64,7 +64,7 @@ public class SpawnManager
         Debug.Log($"player: {player != null}");
         var areaPosition = FindAreaPosition(spawnPointID);
         Debug.Log($"areaPosition: {areaPosition != null}");
-        player.transform.position = areaPosition.transform.position +new Vector3(2f,0f,2f);
+        player.transform.position = areaPosition.transform.position + new Vector3(0f, 0.5f, 0f);
 
         Debug.Log("스폰완료: " + spawnPointID);
     }
