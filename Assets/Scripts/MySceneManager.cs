@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using Unity.XR.Oculus;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR;
@@ -42,20 +43,6 @@ public class MySceneManager
 
 
         SceneManager.LoadScene((int)_name);
-
-        // exterior 값은 유니티 에디터 Inspector에서 설정하는 거라 코드에서 고칠 필요도 없고, 고쳐서도 안 됨.
-        // 애초에 외부에서 수정하지 말라고 캡슐화한 겁니다.
-        /*
-        if(_name==SCENENAME.Exterior)
-        {
-            StageManager.Instance().ChangeExterior(true);
-        }
-
-        if(_name!=SCENENAME.Exterior)
-        {
-            StageManager.Instance().ChangeExterior(false);
-        }
-        */
 
 
     }
