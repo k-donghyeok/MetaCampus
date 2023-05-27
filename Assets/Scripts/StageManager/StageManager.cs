@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using Unity.VisualScripting;
 using System;
 
+
 public class StageManager : MonoBehaviour
 {
     [Serializable]
@@ -28,7 +29,7 @@ public class StageManager : MonoBehaviour
 
     public bool IsPlayerInServerRoom { get; set; } =false;
 
-    public string UserID { get; set; } = "최원탁";
+    public string UserID { get; set; } = "강동혁";
 
     private static StageManager instance = null;
 
@@ -172,57 +173,34 @@ public class StageManager : MonoBehaviour
 
         }
     }
-   
-   
-    public List<DataScore> GetScoreLeaderboard()
-    {
-        
-        StartCoroutine(GetScoreCoroutine());
-        if(IsRequest)
-        {
-            return dataScores;
-        }
-        return null;
-       
-    }
 
-    private List<DataScore> dataScores = null;
 
-    public bool IsRequest { get;private set; } = false;
-    private IEnumerator GetScoreCoroutine()
+   
+
+    public List<DataScore> dataScores { get; private set; }
+    
+    public IEnumerator GetScoreCoroutine()
     {
         using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/getscore.php", ""))
         {
+            
             yield return www.SendWebRequest();
-
-
+            Debug.Log("서버와 통신 후");
             if (www.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log(www.error);
             }
-            else
-            {
-                // Debug.Log(www.downloadHandler.text);
+            
                 string data = www.downloadHandler.text;
-                Debug.Log(data);
                 dataScores = JsonConvert.DeserializeObject<List<DataScore>>(data);
-                GetScoreFinish();
-
-            }
+              
+            
         }
     }
 
+  
 
-    private void GetScoreFinish()
-    {
-        if (dataScores == null)
-        {
-            Debug.Log("데이터베이스에 값이 없음");
-            IsRequest=false;
-        }
-        Debug.Log("데이터베이스 값 가져옴");
-        IsRequest=true;
-    }
+
     private void InitiateExterior()
     {
         GameManager.Instance().Spawn.SpawnPlayerToSavedLocation();

@@ -1,27 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+
 
 public class ServerComputer : MonoBehaviour
 {
+    [SerializeField] GameObject canvas = null;
+    [SerializeField] GameObject detailUiPrefab = null;
+    [SerializeField] Transform parentUi = null;
+
     private void OnTriggerEnter(Collider _other)
     {
         Debug.Log("충돌");
-        if(_other.transform.parent.CompareTag("Player"))
+        if (_other.transform.parent.CompareTag("Player"))
         {
             Debug.Log("플레이어맞음");
-            StageManager.Instance().IsClear=true;
-            Debug.Log("성적수정 성공여부 : "+StageManager.Instance().IsClear);
-            StageManager.Instance().IsPlayerInServerRoom=true;
+            StageManager.Instance().IsClear = true;
+            Debug.Log("성적수정 성공여부: " + StageManager.Instance().IsClear);
+            StageManager.Instance().IsPlayerInServerRoom = true;
 
-
-            var dataScores = StageManager.Instance().GetScoreLeaderboard();
-            //서버에 저장된 리더보드값 띄우기
-
-            // 이름입력 ui 활성화
-
-
+            StartCoroutine(GetScoreLeaderboardCoroutine());
         }
+    }
+
+    private IEnumerator GetScoreLeaderboardCoroutine()
+    {
+        yield return StageManager.Instance().GetScoreCoroutine();
+        Debug.Log("스테이지매니저의 코루틴사용해서 성적 수정후");
+        // 서버에서 받아온 데이터 사용
+        var dataScores = StageManager.Instance().dataScores;
+
+        // 서버에 저장된 리더보드값 띄우기
+        canvas.SetActive(true);
+        InstanceUi(dataScores);
     }
 
     private void OnTriggerExit(Collider _other)
@@ -30,9 +42,18 @@ public class ServerComputer : MonoBehaviour
         if (_other.transform.parent.CompareTag("Player"))
         {
             StageManager.Instance().IsPlayerInServerRoom = false;
+
+            canvas.SetActive(true);
         }
     }
 
+    private void InstanceUi(List<StageManager.DataScore> _dataScores)
+    {
+        for(int i=0;i<_dataScores.Count;++i)
+        {
+            Instantiate(detailUiPrefab, parentUi);
+        }
+    }
 
-
+     
 }
