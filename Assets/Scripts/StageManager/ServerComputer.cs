@@ -30,7 +30,7 @@ public class ServerComputer : MonoBehaviour
         Debug.Log("스테이지매니저의 코루틴사용해서 성적 수정후");
         // 서버에서 받아온 데이터 사용
         var dataScores = StageManager.Instance().dataScores;
-
+        Debug.Log(dataScores.Count);
         // 서버에 저장된 리더보드값 띄우기
         canvas.SetActive(true);
         InstanceUi(dataScores);
@@ -49,9 +49,12 @@ public class ServerComputer : MonoBehaviour
 
     private void InstanceUi(List<StageManager.DataScore> _dataScores)
     {
+        Vector3 pos = new Vector3(0f,190f,0f);
         for(int i=0;i<_dataScores.Count;++i)
         {
-            Instantiate(detailUiPrefab, parentUi);
+            GameObject go =Instantiate(detailUiPrefab, parentUi);
+            go.transform.localPosition = pos;
+            pos = pos - new Vector3(0f, 80f, 0f);
         }
     }
 
