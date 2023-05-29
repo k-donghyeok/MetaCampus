@@ -8,6 +8,7 @@ public class EntranceDoor : SpawnPoint
     {
         base.PassThrough();
         GameManager.Instance().Scene.ChangeScene(MySceneManager.SCENENAME.Interior);
+
     }
 
     
