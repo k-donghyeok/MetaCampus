@@ -10,20 +10,21 @@ public class MultiUseDoor : DoorLock
         animator = GetComponent<Animator>();
     }
 
-    protected override void Unlock(DoorKey _collision)
+    public override bool TryUnlock(DoorKey key)
     {
         // 종류가 다름: 아무 일도 일어나지 않음
-        if (_collision.LockTypeID != LockTypeID) return;
+        if (key.LockTypeID != LockTypeID) return false;
         // 맞지 않음: 뭔가 이벤트?
-        if (_collision.LockColorID != LockColorID)
+        if (key.LockColorID != LockColorID)
         {
 
-            return;
+            return false;
         }
 
         //문이열린다
-        IsOpened = true;
+        IsUnlocked = true;
         animator.SetTrigger("isOpen");
         Debug.Log("카드키 사용 문열림");
+        return true;
     }
 }

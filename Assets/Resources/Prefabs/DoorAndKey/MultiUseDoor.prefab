@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3095168364238845489}
   - component: {fileID: 2075715463}
   - component: {fileID: 5072582708885044800}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MultiUseDoor
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}

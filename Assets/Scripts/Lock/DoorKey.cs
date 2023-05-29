@@ -72,4 +72,17 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
         transform.rotation = Quaternion.identity;
         FloatUpdate();
     }
+
+    public virtual void OnTrigger()
+    {
+        if (!Physics.Raycast(transform.position, transform.forward, out var info, 0.2f, 1 << 7)) return;
+        if (!info.transform.TryGetComponent<DoorLock>(out var door)) return;
+        Debug.Log($"열쇠 {gameObject.name} > {info.transform.gameObject.name} 개방 시도");
+        if (door.TryUnlock(this)) OnUsed();
+    }
+
+    protected virtual void OnUsed()
+    {
+
+    }
 }

@@ -13,10 +13,6 @@ public class PasswordDoor : DoorLock
     [SerializeField, Range(-10f, 10f)]
     private float rotateSpeed = 1f;
 
-    protected override void Unlock(DoorKey _collision)
-    {
-
-    }
 
     private void Update()
     {
