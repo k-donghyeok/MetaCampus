@@ -11,11 +11,22 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
     public TypeID LockTypeID => lockTypeID;
     public ColorID LockColorID => lockColorID;
 
-    #region 떠다니는데 필요한 변수
+    #region Visual
+    /// <summary>
+    /// 부유 속도
+    /// </summary>
     [SerializeField, Range(1f, 10f)]
     private float floatspeed = 1f;
+    /// <summary>
+    /// 부유 왕복 높이
+    /// </summary>
     [SerializeField, Range(0f, 10f)]
     private float height = 1f;
+    /// <summary>
+    /// 놓여있을 때 얼마나 더 커보일지
+    /// </summary>
+    [SerializeField, Range(0.1f, 20.0f)]
+    private float dropScale = 1f;
 
     private float angle = 0f;
     #endregion
