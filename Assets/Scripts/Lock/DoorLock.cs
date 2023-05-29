@@ -12,40 +12,33 @@ public abstract class DoorLock : MonoBehaviour, IHaveLockID
 
     public ColorID LockColorID => lockColorID;
 
-    public abstract void Unlock(DoorKey _collision);
+    protected abstract void Unlock(DoorKey _collision);
 
+    [SerializeField]
+    private MeshRenderer[] dyeRenderers = new MeshRenderer[0];
 
-    protected virtual void Awake()
-    {
-    }
+    [SerializeField]
+    private bool clockwise = true;
+
+    /// <summary>
+    /// 문이 시계방향으로 열리는지 반시계방향으로 열리는지
+    /// </summary>
+    public bool Clockwise => clockwise;
+
     protected virtual void Start()
     {
-        SetColors();
-
+        LockManager.DyeRenderers(LockColorID, dyeRenderers);
     }
+
     private void OnTriggerEnter(Collider collision)
     {
-        DoorKey go = collision.gameObject.GetComponent<DoorKey>();
-        if (go == null)
+        if (!collision.gameObject.TryGetComponent<DoorKey>(out var key))
         {
             Debug.Log("충돌된게 열쇠가 아님");
             return;
         }
-        Debug.Log("충돌됨");
-        Unlock(go);
-    }
-
-
-    private void SetColors()
-    {
-        Color color = LockManager.GetColor(LockColorID);
-
-        MeshRenderer[] ren = GetComponentsInChildren<MeshRenderer>();
-        for (int i = 0; i < ren.Length; ++i)
-        {
-            //Debug.Log($"{i}: {ren[i].material.name}, {ren[i].material.GetColor("_BaseColor")}");
-            ren[i].material.SetColor("_BaseColor", color);
-        }
+        Debug.Log("열쇠와 충돌");
+        Unlock(key);
     }
 
 }

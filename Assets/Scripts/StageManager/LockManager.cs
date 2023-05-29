@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine.SceneManagement;
 using UnityEngine;
 using Random = UnityEngine.Random;
-using UnityEditor.SceneManagement;
 using static IHaveLockID;
 
 public class LockManager
@@ -99,6 +92,12 @@ public class LockManager
     public static Color GetColor(ColorID color)
         => colors[(int)color];
 
+    public static void DyeRenderers(ColorID color, MeshRenderer[] dyeRenderers)
+    {
+        var c = GetColor(color);
+        foreach (var r in dyeRenderers)
+            if (r.materials[0]) r.materials[0].SetColor("_BaseColor", c);
+    }
 }
 
 /// <summary>
@@ -106,8 +105,13 @@ public class LockManager
 /// </summary>
 public interface IHaveLockID
 {
-
+    /// <summary>
+    /// 잠금 종류
+    /// </summary>
     public TypeID LockTypeID { get; }
+    /// <summary>
+    /// 잠금 아이디
+    /// </summary>
     public ColorID LockColorID { get; }
 
     public enum ColorID : int

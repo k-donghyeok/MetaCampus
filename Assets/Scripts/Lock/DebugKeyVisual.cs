@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -9,10 +7,10 @@ using UnityEngine;
 [RequireComponent(typeof(DoorKey))]
 public class DebugKeyVisual : MonoBehaviour
 {
-    private void Start()
-    {
-        if (Application.isPlaying) Destroy(this); 
-    }
+    //private void Start()
+    //{
+    //    if (Application.isPlaying) Destroy(this); 
+    //}
 
 #if UNITY_EDITOR
     private void Update()
@@ -21,14 +19,15 @@ public class DebugKeyVisual : MonoBehaviour
         if (!key) return;
         const float S = 0.5f;
         var c = LockManager.GetColor(key.LockColorID);
-        Debug.DrawLine(transform.position + Vector3.forward * S, transform.position + Vector3.right * S, c);
-        Debug.DrawLine(transform.position + Vector3.right * S, transform.position + Vector3.back * S, c);
-        Debug.DrawLine(transform.position + Vector3.back * S, transform.position + Vector3.left * S, c);
-        Debug.DrawLine(transform.position + Vector3.left * S, transform.position + Vector3.forward * S, c);
-        Debug.DrawLine(transform.position + Vector3.forward * S, transform.position + Vector3.up * 2f, c);
-        Debug.DrawLine(transform.position + Vector3.right * S, transform.position + Vector3.up * 2f, c);
-        Debug.DrawLine(transform.position + Vector3.back * S, transform.position + Vector3.up * 2f, c);
-        Debug.DrawLine(transform.position + Vector3.left * S, transform.position + Vector3.up * 2f, c);
+        var O = transform.position;
+        Debug.DrawLine(O + Vector3.forward * S, O + Vector3.right * S, c);
+        Debug.DrawLine(O + Vector3.right * S, O + Vector3.back * S, c);
+        Debug.DrawLine(O + Vector3.back * S, O + Vector3.left * S, c);
+        Debug.DrawLine(O + Vector3.left * S, O + Vector3.forward * S, c);
+        Debug.DrawLine(O + Vector3.forward * S, O + Vector3.up * 2f, c);
+        Debug.DrawLine(O + Vector3.right * S, O + Vector3.up * 2f, c);
+        Debug.DrawLine(O + Vector3.back * S, O + Vector3.up * 2f, c);
+        Debug.DrawLine(O + Vector3.left * S, O + Vector3.up * 2f, c);
     }
 #endif
 }

@@ -30,7 +30,7 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
 
     protected virtual void Start()
     {
-        SetColors();
+        LockManager.DyeRenderers(LockColorID, dyeRenderers);
     }
 
     private void Update()
@@ -50,13 +50,5 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
             Mathf.Sin(Mathf.Deg2Rad * angleDeg) * 0.1f + 0.9f,
             modelTransform.position.z);
         modelTransform.rotation = Quaternion.Euler(0f, angleDeg, 0f);
-    }
-
-    private void SetColors()
-    {
-        var color = LockManager.GetColor(LockColorID);
-        foreach (var r in dyeRenderers)
-            if (r) foreach(var m in r.materials)
-                    if (m) m.SetColor("_BaseColor", color);
     }
 }
