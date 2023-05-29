@@ -31,24 +31,40 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
     protected virtual void Start()
     {
         LockManager.DyeRenderers(LockColorID, dyeRenderers);
+        modelTransform.localScale = Vector3.one * dropScale;
+        FloatUpdate();
     }
 
     private void Update()
     {
-        if (modelTransform)
-        {
-            FloatUpdate();
-            modelTransform.localScale = Vector3.one * dropScale; // TODO: react to picked up state
-        }
+        if (!Held) FloatUpdate();
     }
 
     private void FloatUpdate()
     {
+        if (!modelTransform) return;
         angleDeg = (angleDeg + 60f * Time.deltaTime) % 360f;
 
         modelTransform.position = new Vector3(modelTransform.position.x,
             Mathf.Sin(Mathf.Deg2Rad * angleDeg) * 0.1f + 0.9f,
             modelTransform.position.z);
         modelTransform.rotation = Quaternion.Euler(0f, angleDeg, 0f);
+    }
+
+    protected bool Held { get; private set; } = false;
+
+    public virtual void OnHeld()
+    {
+        Held = true;
+        modelTransform.localScale = Vector3.one;
+        modelTransform.rotation = Quaternion.identity;
+        modelTransform.position = Vector3.zero;
+    }
+
+    public virtual void OnHeldReleased()
+    {
+        Held = false;
+        modelTransform.localScale = Vector3.one * dropScale;
+        FloatUpdate();
     }
 }
