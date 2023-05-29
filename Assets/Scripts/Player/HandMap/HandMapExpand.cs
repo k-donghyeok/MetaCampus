@@ -58,27 +58,27 @@ public class HandMapExpand : MonoBehaviour
             // 지도를 손에서 떨어뜨리기
             if ((handFlags & (1 << 0)) == 0)
             {
-                map.handleLeft.transform.SetParent(map.transform);
+                map.handleLeft.SetParent(map.transform);
                 grabActionHandler.RequestHandAnimation(true, HandAnimator.SpecialAnimation.None);
             }
             if ((handFlags & (1 << 1)) == 0)
             {
-                map.handleRight.transform.SetParent(map.transform);
+                map.handleRight.SetParent(map.transform);
                 grabActionHandler.RequestHandAnimation(false, HandAnimator.SpecialAnimation.None);
             }
 
-            var leftToRight = map.handleRight.position - map.handleLeft.position;
-            leftToRight = Vector3.ClampMagnitude(leftToRight, retractSpeed * Time.deltaTime);
             if (handFlags > 0)
             { // 한 손을 놓고 있으면 놓은 쪽부터 지도가 말려들어감
-                if ((handFlags & (1 << 0)) > 0) map.handleRight.transform.Translate(-leftToRight);
-                else map.handleLeft.transform.Translate(leftToRight);
+                var leftToRight = map.handleRight.position - map.handleLeft.position;
+                leftToRight = Vector3.ClampMagnitude(leftToRight, retractSpeed * Time.deltaTime);
+                if ((handFlags & (1 << 0)) > 0) map.handleRight.Translate(-leftToRight);
+                else map.handleLeft.Translate(leftToRight);
             }
             else
             { // 양 손을 놓고 있으면 가운데로 지도가 말려들어감
-                leftToRight *= 0.5f;
-                map.handleRight.transform.Translate(-leftToRight);
-                map.handleLeft.transform.Translate(leftToRight);
+                var center = Vector3.Lerp(map.handleLeft.position, map.handleRight.position, 0.5f);
+                map.handleLeft.Translate(Vector3.ClampMagnitude(center - map.handleLeft.position, retractSpeed * 0.5f * Time.deltaTime));
+                map.handleRight.Translate(Vector3.ClampMagnitude(center - map.handleRight.position, retractSpeed * 0.5f * Time.deltaTime));
             }
 
             if (!map.dissappearing && Vector3.Distance(map.handleLeft.position, map.handleRight.position) < expandThreshold)

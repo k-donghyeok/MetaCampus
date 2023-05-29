@@ -12,7 +12,7 @@ public class DebugDoorVisual : MonoBehaviour
     {
         var door = GetComponent<DoorLock>();
         if (!door) return;
-        const float S = 0.8f, A = 0.5f;
+        const float S = 0.9f, A = 0.7f;
         var c = LockManager.GetColor(door.LockColorID);
         var O = transform.position;
         var B = door.Clockwise ? Vector3.back : Vector3.forward;
