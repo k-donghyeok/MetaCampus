@@ -12,12 +12,18 @@ public class OneTimeDoor : DoorLock
 
     protected override void Unlock(DoorKey _collision)
     {
-        if (_collision.LockColorID == LockColorID && _collision.LockTypeID == LockTypeID)
+        // 종류가 다름: 아무 일도 일어나지 않음
+        if (_collision.LockTypeID != LockTypeID) return;
+        // 맞지 않음: 뭔가 이벤트?
+        if (_collision.LockColorID != LockColorID)
         {
-            Destroy(_collision.gameObject);
-            Debug.Log("일회용 열쇠 사용 문이열림");
 
-            animator.SetTrigger("isOpen");
+            return;
         }
+
+        IsOpened = true;
+        animator.SetTrigger("isOpen");
+        _collision.gameObject.SetActive(false);
+        Debug.Log("일회용 열쇠 사용 문이 열림");
     }
 }

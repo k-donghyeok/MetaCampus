@@ -41,9 +41,9 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
         if (!groundModel) return;
         angleDeg = (angleDeg + 60f * Time.deltaTime) % 360f;
 
-        groundModel.position = new Vector3(groundModel.position.x,
+        groundModel.localPosition = new Vector3(groundModel.localPosition.x,
             Mathf.Sin(Mathf.Deg2Rad * angleDeg) * 0.1f,
-            groundModel.position.z);
+            groundModel.localPosition.z);
         groundModel.rotation = Quaternion.Euler(0f, angleDeg, 0f);
     }
 
@@ -54,6 +54,7 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
         {
             if (held == value) return;
             held = value;
+            GetComponent<CapsuleCollider>().enabled = !held;
             groundModel.gameObject.SetActive(!held);
             heldModel.gameObject.SetActive(held);
         }
@@ -68,6 +69,7 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
     public virtual void OnHeldReleased()
     {
         Held = false;
+        transform.rotation = Quaternion.identity;
         FloatUpdate();
     }
 }

@@ -25,6 +25,11 @@ public abstract class DoorLock : MonoBehaviour, IHaveLockID
     /// </summary>
     public bool Clockwise => clockwise;
 
+    /// <summary>
+    /// 문이 열린 상태인지
+    /// </summary>
+    public bool IsOpened { get; protected set; } = false;
+
     protected virtual void Start()
     {
         LockManager.DyeRenderers(LockColorID, dyeRenderers);
@@ -38,6 +43,7 @@ public abstract class DoorLock : MonoBehaviour, IHaveLockID
             return;
         }
         Debug.Log("열쇠와 충돌");
+        if (IsOpened) return; // 이미 열린 상태
         Unlock(key);
     }
 

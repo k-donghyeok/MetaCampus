@@ -6,7 +6,7 @@ public class TimeManager
     private float currentTime = 0f;
 
     public float RemainingTime => countdownDuration - currentTime;
-    public bool IsCountdownComplete => currentTime <= countdownDuration;
+    public bool IsCountdownComplete => currentTime >= countdownDuration;
 
     public void StartCountdown()
     {
@@ -15,16 +15,11 @@ public class TimeManager
 
     public void UpdateCountdown()
     {
-        if (!IsCountdownComplete)
-        {
-            TimeOver();
-            return;
-        }
-           
+        if (IsCountdownComplete) return;
+
 
         currentTime += Time.deltaTime;
-
-      
+        if (IsCountdownComplete) TimeOver();
     }
 
     private void TimeOver()
