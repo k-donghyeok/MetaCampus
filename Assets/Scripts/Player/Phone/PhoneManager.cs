@@ -1,3 +1,4 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.XR;
 
@@ -58,8 +59,8 @@ public class PhoneManager : MonoBehaviour
     /// <param name="device"></param>
     public void SetHeld(InputDevice device)
     {
-        SetHeld(true);
         heldDevice = device;
+        SetHeld(true);
     }
 
     /// <summary>
@@ -74,12 +75,16 @@ public class PhoneManager : MonoBehaviour
         if (held) ChangeMode(Mode.Capture);
         else if (CurMode == Mode.Attach)
         {
-            bool attach = AttachBehav.AttemptAttach();
-            Map.RequestFoldLaydownMap(attach ? 2f : 0f); // 사진 놓음
-            if (attach) hideTimer = 0f;
+            Map.RequestFoldLaydownMap(0f);
         }
     }
 
+    public void AttachAction()
+    {
+        SetHeld(false);
+        Map.RequestFoldLaydownMap(2f);
+        hideTimer = 0f;
+    }
 
     private void Update()
     {
@@ -93,10 +98,10 @@ public class PhoneManager : MonoBehaviour
 
         switch (CurMode)
         {
+            case Mode.Attach:
+                AttachBehav.Update(heldDevice); break;
             case Mode.Capture:
                 CaptureBehav.Update(heldDevice); break;
-            case Mode.Attach:
-                AttachBehav.Update(); break;
         }
 
     }
