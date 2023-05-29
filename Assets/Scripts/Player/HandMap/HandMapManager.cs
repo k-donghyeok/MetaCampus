@@ -66,7 +66,7 @@ public class HandMapManager : MonoBehaviour
 
     private void OnDisable()
     {
-        paperHandler.SetActive(false);
+        paperHandler?.SetActive(false);
     }
 
 

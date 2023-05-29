@@ -71,14 +71,14 @@ public class HandMapExpand : MonoBehaviour
             { // 한 손을 놓고 있으면 놓은 쪽부터 지도가 말려들어감
                 var leftToRight = map.handleRight.position - map.handleLeft.position;
                 leftToRight = Vector3.ClampMagnitude(leftToRight, retractSpeed * Time.deltaTime);
-                if ((handFlags & (1 << 0)) > 0) map.handleRight.Translate(-leftToRight);
-                else map.handleLeft.Translate(leftToRight);
+                if ((handFlags & (1 << 0)) > 0) map.handleRight.Translate(-leftToRight, Space.World);
+                else map.handleLeft.Translate(leftToRight, Space.World);
             }
             else
             { // 양 손을 놓고 있으면 가운데로 지도가 말려들어감
                 var center = Vector3.Lerp(map.handleLeft.position, map.handleRight.position, 0.5f);
-                map.handleLeft.Translate(Vector3.ClampMagnitude(center - map.handleLeft.position, retractSpeed * 0.5f * Time.deltaTime));
-                map.handleRight.Translate(Vector3.ClampMagnitude(center - map.handleRight.position, retractSpeed * 0.5f * Time.deltaTime));
+                map.handleLeft.Translate(Vector3.ClampMagnitude(center - map.handleLeft.position, retractSpeed * 0.5f * Time.deltaTime), Space.World);
+                map.handleRight.Translate(Vector3.ClampMagnitude(center - map.handleRight.position, retractSpeed * 0.5f * Time.deltaTime), Space.World);
             }
 
             if (!map.dissappearing && Vector3.Distance(map.handleLeft.position, map.handleRight.position) < expandThreshold)
