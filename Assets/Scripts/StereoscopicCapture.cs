@@ -27,6 +27,7 @@ public class StereoscopicCapture : MonoBehaviour
 
     public void Capture()
     {
+        Debug.Log("Ä¸ÃÄ½ÃÀÛ");
         mainCamera.stereoSeparation = 0.065f;
         mainCamera.RenderToCubemap(cubeMapRenderTextureLeft, 63, Camera.MonoOrStereoscopicEye.Left);
         mainCamera.RenderToCubemap(cubeMapRenderTextureRight, 63, Camera.MonoOrStereoscopicEye.Right);
