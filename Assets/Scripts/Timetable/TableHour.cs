@@ -35,9 +35,9 @@ public class TableHour : MonoBehaviour
         Image image = GetComponentInChildren<Image>();
         RectTransform rectTransform = image.gameObject.GetComponent<RectTransform>();
         rectTransform.sizeDelta = new Vector2(hourWidth, hourHeight * hour);
-        rectTransform.position += (hourHeight * 0.5f) * Vector3.down;
+        rectTransform.localPosition += (hourHeight * 0.5f) * Vector3.down;
 
         rectTransform = text.gameObject.GetComponent<RectTransform>();
-        rectTransform.position += (hourHeight * 0.5f) * Vector3.down;
+        rectTransform.localPosition += (hourHeight * 0.5f) * Vector3.down;
     }
 }
