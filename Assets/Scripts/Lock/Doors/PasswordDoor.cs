@@ -16,10 +16,12 @@ public class PasswordDoor : DoorLock
     {
         base.Start();
         StageManager.Instance().OnStageLoad += (stage) => SavePassword(stage);
+        foreach (var text in texts) text.SetText(PW_EMPTY);
     }
 
     private int password;
     private int curInput = 0;
+    private const string PW_EMPTY = "XXXX";
 
     private void SavePassword(StageManager stage)
     {
@@ -38,7 +40,7 @@ public class PasswordDoor : DoorLock
         curInput = curInput * 10 + number;
         if (curInput >= 1000) CheckPassword();
         foreach (var text in texts)
-            text.SetText(curInput == 0 ? string.Empty : curInput.ToString());
+            text.SetText(curInput == 0 ? PW_EMPTY : curInput.ToString());
     }
 
     private void CheckPassword()
