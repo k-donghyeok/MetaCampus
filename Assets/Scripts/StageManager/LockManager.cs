@@ -11,10 +11,10 @@ public class LockManager
 
     private int[] passwords = null;
 
-    public int GetPassword(int id)
+    public int GetPassword(ColorID id)
     {
         if (passwords == null) CreatePasswords();
-        return passwords[id];
+        return passwords[(int)id];
     }
 
     private void CreatePasswords()
@@ -33,7 +33,7 @@ public class LockManager
 
         // 비밀번호 생성 후 저장
         for (int i = 0; i < passwords.Length; ++i)
-            passwords[i] = Random.Range(1000, 9999);
+            passwords[i] = Random.Range(1000, 10000);
 
         // 시드 복구
         Random.state = seedBak;
