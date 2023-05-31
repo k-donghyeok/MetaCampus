@@ -121,7 +121,7 @@ public class AIController : MonoBehaviour
         Vector3 detectionStart = transform.position + transform.forward * detectionRadius;
         Vector3 detectionEndLeft = transform.position + Quaternion.Euler(0f, -detectionAngle * 0.5f, 0f) * transform.forward * detectionRadius;
         Vector3 detectionEndRight = transform.position + Quaternion.Euler(0f, detectionAngle * 0.5f, 0f) * transform.forward * detectionRadius;
-        
+
         // AI의 시야 범위를 선으로 그림
         Gizmos.DrawLine(transform.position, detectionStart);
         Gizmos.DrawLine(transform.position, detectionEndLeft);

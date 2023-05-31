@@ -8,8 +8,8 @@ public class TableHour : MonoBehaviour
 {
     private TMP_Text text;
 
-    public float hourWidth = 260f;
-    public float hourHeight = 96f;
+    public float hourWidth = 65f;
+    public float hourHeight = 24f;
 
     private int hour = 1;
 

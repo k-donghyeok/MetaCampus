@@ -1,19 +1,11 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerCollision : MonoBehaviour
 {
-    public float moveSpeed = 20f;
     public GameObject uiObject;
+    public GameObject uiObject2;
     private bool isColliding = false;
-
-    private void Update()
-    {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-
-        Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput) * moveSpeed * Time.deltaTime;
-        transform.Translate(movement);
-    }
+    
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -22,6 +14,8 @@ public class Player : MonoBehaviour
             Debug.Log("시간표 확인");
             isColliding = true;
             uiObject.SetActive(true);
+            uiObject2.SetActive(true);
+            
         }
     }
 
@@ -31,11 +25,13 @@ public class Player : MonoBehaviour
         {
             isColliding = false;
             uiObject.SetActive(false);
+            uiObject2.SetActive(false);
         }
 
         if (!isColliding)
         {
             uiObject.SetActive(false);
+            uiObject2.SetActive(false);
         }
     }
 }
