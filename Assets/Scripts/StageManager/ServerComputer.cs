@@ -43,7 +43,7 @@ public class ServerComputer : MonoBehaviour
         {
             StageManager.Instance().IsPlayerInServerRoom = false;
 
-            canvas.SetActive(true);
+            canvas.SetActive(false);
         }
     }
 
