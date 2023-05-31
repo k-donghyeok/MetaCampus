@@ -1,7 +1,14 @@
+using TMPro;
 using UnityEngine;
 
 public class PasswordDoor : DoorLock
 {
+    [SerializeField]
+    private Canvas[] canvases = new Canvas[2];
+
+    [SerializeField]
+    private TMP_Text[] texts = new TMP_Text[2];
+
     protected void Awake()
     {
         lockTypeID = IHaveLockID.TypeID.Password;
@@ -26,6 +33,8 @@ public class PasswordDoor : DoorLock
     {
         curInput = curInput * 10 + number;
         if (curInput >= 1000) CheckPassword();
+        foreach (var text in texts)
+            text.SetText(curInput == 0 ? string.Empty : curInput.ToString());
     }
 
     private void CheckPassword()
