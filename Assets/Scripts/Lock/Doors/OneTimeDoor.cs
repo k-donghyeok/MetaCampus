@@ -2,12 +2,10 @@ using UnityEngine;
 
 public class OneTimeDoor : DoorLock
 {
-    private Animator animator = null;
 
     protected void Awake()
     {
         lockTypeID = IHaveLockID.TypeID.OneTime;
-        animator = GetComponent<Animator>();
     }
 
     public override bool TryUnlock(DoorKey key)
@@ -22,7 +20,7 @@ public class OneTimeDoor : DoorLock
         }
 
         IsUnlocked = true;
-        animator.SetTrigger("isOpen");
+        PlayOpenAnimation();
         return true;
     }
 }

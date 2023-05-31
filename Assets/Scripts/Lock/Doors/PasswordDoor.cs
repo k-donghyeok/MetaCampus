@@ -7,12 +7,9 @@ public class PasswordDoor : DoorLock
     [SerializeField]
     private TMP_Text[] texts = new TMP_Text[2];
 
-    private Animator animator = null;
-
     protected void Awake()
     {
         lockTypeID = IHaveLockID.TypeID.Password;
-        animator = GetComponent<Animator>();
     }
 
     protected override void Start()
@@ -49,7 +46,7 @@ public class PasswordDoor : DoorLock
         if (curInput == password)
         {
             IsUnlocked = true;
-            animator.SetTrigger("isOpen");
+            PlayOpenAnimation();
         }
         else
         {

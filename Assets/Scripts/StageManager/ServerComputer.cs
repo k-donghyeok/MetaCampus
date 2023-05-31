@@ -13,7 +13,7 @@ public class ServerComputer : MonoBehaviour
     private void OnTriggerEnter(Collider _other)
     {
         Debug.Log("충돌");
-        if (_other.transform.parent.CompareTag("Player"))
+        if (_other.transform.root.CompareTag("Player"))
         {
             Debug.Log("플레이어맞음");
             StageManager.Instance().IsClear = true;
@@ -39,7 +39,7 @@ public class ServerComputer : MonoBehaviour
     private void OnTriggerExit(Collider _other)
     {
         Debug.Log("충돌해제");
-        if (_other.transform.parent.CompareTag("Player"))
+        if (_other.transform.root.CompareTag("Player"))
         {
             StageManager.Instance().IsPlayerInServerRoom = false;
 

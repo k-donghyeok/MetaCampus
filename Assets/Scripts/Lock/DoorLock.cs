@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using static IHaveLockID;
 
@@ -17,6 +18,8 @@ public abstract class DoorLock : MonoBehaviour, IHaveLockID
     public TypeID LockTypeID => lockTypeID;
 
     public ColorID LockColorID => lockColorID;
+
+    protected Animator animator = null;
 
     /// <summary>
     /// 문을 잠금해제 시도
@@ -39,7 +42,12 @@ public abstract class DoorLock : MonoBehaviour, IHaveLockID
 
     protected virtual void Start()
     {
+        animator = GetComponent<Animator>();
         LockManager.DyeRenderers(LockColorID, dyeRenderers);
     }
 
+    protected void PlayOpenAnimation()
+    {
+        if (animator) animator.SetTrigger("isOpen");
+    }
 }

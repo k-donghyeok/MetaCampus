@@ -18,7 +18,7 @@ public class SpawnPoint : MonoBehaviour
     private void OnTriggerEnter(Collider _other)
     {
         Debug.Log("충돌");
-        if (!_other.transform.parent.CompareTag("Player")) return;
+        if (!_other.transform.root.CompareTag("Player")) return;
         Debug.Log("플레이어 맞음");
         PassThrough();
     }

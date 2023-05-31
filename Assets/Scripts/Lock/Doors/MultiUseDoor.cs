@@ -2,12 +2,9 @@ using UnityEngine;
 
 public class MultiUseDoor : DoorLock
 {
-    private Animator animator = null;
-
     protected void Awake()
     {
         lockTypeID = IHaveLockID.TypeID.MultiUse;
-        animator = GetComponent<Animator>();
     }
 
     public override bool TryUnlock(DoorKey key)
@@ -23,8 +20,8 @@ public class MultiUseDoor : DoorLock
 
         //문이열린다
         IsUnlocked = true;
-        animator.SetTrigger("isOpen");
-        Debug.Log("카드키 사용 문열림");
+        PlayOpenAnimation();
+        //Debug.Log("카드키 사용 문열림");
         return true;
     }
 }
