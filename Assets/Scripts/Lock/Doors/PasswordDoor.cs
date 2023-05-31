@@ -50,6 +50,8 @@ public class PasswordDoor : DoorLock
         if (curInput == password)
         {
             IsUnlocked = true;
+            var buttons = GetComponentsInChildren<Button>();
+            foreach (var b in buttons) b.interactable = false;
             PlayOpenAnimation();
         }
         else
