@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PasswordKey : DoorKey
 {
+    [SerializeField]
+    private TMP_Text[] texts = new TMP_Text[0];
+
     private void Awake()
     {
         lockTypeID = IHaveLockID.TypeID.Password;
@@ -12,12 +16,14 @@ public class PasswordKey : DoorKey
     protected override void Start()
     {
         base.Start();
-        DisplayPassword();
+        StageManager.Instance().OnStageLoad += (stage) => DisplayPassword(stage);
     }
 
-    private void DisplayPassword()
+    private void DisplayPassword(StageManager stage)
     {
-        var pw = StageManager.Instance().Lock.GetPassword(LockColorID);
+        var pw = stage.Lock.GetPassword(LockColorID);
+        //Debug.Log($"{gameObject.name}({LockColorID}) 비밀번호: [{pw}]");
+        foreach (var text in texts) text.SetText(pw.ToString());
     }
 
     protected override void Update()
@@ -25,12 +31,10 @@ public class PasswordKey : DoorKey
         if (!Held) FloatUpdate();
     }
 
-    private float angleDeg;
-
     private void FloatUpdate()
     {
         if (!groundModel) return;
-        angleDeg = (angleDeg + 60f * Time.deltaTime) % 360f;
+        float angleDeg = (Time.time * 60f) % 360f;
 
         groundModel.localPosition = new Vector3(groundModel.localPosition.x,
             Mathf.Sin(Mathf.Deg2Rad * angleDeg) * 0.05f,

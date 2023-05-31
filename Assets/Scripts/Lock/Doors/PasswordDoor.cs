@@ -2,40 +2,42 @@ using UnityEngine;
 
 public class PasswordDoor : DoorLock
 {
-    private bool isOpen = false;
-    private float y = 0f;
-
     protected void Awake()
     {
         lockTypeID = IHaveLockID.TypeID.Password;
     }
 
-    [SerializeField, Range(-10f, 10f)]
-    private float rotateSpeed = 1f;
-
-
-    private void Update()
+    protected override void Start()
     {
-        if (isOpen)
+        base.Start();
+        StageManager.Instance().OnStageLoad += (stage) => SavePassword(stage);
+    }
+
+    private int password;
+    private int curInput = 0;
+
+    private void SavePassword(StageManager stage)
+    {
+        password = stage.Lock.GetPassword(LockColorID);
+    }
+
+
+    public void OnButtonPressed(int number)
+    {
+        curInput = curInput * 10 + number;
+        if (curInput >= 1000) CheckPassword();
+    }
+
+    private void CheckPassword()
+    {
+        if (curInput == password)
         {
-            OpenDoor();
+
+        }
+        else
+        {
+            curInput = 0;
         }
     }
 
-    private void OpenDoor()
-    {
-        y += rotateSpeed;
-        if (y > 90f)
-        {
-            y = 90f;
-            isOpen = false;
-        }
-
-        if (y < -90f)
-        {
-            y = -90f;
-            isOpen = false;
-        }
-        transform.rotation = Quaternion.Euler(0f, y, 0f);
-    }
 }

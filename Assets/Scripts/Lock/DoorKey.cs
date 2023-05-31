@@ -19,9 +19,6 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
     [SerializeField]
     protected Transform heldModel = null;
 
-    private float angleDeg = 0f;
-
-
     protected virtual void Start()
     {
         LockManager.DyeRenderers(LockColorID, dyeRenderers);
@@ -39,7 +36,7 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
     private void FloatUpdate()
     {
         if (!groundModel) return;
-        angleDeg = (angleDeg + 60f * Time.deltaTime) % 360f;
+        float angleDeg = (60f * Time.time) % 360f;
 
         groundModel.localPosition = new Vector3(groundModel.localPosition.x,
             Mathf.Sin(Mathf.Deg2Rad * angleDeg) * 0.1f,
