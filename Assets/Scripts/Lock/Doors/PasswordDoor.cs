@@ -31,6 +31,8 @@ public class PasswordDoor : DoorLock
 
     public void OnButtonPressed(Button button)
     {
+        if (IsUnlocked) return; // Already unlocked
+
         var player = GameObject.FindGameObjectWithTag("Player");
         var canvas = button.transform.parent;
         var dir = player.transform.position - canvas.position;
