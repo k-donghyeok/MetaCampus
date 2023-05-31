@@ -1,17 +1,18 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PasswordDoor : DoorLock
 {
     [SerializeField]
-    private Canvas[] canvases = new Canvas[2];
-
-    [SerializeField]
     private TMP_Text[] texts = new TMP_Text[2];
+
+    private Animator animator = null;
 
     protected void Awake()
     {
         lockTypeID = IHaveLockID.TypeID.Password;
+        animator = GetComponent<Animator>();
     }
 
     protected override void Start()
@@ -29,8 +30,14 @@ public class PasswordDoor : DoorLock
     }
 
 
-    public void OnButtonPressed(int number)
+    public void OnButtonPressed(Button button)
     {
+        var player = GameObject.FindGameObjectWithTag("Player");
+        var canvas = button.transform.parent;
+        var dir = player.transform.position - canvas.position;
+        if (Vector3.Dot(dir, canvas.forward) < 0f) return; // Player is behind the door
+
+        int number = button.gameObject.name[^1] - '0';
         curInput = curInput * 10 + number;
         if (curInput >= 1000) CheckPassword();
         foreach (var text in texts)
@@ -41,7 +48,8 @@ public class PasswordDoor : DoorLock
     {
         if (curInput == password)
         {
-
+            IsUnlocked = true;
+            animator.SetTrigger("isOpen");
         }
         else
         {
