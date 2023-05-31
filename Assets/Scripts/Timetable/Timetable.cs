@@ -43,7 +43,7 @@ public class Timetable : MonoBehaviour
                         lastScript.UpdateText(timetableData[h, d]);
 
                         (go.transform as RectTransform).position
-                            = new Vector3((d - 1.54f) * lastScript.hourWidth, (3 - h) * lastScript.hourHeight, 900f);
+                            = new Vector3((d - 1.54f) * lastScript.hourWidth, (3 - h) * lastScript.hourHeight, 0f);
                     }
                 }
             }
