@@ -51,6 +51,18 @@ public class AIController : MonoBehaviour
                 // Player가 시야 범위 내에 있는지 확인
                 if (Vector3.Angle(transform.forward, directionToPlayer) <= visionAngle / 2f)
                 {
+                    // Player와 AI 사이에 장애물이 있는지 확인
+                    RaycastHit hit;
+                    if (Physics.Linecast(transform.position, collider.transform.position, out hit))
+                    {
+                        // 장애물이 벽인지 확인
+                        if (hit.collider.CompareTag("Wall"))
+                        {
+                            // 벽 뒤에 있는 경우 감지하지 않음
+                            continue;
+                        }
+                    }
+
                     // Player 감지 시 동작
                     isPaused = true;
                     pauseTimer = pauseDuration;
@@ -77,15 +89,37 @@ public class AIController : MonoBehaviour
     {
         // 시야 범위를 에디터 상에서 시각적으로 표시
         Gizmos.color = Color.red;
+
+        // 시야의 중심 방향
         Vector3 direction = transform.forward;
+
+        // 왼쪽 끝 레이의 회전 각도
         Quaternion leftRayRotation = Quaternion.AngleAxis(-visionAngle / 2f, Vector3.up);
+        // 오른쪽 끝 레이의 회전 각도
         Quaternion rightRayRotation = Quaternion.AngleAxis(visionAngle / 2f, Vector3.up);
+
+        // 왼쪽 레이의 방향
         Vector3 leftRayDirection = leftRayRotation * direction;
+        // 오른쪽 레이의 방향
         Vector3 rightRayDirection = rightRayRotation * direction;
 
+        // 왼쪽 레이의 시야 범위 표시
         Gizmos.DrawRay(transform.position, leftRayDirection * visionRadius);
+        // 오른쪽 레이의 시야 범위 표시
         Gizmos.DrawRay(transform.position, rightRayDirection * visionRadius);
+        // 중앙 레이의 시야 범위 표시
         Gizmos.DrawRay(transform.position, direction * visionRadius);
-        
+
+        // 삼각형 시야 범위 표시
+        float halfVisionAngle = visionAngle / 2f;
+        Quaternion coneRotation = Quaternion.Euler(0f, -halfVisionAngle, 0f);
+        Vector3 leftConeDirection = coneRotation * direction;
+        coneRotation = Quaternion.Euler(0f, halfVisionAngle, 0f);
+        Vector3 rightConeDirection = coneRotation * direction;
+
+        Gizmos.DrawLine(transform.position, transform.position + leftConeDirection * visionRadius);
+        Gizmos.DrawLine(transform.position, transform.position + rightConeDirection * visionRadius);
+        Gizmos.DrawLine(transform.position + leftConeDirection * visionRadius, transform.position + rightConeDirection * visionRadius);
     }
+
 }
