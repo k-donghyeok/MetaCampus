@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5656342203663023934}
   - component: {fileID: 7947138811517074377}
+  - component: {fileID: 6430637088118613390}
   m_Layer: 0
   m_Name: StageManager
   m_TagString: GameController
@@ -45,3 +46,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   exterior: 0
+--- !u!114 &6430637088118613390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3754730937907888525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 4a1df4903e205c94d81e5c411f79eea5, type: 2}
