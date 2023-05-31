@@ -15,12 +15,9 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
     private MeshRenderer[] dyeRenderers = new MeshRenderer[0];
 
     [SerializeField]
-    private Transform groundModel = null;
+    protected Transform groundModel = null;
     [SerializeField]
-    private Transform heldModel = null;
-
-    private float angleDeg = 0f;
-
+    protected Transform heldModel = null;
 
     protected virtual void Start()
     {
@@ -31,7 +28,7 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
         FloatUpdate();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (!Held) FloatUpdate();
     }
@@ -39,7 +36,7 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
     private void FloatUpdate()
     {
         if (!groundModel) return;
-        angleDeg = (angleDeg + 60f * Time.deltaTime) % 360f;
+        float angleDeg = (60f * Time.time) % 360f;
 
         groundModel.localPosition = new Vector3(groundModel.localPosition.x,
             Mathf.Sin(Mathf.Deg2Rad * angleDeg) * 0.1f,

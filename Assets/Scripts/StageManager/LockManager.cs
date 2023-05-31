@@ -11,10 +11,10 @@ public class LockManager
 
     private int[] passwords = null;
 
-    public int GetPassword(int id)
+    public int GetPassword(ColorID id)
     {
         if (passwords == null) CreatePasswords();
-        return passwords[id];
+        return passwords[(int)id];
     }
 
     private void CreatePasswords()
@@ -33,7 +33,7 @@ public class LockManager
 
         // 비밀번호 생성 후 저장
         for (int i = 0; i < passwords.Length; ++i)
-            passwords[i] = Random.Range(1000, 9999);
+            passwords[i] = Random.Range(1000, 10000);
 
         // 시드 복구
         Random.state = seedBak;
@@ -90,10 +90,11 @@ public class LockManager
         = { new Color(1f, 0f, 0f), new Color(0f, 1f, 0f), new Color(0f, 0f, 1f), new Color(1f, 1f, 0.2f), new Color(0f, 1f, 1f), new Color(1f, 0.5f, 1f) };
 
     public static Color GetColor(ColorID color)
-        => colors[(int)color];
+        => color == ColorID.None ? Color.white : colors[(int)color];
 
     public static void DyeRenderers(ColorID color, MeshRenderer[] dyeRenderers)
     {
+        if (color == ColorID.None) return;
         var c = GetColor(color);
         foreach (var r in dyeRenderers)
             if (r.materials[0]) r.materials[0].SetColor("_BaseColor", c);
@@ -116,6 +117,7 @@ public interface IHaveLockID
 
     public enum ColorID : int
     {
+        None = -1,
         Red = 0,
         Green = 1,
         Blue = 2,
