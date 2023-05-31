@@ -20,14 +20,14 @@ public class DebugKeyVisual : MonoBehaviour
         const float S = 0.5f;
         var c = LockManager.GetColor(key.LockColorID);
         var O = transform.position;
-        Debug.DrawLine(O + Vector3.forward * S, O + Vector3.right * S, c);
-        Debug.DrawLine(O + Vector3.right * S, O + Vector3.back * S, c);
-        Debug.DrawLine(O + Vector3.back * S, O + Vector3.left * S, c);
-        Debug.DrawLine(O + Vector3.left * S, O + Vector3.forward * S, c);
-        Debug.DrawLine(O + Vector3.forward * S, O + Vector3.up * 2f, c);
-        Debug.DrawLine(O + Vector3.right * S, O + Vector3.up * 2f, c);
-        Debug.DrawLine(O + Vector3.back * S, O + Vector3.up * 2f, c);
-        Debug.DrawLine(O + Vector3.left * S, O + Vector3.up * 2f, c);
+        Debug.DrawLine(O + transform.forward * S, O + transform.right * S, c);
+        Debug.DrawLine(O + transform.right * S, O - transform.forward * S, c);
+        Debug.DrawLine(O - transform.forward * S, O - transform.right * S, c);
+        Debug.DrawLine(O - transform.right * S, O + transform.forward * S, c);
+        Debug.DrawLine(O + transform.forward * S, O + transform.up * 2f, c);
+        Debug.DrawLine(O + transform.right * S, O + transform.up * 2f, c);
+        Debug.DrawLine(O - transform.forward * S, O + transform.up * 2f, c);
+        Debug.DrawLine(O - transform.right * S, O + transform.up * 2f, c);
     }
 #endif
 }
