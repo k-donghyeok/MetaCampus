@@ -10,7 +10,7 @@ public class YeilManager
 {
     public YeilManager()
     {
-        score = Save.LoadValue(SCOREKEY, 0);
+        //score = Save.LoadValue(SCOREKEY, 0);
         Save.OnSaveReset += OnNewSave;
     }
 

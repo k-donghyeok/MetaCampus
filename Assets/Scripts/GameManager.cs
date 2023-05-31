@@ -18,9 +18,13 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            Initiate();
         }
         else if (instance != this) Destroy(gameObject);
+    }
+
+    private void Start()
+    {
+        Initiate();
     }
 
     /// <summary>
@@ -33,12 +37,20 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public SaveManager Save { get; private set; } = null;
 
+    public SpawnManager Spawn { get; private set; } = null;
+
+    public MySceneManager Scene { get; private set; } = null;
+
     private void Initiate()
     {
+        Debug.Log("게임매니저 생성후 매니저들 생성");
         Save = new SaveManager();
         Yeil = new YeilManager();
-       
-        Save.Initialize();
+        Spawn = new SpawnManager();
+        Scene = new MySceneManager();
+
+        Save.LoadFromPrefs();
+        //Scene.MovePlayerToSpawn();
     }
 
 }
