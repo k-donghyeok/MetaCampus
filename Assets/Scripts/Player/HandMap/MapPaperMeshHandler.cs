@@ -87,7 +87,7 @@ public class MapPaperMeshHandler
         mesh.SetTriangles(tris, 0);
     }
 
-    public void SetActive(bool enable) => paperObject.SetActive(enable);
+    public void SetActive(bool enable) => paperObject?.SetActive(enable);
 
     /// <summary>
     /// 지도의 메쉬 업데이트

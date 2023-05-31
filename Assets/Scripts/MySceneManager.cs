@@ -12,14 +12,19 @@ public class MySceneManager
     public enum SCENENAME : int
     {
         /// <summary>
-        /// 내부
-        /// </summary>
-        Interior = 0,
-        /// <summary>
         /// 외부
         /// </summary>
-        Exterior = 1
-       
+        ///  
+        Exterior = 0,
+        /// <summary>
+        /// 내부
+        /// </summary>
+        Interior = 1,
+        /// <summary>
+        /// 튜토리얼 건물
+        /// </summary>
+        Tutorial=2,
+
     }
 
     private int currentSceneID;
