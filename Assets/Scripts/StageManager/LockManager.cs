@@ -90,7 +90,7 @@ public class LockManager
         = { new Color(1f, 0f, 0f), new Color(0f, 1f, 0f), new Color(0f, 0f, 1f), new Color(1f, 1f, 0.2f), new Color(0f, 1f, 1f), new Color(1f, 0.5f, 1f) };
 
     public static Color GetColor(ColorID color)
-        => colors[(int)color];
+        => color == ColorID.None ? Color.white : colors[(int)color];
 
     public static void DyeRenderers(ColorID color, MeshRenderer[] dyeRenderers)
     {
@@ -117,7 +117,7 @@ public interface IHaveLockID
 
     public enum ColorID : int
     {
-        None = 0,
+        None = -1,
         Red = 0,
         Green = 1,
         Blue = 2,
