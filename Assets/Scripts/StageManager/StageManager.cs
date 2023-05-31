@@ -117,12 +117,13 @@ public class StageManager : MonoBehaviour
                 int score = Mathf.RoundToInt(Time.RemainingTime * 100f); // 100분의 1초 단위
                 Debug.Log("남은시간 : " + score);
                 StartCoroutine(SetScoreCoroutine(UserID, score));
-            }
-        }
-       
-        
-    }
 
+                // 진행도 저장 세이브매니저 써서 playerPrefs 키값:건물 , 값:IsClear       
+            }
+
+
+        }
+    }
     private void UpdateWorldMap()
     {
 

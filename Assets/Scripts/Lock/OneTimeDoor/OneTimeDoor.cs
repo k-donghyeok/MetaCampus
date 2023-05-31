@@ -7,7 +7,7 @@ public class OneTimeDoor : DoorLock
     protected void Awake()
     {
         lockTypeID = IHaveLockID.TypeID.OneTime;
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     public override bool TryUnlock(DoorKey key)
