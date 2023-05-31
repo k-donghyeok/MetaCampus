@@ -346,6 +346,7 @@ GameObject:
   - component: {fileID: 215186954}
   - component: {fileID: 215186956}
   - component: {fileID: 215186955}
+  - component: {fileID: 215186957}
   m_Layer: 0
   m_Name: Plank
   m_TagString: Untagged
@@ -419,6 +420,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 215186953}
   m_Mesh: {fileID: 5779197439840542771, guid: 67cfd61f3484a674fb2de7d9a46be6f7, type: 3}
+--- !u!65 &215186957
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 215186953}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.89553374, y: 2.1, z: 0.049999997}
+  m_Center: {x: 0.44776687, y: 1.05, z: 0.024999999}
 --- !u!1001 &229759211
 PrefabInstance:
   m_ObjectHideFlags: 0

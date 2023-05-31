@@ -46,8 +46,10 @@ public abstract class DoorLock : MonoBehaviour, IHaveLockID
         LockManager.DyeRenderers(LockColorID, dyeRenderers);
     }
 
-    protected void PlayOpenAnimation()
+    protected void PlayOpenAnimation(bool open = true)
     {
-        if (animator) animator.SetTrigger("isOpen");
+        if (!animator) return;
+        animator.SetBool("CW", Clockwise);
+        animator.SetBool("isOpen", open);
     }
 }
