@@ -31,7 +31,7 @@ public class PasswordKey : DoorKey
         if (!Held) FloatUpdate();
     }
 
-    private void FloatUpdate()
+    protected override void FloatUpdate()
     {
         if (!groundModel) return;
         float angleDeg = (Time.time * 60f) % 360f;
@@ -39,5 +39,9 @@ public class PasswordKey : DoorKey
         groundModel.localPosition = new Vector3(groundModel.localPosition.x,
             Mathf.Sin(Mathf.Deg2Rad * angleDeg) * 0.05f,
             groundModel.localPosition.z);
+    }
+
+    public override void OnTrigger()
+    {
     }
 }

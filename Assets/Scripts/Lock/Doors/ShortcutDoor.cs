@@ -20,9 +20,8 @@ public class ShortcutDoor : DoorLock
     {
         if (!other.transform.root.CompareTag("Player")) return; // Not Player
         var dir = other.transform.position - transform.position;
-        var dot = Vector3.Dot(dir, transform.forward);
-        if (Clockwise && dot < 0.1f) return; // Not Front
-        if (!Clockwise && dot > -0.1f) return;
+        var dot = Vector3.Dot(dir, Clockwise ? transform.forward : -transform.forward);
+        if (dot < 0f) return; // Not Front
 
         IsUnlocked = true;
         PlayOpenAnimation();

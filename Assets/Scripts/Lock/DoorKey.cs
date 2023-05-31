@@ -33,7 +33,7 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
         if (!Held) FloatUpdate();
     }
 
-    private void FloatUpdate()
+    protected virtual void FloatUpdate()
     {
         if (!groundModel) return;
         float angleDeg = (60f * Time.time) % 360f;
