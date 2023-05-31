@@ -94,6 +94,7 @@ public class LockManager
 
     public static void DyeRenderers(ColorID color, MeshRenderer[] dyeRenderers)
     {
+        if (color == ColorID.None) return;
         var c = GetColor(color);
         foreach (var r in dyeRenderers)
             if (r.materials[0]) r.materials[0].SetColor("_BaseColor", c);
@@ -116,6 +117,7 @@ public interface IHaveLockID
 
     public enum ColorID : int
     {
+        None = 0,
         Red = 0,
         Green = 1,
         Blue = 2,
