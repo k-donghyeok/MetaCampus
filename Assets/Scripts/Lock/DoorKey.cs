@@ -11,47 +11,78 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
     public TypeID LockTypeID => lockTypeID;
     public ColorID LockColorID => lockColorID;
 
-    #region 떠다니는데 필요한 변수
-    [SerializeField, Range(1f, 10f)]
-    private float floatspeed = 1f;
-    [SerializeField, Range(0f, 10f)]
-    private float height = 1f;
+    [SerializeField]
+    private MeshRenderer[] dyeRenderers = new MeshRenderer[0];
 
-    private float angle = 0f;
-    #endregion
+    [SerializeField]
+    private Transform groundModel = null;
+    [SerializeField]
+    private Transform heldModel = null;
 
+    private float angleDeg = 0f;
 
 
     protected virtual void Start()
     {
-        SetColors();
+        LockManager.DyeRenderers(LockColorID, dyeRenderers);
+        groundModel.gameObject.SetActive(true);
+        heldModel.gameObject.SetActive(false);
+
+        FloatUpdate();
     }
+
     private void Update()
     {
-        Float();
-    }
-    private void Float()
-    {
-        angle += floatspeed;
-        if (angle > 360f)
-        {
-            angle = 0f;
-        }
-        float deg = Mathf.Deg2Rad * angle;
-        float sin = Mathf.Sin(deg);
-
-        transform.position = new Vector3(transform.position.x, height + sin, transform.position.z);
+        if (!Held) FloatUpdate();
     }
 
-    private void SetColors()
+    private void FloatUpdate()
     {
-        Color color = LockManager.GetColor(LockColorID);
+        if (!groundModel) return;
+        angleDeg = (angleDeg + 60f * Time.deltaTime) % 360f;
 
-        MeshRenderer[] ren = GetComponentsInChildren<MeshRenderer>();
-        for (int i = 0; i < ren.Length; ++i)
+        groundModel.localPosition = new Vector3(groundModel.localPosition.x,
+            Mathf.Sin(Mathf.Deg2Rad * angleDeg) * 0.1f,
+            groundModel.localPosition.z);
+        groundModel.rotation = Quaternion.Euler(0f, angleDeg, 0f);
+    }
+
+    protected bool Held
+    {
+        get => held;
+        private set
         {
-            //Debug.Log($"{i}: {ren[i].material.name}, {ren[i].material.GetColor("_BaseColor")}");
-            ren[i].material.SetColor("_BaseColor", color);
+            if (held == value) return;
+            held = value;
+            GetComponent<CapsuleCollider>().enabled = !held;
+            groundModel.gameObject.SetActive(!held);
+            heldModel.gameObject.SetActive(held);
         }
+    }
+    private bool held = false;
+
+    public virtual void OnHeld()
+    {
+        Held = true;
+    }
+
+    public virtual void OnHeldReleased()
+    {
+        Held = false;
+        transform.rotation = Quaternion.identity;
+        FloatUpdate();
+    }
+
+    public virtual void OnTrigger()
+    {
+        if (!Physics.Raycast(transform.position, transform.forward, out var info, 0.2f, 1 << 7)) return;
+        if (!info.transform.TryGetComponent<DoorLock>(out var door)) return;
+        Debug.Log($"열쇠 {gameObject.name} > {info.transform.gameObject.name} 개방 시도");
+        if (door.TryUnlock(this)) OnUsed();
+    }
+
+    protected virtual void OnUsed()
+    {
+
     }
 }
