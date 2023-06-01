@@ -8,8 +8,8 @@ public class TableHour : MonoBehaviour
 {
     private TMP_Text text;
 
-    public float hourWidth = 65f;
-    public float hourHeight = 24f;
+    public float hourWidth = 326f;
+    public float hourHeight = 120f;
 
     private int hour = 1;
 
@@ -35,9 +35,9 @@ public class TableHour : MonoBehaviour
         Image image = GetComponentInChildren<Image>();
         RectTransform rectTransform = image.gameObject.GetComponent<RectTransform>();
         rectTransform.sizeDelta = new Vector2(hourWidth, hourHeight * hour);
-        rectTransform.position += (hourHeight * 0.5f) * Vector3.down;
+        rectTransform.localPosition += (hourHeight * 0.5f) * Vector3.down;
 
         rectTransform = text.gameObject.GetComponent<RectTransform>();
-        rectTransform.position += (hourHeight * 0.5f) * Vector3.down;
+        rectTransform.localPosition += (hourHeight * 0.5f) * Vector3.down;
     }
 }

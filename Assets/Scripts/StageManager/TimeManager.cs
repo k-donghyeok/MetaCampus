@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TimeManager
 {
-    private float countdownDuration = 60f;
+    private float countdownDuration = 70f;
     private float currentTime = 0f;
 
     public float RemainingTime => countdownDuration - currentTime;
@@ -16,7 +16,6 @@ public class TimeManager
     public void UpdateCountdown()
     {
         if (IsCountdownComplete) return;
-
 
         currentTime += Time.deltaTime;
         if (IsCountdownComplete) TimeOver();
