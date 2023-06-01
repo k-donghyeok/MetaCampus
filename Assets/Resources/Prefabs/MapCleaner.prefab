@@ -4905,6 +4905,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2764687229266817935}
   - component: {fileID: 2764687229266817932}
+  - component: {fileID: 5640114903945642017}
+  - component: {fileID: 2265566775231456964}
   m_Layer: 0
   m_Name: MapCleaner
   m_TagString: Untagged
@@ -4942,6 +4944,121 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   faucetPS: {fileID: 2764687228994353216}
+--- !u!65 &5640114903945642017
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2764687229266817934}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 0.2, z: 0.5}
+  m_Center: {x: -0.05, y: 1.2, z: 0.8}
+--- !u!114 &2265566775231456964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2764687229266817934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a35f6cfbfba9b548aaa00d52cfe8a50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_InteractionManager: {fileID: 0}
+  m_Colliders: []
+  m_InteractionLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_InteractionLayers:
+    m_Bits: 1
+  m_DistanceCalculationMode: 1
+  m_SelectMode: 0
+  m_CustomReticle: {fileID: 0}
+  m_AllowGazeInteraction: 0
+  m_AllowGazeSelect: 0
+  m_OverrideGazeTimeToSelect: 0
+  m_GazeTimeToSelect: 0.5
+  m_OverrideTimeToAutoDeselectGaze: 0
+  m_TimeToAutoDeselectGaze: 3
+  m_AllowGazeAssistance: 0
+  m_FirstHoverEntered:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2764687229266817932}
+        m_TargetAssemblyTypeName: CleanerController, Assembly-CSharp
+        m_MethodName: OnHovered
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 2265566775231456964}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.XR.Interaction.Toolkit.XRBaseInteractable,
+            Unity.XR.Interaction.Toolkit
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_LastHoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstSelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastSelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Activated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Deactivated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_StartingHoverFilters: []
+  m_StartingSelectFilters: []
+  m_StartingInteractionStrengthFilters: []
+  m_OnFirstHoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnLastHoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnHoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnHoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnSelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnSelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnSelectCanceled:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnActivate:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnDeactivate:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2764687229800825042
 GameObject:
   m_ObjectHideFlags: 0
@@ -4951,7 +5068,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2764687229800825043}
-  - component: {fileID: 2764687229800825040}
   m_Layer: 0
   m_Name: Faucet
   m_TagString: Untagged
@@ -4975,19 +5091,6 @@ Transform:
   m_Father: {fileID: 2764687229266817935}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &2764687229800825040
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2764687229800825042}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.2, z: 0.6}
-  m_Center: {x: 0.1, y: -0.1, z: -0.05}
 --- !u!1 &4871540874829391072
 GameObject:
   m_ObjectHideFlags: 0
