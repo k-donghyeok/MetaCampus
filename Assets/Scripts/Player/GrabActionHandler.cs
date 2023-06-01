@@ -23,22 +23,7 @@ public class GrabActionHandler : MonoBehaviour
     private void Start()
     {
         InitDevices();
-        AddInteractableTrackers();
     }
-
-    private void AddInteractableTrackers()
-    {
-        hoveredInteractables = new HashSet<XRBaseInteractable>[2] { new(), new() };
-        
-        var array = GameObject.FindObjectsOfType<XRBaseInteractable>();
-        foreach (var i in array)
-        {
-            i.hoverEntered.AddListener((e) => { Debug.Log(e.interactorObject.transform.name); });
-            //i.hoverExited.AddListener((e) => { Debug.Log(e.interactorObject.transform.name); });
-        }
-    }
-
-    private HashSet<XRBaseInteractable>[] hoveredInteractables;
 
     /// <summary>
     /// 추적할 VR 입력 장치를 가져옴
@@ -87,7 +72,8 @@ public class GrabActionHandler : MonoBehaviour
     /// <exception cref="System.IndexOutOfRangeException">grasp에 0이나 1이 아닌 수를 집어넣은 경우</exception>
     public bool GrabOccupied(int grasp)
     {
-        return hoveredInteractables[grasp].Count > 0;
+        return directInteractors[grasp].interactablesHovered.Count > 0
+            || directInteractors[grasp].interactablesSelected.Count > 0;
     }
 
     /// <summary>
