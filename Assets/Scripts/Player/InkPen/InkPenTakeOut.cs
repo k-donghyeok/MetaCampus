@@ -29,7 +29,17 @@ public class InkPenTakeOut : MonoBehaviour
             if (penHand.HasValue || grabActionHandler.GrabOccupied(left)) return;
             if (!device.TryGetFeatureValue(CommonUsages.devicePosition, out var pos)) return;
             if (pos.y < 1.0f) return; // too low
-            if (pos.z > 0.1f) return; // too front
+
+            float front = 0.1f;
+            { // Head Pos Check
+                List<InputDevice> devices = new();
+                InputDevices.GetDevicesWithCharacteristics(InputDeviceCharacteristics.HeadMounted, devices);
+                if (devices.Count < 1) goto FrontCheck;
+                if (!devices[0].TryGetFeatureValue(CommonUsages.devicePosition, out var headPos)) goto FrontCheck;
+                front += headPos.z;
+            }
+            FrontCheck: 
+            if (pos.z > front) return; // too front
 
             TakeOutPen(left, device);
         };
