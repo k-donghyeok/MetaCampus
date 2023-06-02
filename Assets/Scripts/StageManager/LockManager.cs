@@ -9,6 +9,8 @@ public class LockManager
     {
     }
 
+    #region Password
+
     private int[] passwords = null;
 
     public int GetPassword(ColorID id)
@@ -39,52 +41,31 @@ public class LockManager
         Random.state = seedBak;
     }
 
+    #endregion Password
 
-    /*
-    /// <summary>
-    /// 이 장면의 Lock ID를 게임 파일로 저장
-    /// </summary>
-    public static void SaveIDs(IHaveLockID[] interfaces)
-    {
-        // 중복되지 않는 값을 받는 HashSet을 초기화
-        HashSet<int> ids = new HashSet<int>();
-        // 이 장면의 모든 IHaveLockID 인터페이스에 있는 ID를 받아옴
-        foreach (var i in interfaces) ids.Add(i.LockColorID); //수정됨 LockID에서 지금으로
+    #region Remote
 
-        string sceneName = SceneManager.GetActiveScene().name;
-        string path = $"Assets/Resources/{GetIDPath(sceneName)}.txt";
-
-        // ID를 Resources 폴더에 게임 파일로 저장
-        using (FileStream fs = new FileStream(path, FileMode.Create))
-        {
-            using (StreamWriter writer = new StreamWriter(fs))
-            {
-                writer.Write(string.Join(',', ids));
-            }
-        }
-
-        UnityEditor.AssetDatabase.Refresh();
-        Debug.Log($"{sceneName}의 Lock 저장 완료");
-    }
+    private readonly bool[] remotes = new bool[6];
 
     /// <summary>
-    /// 원하는 장면의 Lock ID를 게임 파일에서 불러옴
+    /// Remote 문류를 열기
     /// </summary>
-    public static int[] LoadIDs(string sceneName)
+    /// <param name="color"></param>
+    public void OpenRemote(ColorID color)
     {
-        var text = Resources.Load(GetIDPath(sceneName)) as TextAsset;
-        string data = text.text;
-        return Array.ConvertAll(data.Split(','), int.Parse);
+        if (remotes[(int)color]) return;
+        remotes[(int)color] = true;
+        OnRemoteOpened(color);
     }
 
+    public delegate void RemoteOpenHandler(ColorID color);
+
     /// <summary>
-    /// 장면의 Lock ID가 저장된 게임 파일의 Resources 위치를 반환
+    /// Remote 잠금이 해제됐을 때 발생하는 이벤트
     /// </summary>
-    public static string GetIDPath(string sceneName)
-    {
-        return $"GameData/{sceneName}-ID";
-    }
-    */
+    public RemoteOpenHandler OnRemoteOpened;
+
+    #endregion Remote
 
     private static readonly Color[] colors
         = { new Color(1f, 0f, 0f), new Color(0f, 1f, 0f), new Color(0f, 0f, 1f), new Color(1f, 1f, 0.2f), new Color(0f, 1f, 1f), new Color(1f, 0.5f, 1f) };
@@ -131,6 +112,7 @@ public interface IHaveLockID
         None = -1,
         OneTime,
         MultiUse,
-        Password
+        Password,
+        Remote
     }
 }
