@@ -76,7 +76,7 @@ public class HandMapExpand : MonoBehaviour
             }
             else
             { // 양 손을 놓고 있으면 가운데로 지도가 말려들어감
-                var center = Vector3.Lerp(map.handleLeft.position, map.handleRight.position, 0.5f);
+                var center = map.GetCentre();
                 map.handleLeft.Translate(Vector3.ClampMagnitude(center - map.handleLeft.position, retractSpeed * 0.5f * Time.deltaTime), Space.World);
                 map.handleRight.Translate(Vector3.ClampMagnitude(center - map.handleRight.position, retractSpeed * 0.5f * Time.deltaTime), Space.World);
             }
