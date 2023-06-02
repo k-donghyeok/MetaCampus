@@ -3,9 +3,6 @@ using UnityEngine;
 
 public abstract class RemoteKeyBase : DoorKey
 {
-    [SerializeField]
-    protected XRGrabInteractable interactable;
-
     protected bool spent = false;
 
     private void Awake()
@@ -19,17 +16,16 @@ public abstract class RemoteKeyBase : DoorKey
 
     public override void OnTrigger()
     {
+        OnUsed();
     }
 
-    protected void SendOpen()
+    private void SendOpen()
         => StageManager.Instance().Lock.OpenRemote(LockColorID);
 
     protected override void OnUsed()
     {
+        if (spent) return;
+        SendOpen();
         spent = true;
-        var rBody = interactable.GetComponent<Rigidbody>();
-        rBody.velocity = Vector3.zero;
-        rBody.constraints = RigidbodyConstraints.FreezeAll;
-        interactable.enabled = false;
     }
 }
