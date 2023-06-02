@@ -3,21 +3,61 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class FreeDoor : DoorLock
 {
-    public void Toggle(XRBaseInteractable self)
+    [SerializeField]
+    private XRGrabInteractable interactable;
+    [SerializeField]
+    private HingeJoint joint;
+
+    [SerializeField]
+    private Rigidbody doorBody;
+
+    protected override void Start()
     {
-        var interactor = self.GetOldestInteractorHovering();
-        if (interactor == null) return;
-        var go = interactor.transform.root;
-        var pm = go.GetComponent<PlayerManager>();
-        if (pm == null) return;
-
-        /*
-        var dir = pm.xrOrigin.position - transform.position;
-        var dot = Vector3.Dot(dir, Clockwise ? transform.forward : -transform.forward);
-        if (dot < 0f) return; // Not Front
-
+        base.Start();
+        if (!Clockwise)
+        {
+            var limits = joint.limits;
+            limits.min = -90f;
+            limits.max = 0f;
+            joint.limits = limits;
+        }
         IsUnlocked = true;
-        PlayOpenAnimation();
-        self.enabled = false; */
+    }
+
+    private void Update()
+    {
+        if ((doorBody.transform.position - transform.position).magnitude > 2f
+            || doorBody.velocity.magnitude > 8f) Reset();
+
+        if (interactor == null) return;
+        if (Vector3.Distance(interactor.transform.position, transform.position) > 2f)
+        {
+            interactable.enabled = false;
+            OnGrabReleased();
+            interactable.enabled = true;
+        }
+    }
+
+    private void Reset()
+    {
+        doorBody.transform.localPosition = Vector3.zero;
+        doorBody.transform.rotation = Quaternion.identity;
+        doorBody.velocity = Vector3.zero;
+
+        interactable.enabled = false;
+        OnGrabReleased();
+        interactable.enabled = true;
+    }
+
+    private IXRInteractor interactor = null;
+
+    public void OnGrabbed()
+    {
+        interactor = interactable.firstInteractorSelecting;
+    }
+
+    public void OnGrabReleased()
+    {
+        interactor = null;
     }
 }
