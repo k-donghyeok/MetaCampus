@@ -33,9 +33,9 @@ public class PasswordDoor : DoorLock
     {
         if (IsUnlocked) return; // Already unlocked
 
-        var player = GameObject.FindGameObjectWithTag("Player");
         var canvas = button.transform.parent;
-        var dir = player.transform.position - canvas.position;
+
+        var dir = PlayerManager.InstanceOrigin().position - canvas.position;
         if (Vector3.Dot(dir, canvas.forward) < 0f) return; // Player is behind the door
 
         int number = button.gameObject.name[^1] - '0';

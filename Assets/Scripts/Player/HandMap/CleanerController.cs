@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 
 public class CleanerController : MonoBehaviour
 {
@@ -38,12 +35,9 @@ public class CleanerController : MonoBehaviour
         player = null;
     }
 
-    public void OnHovered(XRBaseInteractable self)
+    public void OnHovered()
     {
-        var interactor = self.GetOldestInteractorHovering();
-        if (interactor == null) return;
-        var go = interactor.transform.root;
-        player = go.GetComponent<PlayerManager>();
+        player = PlayerManager.Instance();
         if (player) Activate();
     }
 }
