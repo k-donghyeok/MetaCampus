@@ -144,7 +144,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lockColorID: 0
-  dyeRenderers: []
+  dyeRenderers:
+  - {fileID: 3577559753384634529}
   clockwise: 1
 --- !u!95 &7924709358971209651
 Animator:
