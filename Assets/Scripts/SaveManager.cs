@@ -9,8 +9,29 @@ using UnityEngine;
 /// </summary>
 public class SaveManager
 {
+    private static SaveManager instance = null;
+
+    public static SaveManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = new SaveManager();
+            }
+            return instance;
+        }
+    }
+
+    private Dictionary<string, object> saveData;
+
+    private const string SAVEDATAONPREFS = "SaveData";
+    private const string SAVESEED = "Seed";
+
     public SaveManager()
     {
+        saveData = new Dictionary<string, object>();
+        LoadFromPrefs();
     }
 
     /// <summary>
@@ -57,12 +78,6 @@ public class SaveManager
     /// </summary>
     public SaveEventHandler OnSaveToPref = null;
 
-    private Dictionary<string, object> saveData;
-
-    private const string SAVEDATAONPREFS = "SaveData";
-
-    private const string SAVESEED = "Seed";
-
     /// <summary>
     /// 세이브 파일의 시드값
     /// </summary>
@@ -77,7 +92,8 @@ public class SaveManager
     {
         saveData.Remove(key);
         saveData.Add(key, value);
-       
+        SaveToPrefs();
+
     }
 
     /// <summary>
@@ -95,5 +111,4 @@ public class SaveManager
         SaveValue(key, defaultValue);
         return defaultValue;
     }
-
 }

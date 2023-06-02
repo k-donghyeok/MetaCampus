@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerCollision : MonoBehaviour
+public class CollisionInteraction : MonoBehaviour
 {
     public GameObject uiObject;
     public GameObject uiObject2;
