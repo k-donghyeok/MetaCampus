@@ -36,7 +36,8 @@ public class PasswordDoor : DoorLock
         var canvas = button.transform.parent;
 
         var dir = PlayerManager.InstanceOrigin().position - canvas.position;
-        if (Vector3.Dot(dir, canvas.forward) < 0f) return; // Player is behind the door
+        //Debug.Log($"{gameObject.name} OnButtonPressed: {PlayerManager.InstanceOrigin().position}/{canvas.position} {Vector3.Dot(dir, -canvas.forward)}");
+        if (Vector3.Dot(dir, -canvas.forward) < 0f) return; // Player is behind the door
 
         int number = button.gameObject.name[^1] - '0';
         curInput = curInput * 10 + number;
