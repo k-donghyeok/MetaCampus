@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CollisionPopup : MonoBehaviour
+public class PlayerCollision : MonoBehaviour
 {
     public GameObject uiObject;
     public GameObject uiObject2;
