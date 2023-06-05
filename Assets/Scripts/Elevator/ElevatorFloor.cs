@@ -27,16 +27,9 @@ public class ElevatorFloor : MonoBehaviour
         this.owner = owner;
         this.index = index;
         txtName.text = name;
-    }
 
-    /// <summary>
-    /// 엘리베이터 기기의 현재 위치 표시
-    /// </summary>
-    public void SetStatus(string text)
-    {
-        txtStatus.text = text;
+        this.owner.OnStatusUpdate += (status) => txtStatus.text = status;
     }
-
 
     public void CallElevator()
     {

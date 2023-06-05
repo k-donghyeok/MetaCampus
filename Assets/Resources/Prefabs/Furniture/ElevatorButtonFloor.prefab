@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 7359631569623152995}
   - component: {fileID: 7359631569623152994}
   - component: {fileID: 7359631569623153005}
+  - component: {fileID: 5135924625961254586}
   m_Layer: 0
   m_Name: ElevatorButtonFloor
   m_TagString: Untagged
@@ -257,4 +258,29 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7359631569623152994}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5135924625961254586}
+        m_TargetAssemblyTypeName: ElevatorButtonFloor, Assembly-CSharp
+        m_MethodName: OnPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5135924625961254586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7359631569623153007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74476094320c33149b3d07b510a31fde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  txtName: {fileID: 7359631569465567867}
