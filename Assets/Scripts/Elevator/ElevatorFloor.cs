@@ -40,7 +40,7 @@ public class ElevatorFloor : MonoBehaviour
 
     public void CallElevator()
     {
-        owner.MoveToFloor(index);
+        owner.RequestMoveToFloor(index, true);
     }
 
 }

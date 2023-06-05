@@ -35,12 +35,25 @@ public class ElevatorController : MonoBehaviour
             var floor = go.GetComponent<ElevatorFloor>();
             floor.Initiate(this, i, floors[i].name);
         }
+
+        // chamber 내부에 floors 개수만큼 층별로 가는 버튼을 만든다
     }
 
 
-    public void MoveToFloor(int index)
+    public void RequestMoveToFloor(int index, bool requestOpen)
     {
         //floors[index].height
+        if (requestOpen) RequestOpenDoor();
+    }
+
+    public void RequestOpenDoor()
+    {
+
+    }
+
+    public void RequestCloseDoor()
+    {
+
     }
 
 
