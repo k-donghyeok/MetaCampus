@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -51,6 +52,14 @@ public class GameManager : MonoBehaviour
 
         Save.LoadFromPrefs();
         //Scene.MovePlayerToSpawn();
+
     }
+
+    
+    public string UserID { get; set; } = "강동혁";
+
+    private Dictionary<string, bool> clearStatus
+        = new Dictionary<string, bool>(); // 건물별 클리어 여부 저장
+
 
 }

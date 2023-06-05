@@ -7,12 +7,6 @@ using System;
 
 public class StageManager : MonoBehaviour
 {
-    [Serializable]
-    public class DataScore 
-    {
-        public string id;
-        public int score;
-    }
 
     [SerializeField]
     private bool exterior = true;
@@ -26,7 +20,6 @@ public class StageManager : MonoBehaviour
 
     public bool IsPlayerInServerRoom { get; set; } =false;
 
-    public string UserID { get; set; } = "강동혁";
 
     private static StageManager instance = null;
 
@@ -44,7 +37,6 @@ public class StageManager : MonoBehaviour
 
     public LockManager Lock { get; private set; } = null;
 
-    private Dictionary<string, bool> clearStatus; // 건물별 클리어 여부 저장
 
     private void Awake()
     {
@@ -57,8 +49,6 @@ public class StageManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
-        clearStatus = new Dictionary<string, bool>();
     }
 
     private void Start()
@@ -66,25 +56,6 @@ public class StageManager : MonoBehaviour
         if (!IsExterior())
         {
             InitiateInterior();
-
-            // 건물 이름에 해당하는 클리어 여부를 불러옴
-            string buildingName = GetName();
-            bool isClear = GameManager.Instance().Save.LoadValue(buildingName, false);
-            SetClearStatus(buildingName, isClear);
-
-            // 건물 클리어 상태 확인
-            bool isTutorialClear = GetClearStatus("튜토리얼");
-            bool isEngineeringClear = GetClearStatus("공대");
-            bool isArtClear = GetClearStatus("예대");
-            bool isMarineClear = GetClearStatus("해양");
-            bool isLibraryClear = GetClearStatus("도서관");
-
-            // 상태 출력
-            Debug.Log("튜토리얼 클리어 여부: " + isTutorialClear);
-            Debug.Log("공대 클리어 여부: " + isEngineeringClear);
-            Debug.Log("예대 클리어 여부: " + isArtClear);
-            Debug.Log("해양 클리어 여부: " + isMarineClear);
-            Debug.Log("도서관 클리어 여부: " + isLibraryClear);
         }
         else
         {
@@ -116,9 +87,8 @@ public class StageManager : MonoBehaviour
     {
         if (IsExterior()) return;
 
-        if (IsPlayerInServerRoom) return;
-
-        Time?.UpdateCountdown();
+        if (!IsPlayerInServerRoom)
+            Time.UpdateCountdown();
     }
 
     private void InitiateInterior()
@@ -142,7 +112,7 @@ public class StageManager : MonoBehaviour
                 //로컬서버에 시간 올리기 
                 int score = Mathf.RoundToInt(Time.RemainingTime * 100f); // 100분의 1초 단위
                 Debug.Log("남은시간 : " + score);
-                StartCoroutine(SetScoreCoroutine(UserID, score));
+                StartCoroutine(UploadScoreCoroutine(GameManager.Instance().UserID, score));
 
                 // 진행도 저장
                 string buildingName = GetName();
@@ -151,36 +121,8 @@ public class StageManager : MonoBehaviour
             }
         }
     }
-    //건물 이름에 해당하는 클리어 여부를 설정
-    private void SetClearStatus(string buildingName, bool isClear)
-    {
-        if (clearStatus.ContainsKey(buildingName))
-        {
-            clearStatus[buildingName] = isClear;
-        }
-        else
-        {
-            clearStatus.Add(buildingName, isClear);
-        }
-    }
-    //건물 이름에 해당하는 클리어 여부를 반환
-    public bool GetClearStatus(string buildingName)
-    {
-        if (clearStatus.TryGetValue(buildingName, out bool isClear))
-        {
-            return isClear;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    private void UpdateWorldMap()
-    {
 
-    }
-    
-    private IEnumerator SetScoreCoroutine(string _id, int _score)
+    private IEnumerator UploadScoreCoroutine(string _id, int _score)
     {
         Debug.Log(_id);
         Debug.Log(_score);
@@ -221,22 +163,12 @@ public class StageManager : MonoBehaviour
         }
     }
 
-    public List<DataScore> dataScores { get; private set; }
-    
-    public IEnumerator GetScoreCoroutine()
+
+    private void UpdateWorldMap()
     {
-        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/getscore.php", ""))
-        {
-            yield return www.SendWebRequest();
-            Debug.Log("서버와 통신 후");
-            if (www.result == UnityWebRequest.Result.ProtocolError)
-            {
-                Debug.Log(www.error);
-            }
-                string data = www.downloadHandler.text;
-                dataScores = JsonConvert.DeserializeObject<List<DataScore>>(data);
-        }
+
     }
+    
 
     private void InitiateExterior()
     {
