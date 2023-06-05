@@ -2,11 +2,10 @@ using UnityEngine;
 
 public class TimeManager
 {
-    private float countdownDuration = 70f;
     private float currentTime = 0f;
 
-    public float RemainingTime => countdownDuration - currentTime;
-    public bool IsCountdownComplete => currentTime >= countdownDuration;
+    public float RemainingTime => StageManager.Instance().CountdownDuration - currentTime;
+    public bool IsCountdownComplete => currentTime >= StageManager.Instance().CountdownDuration;
 
     public void StartCountdown()
     {
