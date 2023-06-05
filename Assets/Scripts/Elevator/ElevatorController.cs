@@ -78,25 +78,74 @@ public class ElevatorController : MonoBehaviour
 
         // 첫 번째 층으로 엘리베이터를 위치
         chamberRbody.transform.localPosition = new Vector3(0f, floors[0].height, 0f);
-        // 상태 메시지 초기화
-        OnStatusUpdate?.Invoke(floors[0].name);
+        CurStatusIndex = 0;
     }
 
+    private bool isMoving = false;
+
+    private int CurStatusIndex
+    {
+        get => curStatusIndex;
+        set
+        {
+            if (curStatusIndex == value) return;
+            curStatusIndex = value;
+            OnStatusUpdate?.Invoke(floors[curStatusIndex].name);
+        }
+    }
+    private int curStatusIndex = -1;
+
+    private void CalculateStatusIndex()
+    {
+        float curHeight = chamberRbody.transform.localPosition.y;
+
+        if (CurStatusIndex > 0 && curHeight < floors[CurStatusIndex].height)
+        {
+            float mid = Mathf.Lerp(floors[CurStatusIndex - 1].height, floors[CurStatusIndex].height, 0.5f);
+            if (curHeight < mid) --CurStatusIndex;
+        }
+        else if (CurStatusIndex < floors.Length - 2 && curHeight > floors[CurStatusIndex].height)
+        {
+            float mid = Mathf.Lerp(floors[CurStatusIndex].height, floors[CurStatusIndex + 1].height, 0.5f);
+            if (curHeight > mid) ++CurStatusIndex;
+        }
+    }
 
     public void RequestMoveToFloor(int index, bool exterior)
     {
-        //floors[index].height
-        if (exterior) RequestOpenDoor();
+        if (CurStatusIndex == index && !isMoving)
+        {
+            if (exterior) RequestOpenDoor();
+            return;
+        }
+        if (MoveCoroutine != null) StopCoroutine(MoveCoroutine);
+        MoveCoroutine = StartCoroutine(MoveToFloor(index));
+    }
+
+    private Coroutine MoveCoroutine = null;
+
+    private IEnumerator MoveToFloor(int index)
+    {
+        // 문이 열려 있으면 대기
+
+        // 문이 닫혀 있으면 이동 시작
+        isMoving = true;
+        yield return null;
+
+        // 이동 끝
+        isMoving = false;
+        RequestOpenDoor();
     }
 
     public void RequestOpenDoor()
     {
-
+        if (isMoving) return;
+        // 문 열리는 애니메이션 재생
     }
 
     public void RequestCloseDoor()
     {
-
+        // 문이 닫히는 애니메이션 재생
     }
 
 
