@@ -40,8 +40,13 @@ public class ElevatorController : MonoBehaviour
 
     public StatusUpdateHandler OnStatusUpdate = null;
 
+    private ElevatorFloor[] elevFloors;
+    private ElevatorButtonFloor[] elevButtons;
+
     private void Start()
     {
+        List<ElevatorFloor> elevFloors = new();
+        List<ElevatorButtonFloor> elevButtons = new();
         // floors의 개수만큼
         for (int i = 0; i < floors.Length; ++i)
         {
@@ -52,6 +57,7 @@ public class ElevatorController : MonoBehaviour
                 go.transform.localPosition = new Vector3(0f, floors[i].height, 0f);
                 var floor = go.GetComponent<ElevatorFloor>();
                 floor.Initiate(this, i, floors[i].name);
+                elevFloors.Add(floor);
             }
 
             // chamber 내부에 층별로 가는 버튼을 만든다
@@ -61,14 +67,17 @@ public class ElevatorController : MonoBehaviour
                 go.transform.localPosition = new Vector2(0f, 400f - 110f * (floors.Length - 1 - i));
                 var button = go.GetComponent<ElevatorButtonFloor>();
                 button.Initiate(this, i, floors[i].name);
+                elevButtons.Add(button);
             }
         }
+        this.elevFloors = elevFloors.ToArray();
+        this.elevButtons = elevButtons.ToArray();
 
         // 엘리베이터 상태가 변경될때 칸 안의 상태 텍스트를 바꾼다
         OnStatusUpdate += (status) => chamberTxtStatus.text = status;
 
         // 첫 번째 층으로 엘리베이터를 위치
-
+        chamberRbody.transform.localPosition = new Vector3(0f, floors[0].height, 0f);
         // 상태 메시지 초기화
         OnStatusUpdate?.Invoke(floors[0].name);
     }
