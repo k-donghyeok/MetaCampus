@@ -1,9 +1,8 @@
+using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-using System;
-using Newtonsoft.Json;
 using UnityEngine.Networking;
 
 public class ServerComputer : MonoBehaviour
@@ -41,7 +40,7 @@ public class ServerComputer : MonoBehaviour
 
     private IEnumerator InitiateUI(List<DataScore> _dataScores)
     {
-        Vector3 pos = new Vector3(0f,190f,0f);
+        Vector3 pos = new Vector3(0f, 190f, 0f);
         int j = 0;
         for (int i = 0; i < _dataScores.Count; ++i)
         {

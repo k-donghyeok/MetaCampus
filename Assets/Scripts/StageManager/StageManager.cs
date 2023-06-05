@@ -1,9 +1,6 @@
-using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Networking;
-using Newtonsoft.Json;
-using System;
 
 public class StageManager : MonoBehaviour
 {
@@ -15,10 +12,10 @@ public class StageManager : MonoBehaviour
     private float countdownDuration = 70f;
 
     public bool IsExterior() => exterior;
-  
+
     public bool IsClear { get; set; } = false;
 
-    public bool IsPlayerInServerRoom { get; set; } =false;
+    public bool IsPlayerInServerRoom { get; set; } = false;
 
 
     private static StageManager instance = null;
@@ -29,7 +26,7 @@ public class StageManager : MonoBehaviour
     /// 이 스테이지의 씬 이름을 반환
     /// </summary>
     public string GetName() => gameObject.scene.name;
-    
+
     /// <summary>
     /// 타이머 관리
     /// </summary>
@@ -99,27 +96,26 @@ public class StageManager : MonoBehaviour
         Time.StartCountdown();
     }
 
-    public void CheckClear()
+    /// <summary>
+    /// 클리어 했는지 확인 후 저장
+    /// </summary>
+    public void ClearValidate()
     {
-        if(!IsExterior())
-        {
-            Debug.Log("성적수정 여부" + IsClear);
-            Debug.Log("제한시간안에 탈출성공여부" + Time.IsCountdownComplete);
-            if (IsClear && Time.IsCountdownComplete)
-            {
-                //월드맵 지도 갱신
-                UpdateWorldMap();
-                //로컬서버에 시간 올리기 
-                int score = Mathf.RoundToInt(Time.RemainingTime * 100f); // 100분의 1초 단위
-                Debug.Log("남은시간 : " + score);
-                StartCoroutine(UploadScoreCoroutine(GameManager.Instance().UserID, score));
+        Debug.Log("성적수정 여부" + IsClear);
+        Debug.Log("제한시간안에 탈출성공여부" + !Time.IsCountdownComplete);
+        if (!IsClear || Time.IsCountdownComplete) return; // 클리어 실패
 
-                // 진행도 저장
-                string buildingName = GetName();
-                bool isClear = true;
-                GameManager.Instance().Save.SaveValue(buildingName, isClear);
-            }
-        }
+        //월드맵 지도 갱신
+        UpdateWorldMap();
+        //로컬서버에 시간 올리기 
+        int score = Mathf.RoundToInt(Time.RemainingTime * 100f); // 100분의 1초 단위
+        Debug.Log("남은시간 : " + score);
+        StartCoroutine(UploadScoreCoroutine(GameManager.Instance().UserID, score));
+
+        // 진행도 저장
+        string buildingName = GetName();
+        bool isClear = true;
+        GameManager.Instance().Save.SaveValue(buildingName, isClear);
     }
 
     private IEnumerator UploadScoreCoroutine(string _id, int _score)
@@ -168,7 +164,7 @@ public class StageManager : MonoBehaviour
     {
 
     }
-    
+
 
     private void InitiateExterior()
     {
