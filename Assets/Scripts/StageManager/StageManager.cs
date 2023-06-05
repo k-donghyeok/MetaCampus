@@ -17,6 +17,10 @@ public class StageManager : MonoBehaviour
     [SerializeField]
     private bool exterior = true;
 
+    [SerializeField]
+    private float countdownDuration = 70f;
+    public float CountdownDuration => countdownDuration;
+
     public bool IsExterior() => exterior;
   
     public bool IsClear { get; set; } = false;
@@ -66,7 +70,7 @@ public class StageManager : MonoBehaviour
 
             // 건물 이름에 해당하는 클리어 여부를 불러옴
             string buildingName = GetName();
-            bool isClear = SaveManager.Instance.LoadValue(buildingName, false);
+            bool isClear = GameManager.Instance().Save.LoadValue(buildingName, false);
             SetClearStatus(buildingName, isClear);
 
             // 건물 클리어 상태 확인
@@ -144,11 +148,11 @@ public class StageManager : MonoBehaviour
                 // 진행도 저장
                 string buildingName = GetName();
                 bool isClear = true;
-                SaveManager.Instance.SaveValue(buildingName, isClear);
+                GameManager.Instance().Save.SaveValue(buildingName, isClear);
             }
         }
     }
-
+    //건물 이름에 해당하는 클리어 여부를 설정
     private void SetClearStatus(string buildingName, bool isClear)
     {
         if (clearStatus.ContainsKey(buildingName))
@@ -160,7 +164,7 @@ public class StageManager : MonoBehaviour
             clearStatus.Add(buildingName, isClear);
         }
     }
-
+    //건물 이름에 해당하는 클리어 여부를 반환
     public bool GetClearStatus(string buildingName)
     {
         if (clearStatus.TryGetValue(buildingName, out bool isClear))

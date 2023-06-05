@@ -16,6 +16,8 @@ public class AIController : MonoBehaviour
     private bool isPaused = false;
     private float pauseTimer = 0f;
 
+    public string playerTag = "Player"; // Player의 태그
+
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -41,36 +43,41 @@ public class AIController : MonoBehaviour
             }
 
             // Player 감지
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position, visionRadius, playerLayer);
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, visionRadius);
             foreach (Collider collider in hitColliders)
             {
-                // Player의 방향 벡터 계산
-                Vector3 directionToPlayer = collider.transform.position - transform.position;
-                directionToPlayer.y = 0f; // y축 방향 제거
-
-                // Player가 시야 범위 내에 있는지 확인
-                if (Vector3.Angle(transform.forward, directionToPlayer) <= visionAngle / 2f)
+                // Player인지 확인
+                if (collider.CompareTag(playerTag))
                 {
-                    // Player와 AI 사이에 장애물이 있는지 확인
-                    RaycastHit hit;
-                    if (Physics.Linecast(transform.position, collider.transform.position, out hit))
-                    {
-                        // 장애물이 벽인지 확인
-                        if (hit.collider.CompareTag("Wall"))
-                        {
-                            // 벽 뒤에 있는 경우 감지하지 않음
-                            continue;
-                        }
-                    }
+                    // Player의 방향 벡터 계산
+                    Vector3 directionToPlayer = collider.transform.position - transform.position;
+                    directionToPlayer.y = 0f; // y축 방향 제거
 
-                    // Player 감지 시 동작
-                    isPaused = true;
-                    pauseTimer = pauseDuration;
-                    agent.isStopped = true;
-                    Debug.Log("Player 감지됨!");
-                    break;
+                    // Player가 시야 범위 내에 있는지 확인
+                    if (Vector3.Angle(transform.forward, directionToPlayer) <= visionAngle / 2f)
+                    {
+                        // Player와 AI 사이에 장애물이 있는지 확인
+                        RaycastHit hit;
+                        if (Physics.Linecast(transform.position, collider.transform.position, out hit))
+                        {
+                            // 장애물이 벽인지 확인
+                            if (hit.collider.CompareTag("Wall"))
+                            {
+                                // 벽 뒤에 있는 경우 감지하지 않음
+                                continue;
+                            }
+                        }
+
+                        // Player 감지 시 동작
+                        isPaused = true;
+                        pauseTimer = pauseDuration;
+                        agent.isStopped = true;
+                        Debug.Log("Player 감지됨!");
+                        break;
+                    }
                 }
             }
+
         }
         else
         {
