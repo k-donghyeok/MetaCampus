@@ -42,8 +42,21 @@ public class GameManager : MonoBehaviour
 
     public MySceneManager Scene { get; private set; } = null;
 
+    private bool daytime = true;
+
+    /// <summary>
+    /// 낮인지 여부
+    /// </summary>
+    public bool IsDaytime() => daytime;
+
+    /// <summary>
+    /// 낮밤 전환
+    /// </summary>
+    public void ToggleDaytime() => daytime = !daytime;
+
     private void Initiate()
     {
+        daytime = true; // 게임이 시작하면 낮 시간
         Debug.Log("게임매니저 생성후 매니저들 생성");
         Save = new SaveManager();
         //Yeil = new YeilManager();
@@ -52,7 +65,6 @@ public class GameManager : MonoBehaviour
 
         Save.LoadFromPrefs();
         //Scene.MovePlayerToSpawn();
-
     }
 
     
