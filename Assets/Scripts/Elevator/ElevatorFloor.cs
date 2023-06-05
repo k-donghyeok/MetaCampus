@@ -11,6 +11,24 @@ public class ElevatorFloor : MonoBehaviour
     [SerializeField]
     private TMP_Text txtName = null;
 
+    private int index = -1;
+
+    private ElevatorController owner = null;
+
+    public void SetOwner(ElevatorController owner)
+        => this.owner = owner;
+
+    /// <summary>
+    /// 기본 데이터 입력
+    /// </summary>
+    public void Initiate(ElevatorController owner,
+        int index, string name)
+    {
+        this.owner = owner;
+        this.index = index;
+        txtName.text = name;
+    }
+
     /// <summary>
     /// 엘리베이터 기기의 현재 위치 표시
     /// </summary>
@@ -19,12 +37,10 @@ public class ElevatorFloor : MonoBehaviour
         txtStatus.text = text;
     }
 
-    /// <summary>
-    /// 이 층의 이름 표시
-    /// </summary>
-    public void SetData(string name)
+
+    public void CallElevator()
     {
-        txtName.text = name;
+        owner.MoveToFloor(index);
     }
 
 }

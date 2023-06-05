@@ -5,19 +5,6 @@ using UnityEngine;
 
 public class ElevatorController : MonoBehaviour
 {
-    [SerializeField]
-    private FloorData[] floors = new FloorData[1];
-
-    [SerializeField]
-    private GameObject floorPrefab = null;
-
-    private void Start()
-    {
-        // floors의 개수만큼 floorPrefab의 인스턴스를 만든다
-    }
-
-
-
     [Serializable]
     private struct FloorData
     {
@@ -30,4 +17,31 @@ public class ElevatorController : MonoBehaviour
         /// </summary>
         public float height;
     }
+
+    [SerializeField]
+    private FloorData[] floors = new FloorData[1];
+
+    [SerializeField]
+    private GameObject floorPrefab = null;
+
+    private void Start()
+    {
+        // floors의 개수만큼 floorPrefab의 인스턴스를 만든다
+        for (int i = 0; i < floors.Length; ++i)
+        {
+            var go = Instantiate(floorPrefab, transform);
+            go.name = $"Floor {floors[i].name}";
+            go.transform.localPosition = new Vector3(0f, floors[i].height, 0f);
+            var floor = go.GetComponent<ElevatorFloor>();
+            floor.Initiate(this, i, floors[i].name);
+        }
+    }
+
+
+    public void MoveToFloor(int index)
+    {
+        //floors[index].height
+    }
+
+
 }
