@@ -27,6 +27,8 @@ public class ElevatorController : MonoBehaviour
     private RectTransform chamberPanel = null;
     [SerializeField]
     private TMP_Text chamberTxtStatus = null;
+    [SerializeField]
+    private Rigidbody chamberRbody = null;
 
     [Header("Prefabs")]
     [SerializeField]
