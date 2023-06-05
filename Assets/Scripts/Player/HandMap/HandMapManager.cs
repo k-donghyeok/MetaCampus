@@ -45,6 +45,9 @@ public class HandMapManager : MonoBehaviour
 
     public PlanTextureManager PlanMgr { get; private set; } = null;
 
+    internal Vector3 GetCentre()
+        => Vector3.Lerp(handleLeft.position, handleRight.position, 0.5f);
+
     private void Awake()
     {
         PlanMgr = new PlanTextureManager(this);
@@ -107,7 +110,7 @@ public class HandMapManager : MonoBehaviour
     public void CreateToggleEffect()
     {
         var effect = Instantiate(prefabParticleEffect);
-        effect.transform.SetPositionAndRotation(Vector3.Lerp(handleLeft.transform.position, handleRight.transform.position, 0.5f), Quaternion.identity);
+        effect.transform.SetPositionAndRotation(GetCentre(), Quaternion.identity);
         Destroy(effect, 1f);
     }
 
@@ -214,7 +217,7 @@ public class HandMapManager : MonoBehaviour
     public void RequestPenDraw(Transform tip)
     {
         var dist = GetDistanceFromMap(tip.position);
-        if (dist > 0.02f || dist < -0.04f) { PausePenDraw(); return; }
+        if (dist > 0.2f || dist < -0.1f) { PausePenDraw(); return; }
 
         Vector3 centerPos = Vector3.Lerp(handleLeft.position, handleRight.position, 0.5f);
         Vector3 localPos = tip.position - centerPos;
@@ -235,5 +238,28 @@ public class HandMapManager : MonoBehaviour
     }
 
     #endregion LayDown
+
+    /// <summary>
+    /// 지도 리셋 기구가 부르는 업데이트
+    /// </summary>
+    /// <param name="washZone">지도가 리셋되기 위해 있어야하는 위치</param>
+    public void WashUpdate(Collider washZone)
+    {
+        if (dissappearing) return;
+
+        if (washZone.bounds.Contains(GetCentre()))
+        {
+            if (washTime < 0f) washTime = Time.time;
+            if (washTime + 4f < Time.time)
+            {
+                PlanMgr.ResetPlan();
+                CreateToggleEffect();
+                washTime = float.MaxValue;
+            }
+        }
+        else washTime = -1f;
+    }
+
+    private float washTime = -1f;
 
 }

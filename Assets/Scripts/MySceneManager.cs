@@ -46,7 +46,6 @@ public class MySceneManager
     {
         Debug.Log("¾Àº¯°æ");
 
-        StageManager.Instance().CheckClear();
 
 
         SceneManager.LoadScene((int)_name);

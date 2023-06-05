@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using static MySceneManager;
 
@@ -10,6 +8,8 @@ public class ExitPortal : MonoBehaviour
 
     protected virtual void PassThrough()
     {
+        if (!StageManager.Instance().IsExterior())
+            StageManager.Instance().ClearValidate();
         GameManager.Instance().Scene.ChangeScene(targetScene);
     }
 

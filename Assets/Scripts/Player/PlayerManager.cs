@@ -25,6 +25,17 @@ public class PlayerManager : MonoBehaviour
 
     public InkPenManager Pen() => pen;
 
+    /// <summary>
+    /// <see cref="PlayerManager"/> 인스턴스
+    /// </summary>
+    public static PlayerManager Instance()
+        => GameObject.FindGameObjectWithTag("Player").transform.root.GetComponent<PlayerManager>();
+
+    /// <summary>
+    /// 플레이어 실제 위치
+    /// </summary>
+    public static Transform InstanceOrigin()
+        => Instance().xrOrigin;
 
     private void Start()
     {

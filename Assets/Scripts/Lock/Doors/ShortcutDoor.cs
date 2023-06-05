@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class ShortcutDoor : DoorLock
 {
@@ -16,14 +12,15 @@ public class ShortcutDoor : DoorLock
         if (!Clockwise) handles.transform.Rotate(0f, 180f, 0f, Space.Self);
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void TryOpen(XRBaseInteractable self)
     {
-        if (!other.transform.root.CompareTag("Player")) return; // Not Player
-        var dir = other.transform.position - transform.position;
+        var dir = PlayerManager.InstanceOrigin().position - transform.position;
         var dot = Vector3.Dot(dir, Clockwise ? transform.forward : -transform.forward);
+        Debug.Log($"{gameObject.name} TryOpen: {dot}");
         if (dot < 0f) return; // Not Front
 
         IsUnlocked = true;
         PlayOpenAnimation();
+        self.enabled = false;
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -30,7 +31,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// 점수 관리
     /// </summary>
-    public YeilManager Yeil { get; private set; } = null;
+    //public YeilManager Yeil { get; private set; } = null;
 
     /// <summary>
     /// 저장 관리
@@ -45,12 +46,20 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("게임매니저 생성후 매니저들 생성");
         Save = new SaveManager();
-        Yeil = new YeilManager();
+        //Yeil = new YeilManager();
         Spawn = new SpawnManager();
         Scene = new MySceneManager();
 
         Save.LoadFromPrefs();
         //Scene.MovePlayerToSpawn();
+
     }
+
+    
+    public string UserID { get; set; } = "강동혁";
+
+    private Dictionary<string, bool> clearStatus
+        = new Dictionary<string, bool>(); // 건물별 클리어 여부 저장
+
 
 }

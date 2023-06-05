@@ -26,11 +26,6 @@ public class PasswordKey : DoorKey
         foreach (var text in texts) text.SetText(pw.ToString());
     }
 
-    protected override void Update()
-    {
-        if (!Held) FloatUpdate();
-    }
-
     protected override void FloatUpdate()
     {
         if (!groundModel) return;

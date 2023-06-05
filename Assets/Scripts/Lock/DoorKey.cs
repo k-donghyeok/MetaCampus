@@ -22,8 +22,8 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
     protected virtual void Start()
     {
         LockManager.DyeRenderers(LockColorID, dyeRenderers);
-        groundModel.gameObject.SetActive(true);
-        heldModel.gameObject.SetActive(false);
+        if (groundModel) groundModel.gameObject.SetActive(true);
+        if (heldModel) heldModel.gameObject.SetActive(false);
 
         FloatUpdate();
     }
@@ -52,8 +52,8 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
             if (held == value) return;
             held = value;
             GetComponent<CapsuleCollider>().enabled = !held;
-            groundModel.gameObject.SetActive(!held);
-            heldModel.gameObject.SetActive(held);
+            if (groundModel) groundModel.gameObject.SetActive(!held);
+            if (heldModel) heldModel.gameObject.SetActive(held);
         }
     }
     private bool held = false;
@@ -72,7 +72,7 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
 
     public virtual void OnTrigger()
     {
-        if (!Physics.Raycast(transform.position, transform.forward, out var info, 0.2f, 1 << 7)) return;
+        if (!Physics.SphereCast(transform.position, 0.3f, transform.forward, out var info, 0.2f, 1 << 7)) return;
         if (!info.transform.TryGetComponent<DoorLock>(out var door)) return;
         Debug.Log($"열쇠 {gameObject.name} > {info.transform.gameObject.name} 개방 시도");
         if (door.TryUnlock(this)) OnUsed();

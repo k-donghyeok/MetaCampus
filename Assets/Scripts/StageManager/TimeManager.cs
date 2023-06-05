@@ -2,11 +2,23 @@ using UnityEngine;
 
 public class TimeManager
 {
-    private float countdownDuration = 70f;
+    public TimeManager(float remainingTime)
+    {
+        totalTime = remainingTime;
+    }
+
     private float currentTime = 0f;
 
-    public float RemainingTime => countdownDuration - currentTime;
-    public bool IsCountdownComplete => currentTime >= countdownDuration;
+    private readonly float totalTime = 70f;
+
+    /// <summary>
+    /// 남은 시간 (초)
+    /// </summary>
+    public float RemainingTime => totalTime - currentTime;
+    /// <summary>
+    /// 시간 초과 여부
+    /// </summary>
+    public bool IsCountdownComplete => currentTime >= totalTime;
 
     public void StartCountdown()
     {
