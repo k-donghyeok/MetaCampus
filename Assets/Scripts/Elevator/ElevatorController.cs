@@ -222,7 +222,7 @@ public class ElevatorController : MonoBehaviour
         doorOpenHang = 0f;
     }
 
-    public void OnChamberCollision()
+    public void OnDoorCollision()
     {
         if (isMoving) return;
         if (doorOpenHang == 0f && doorOpen > 0f) // 문이 닫히고 있는 중
