@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -10,21 +6,31 @@ public class LightManager : MonoBehaviour
 {
     [Header("Volume Profiles")]
     [SerializeField]
-    private VolumeProfile profileDay;
+    private VolumeProfile profileDay = null;
     [SerializeField]
-    private VolumeProfile profileNight;
+    private VolumeProfile profileNight = null;
 
     [Header("Skyboxes")]
     [SerializeField]
-    private Material skyboxDay;
+    private Material skyboxDay = null;
     [SerializeField]
-    private Material skyboxNight;
+    private Material skyboxNight = null;
 
     [Header("Directional Lights")]
     [SerializeField]
-    private GameObject dirLightDay;
+    private GameObject dirLightDay = null;
     [SerializeField]
-    private GameObject dirLightNight;
+    private GameObject dirLightNight = null;
+
+    [Header("Lightmaps")]
+    [SerializeField]
+    private Texture2D[] lightmapsDayDir = new Texture2D[0];
+    [SerializeField]
+    private Texture2D[] lightmapsDayColor = new Texture2D[0];
+    [SerializeField]
+    private Texture2D[] lightmapsNightDir = new Texture2D[0];
+    [SerializeField]
+    private Texture2D[] lightmapsNightColor = new Texture2D[0];
 
     public void Initialize(bool day)
     {
@@ -36,20 +42,25 @@ public class LightManager : MonoBehaviour
         RenderSettings.skybox
             = day ? skyboxDay : skyboxNight;
 
-        ChangeDirectionalLight(day);
+        // Directional Light 설정
+        dirLightDay.SetActive(day);
+        dirLightNight.SetActive(!day);
 
-        void ChangeDirectionalLight(bool day)
+        // Lightmap 설정
+        LightMapSetup(day);
+
+        void LightMapSetup(bool day)
         {
+            List<LightmapData> lData = new();
             if (day)
-            {
-                dirLightDay.SetActive(true);
-                dirLightNight.SetActive(false);
-            }
+                for (int i = 0; i < lightmapsDayDir.Length; ++i)
+                    lData.Add(new() { lightmapDir = lightmapsDayDir[i], lightmapColor = lightmapsDayColor[i] });
             else
-            {
-                dirLightDay.SetActive(false);
-                dirLightNight.SetActive(true);
-            }
+                for (int i = 0; i < lightmapsNightDir.Length; ++i)
+                    lData.Add(new() { lightmapDir = lightmapsNightDir[i], lightmapColor = lightmapsNightColor[i] });
+            if (lData.Count < 1) return;
+
+            LightmapSettings.lightmaps = lData.ToArray();
         }
     }
 }
