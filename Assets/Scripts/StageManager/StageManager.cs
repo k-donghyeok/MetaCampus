@@ -19,7 +19,6 @@ public class StageManager : MonoBehaviour
 
     [SerializeField]
     private float countdownDuration = 70f;
-    public float CountdownDuration => countdownDuration;
 
     public bool IsExterior() => exterior;
   
@@ -124,7 +123,7 @@ public class StageManager : MonoBehaviour
 
     private void InitiateInterior()
     {
-        Time = new TimeManager();
+        Time = new TimeManager(countdownDuration);
         Lock = new LockManager();
 
         Time.StartCountdown();

@@ -16,7 +16,7 @@ public class AIController : MonoBehaviour
     private bool isPaused = false;
     private float pauseTimer = 0f;
 
-    public string playerTag = "Player"; // Player의 태그
+    public const string playerTag = "Player"; // Player의 태그
 
     private void Start()
     {
@@ -47,7 +47,7 @@ public class AIController : MonoBehaviour
             foreach (Collider collider in hitColliders)
             {
                 // Player인지 확인
-                if (collider.CompareTag(playerTag))
+                if (collider.transform.root.CompareTag(playerTag))
                 {
                     // Player의 방향 벡터 계산
                     Vector3 directionToPlayer = collider.transform.position - transform.position;

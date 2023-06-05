@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// 痢荐 包府
     /// </summary>
-    public YeilManager Yeil { get; private set; } = null;
+    //public YeilManager Yeil { get; private set; } = null;
 
     /// <summary>
     /// 历厘 包府
@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("霸烙概聪历 积己饶 概聪历甸 积己");
         Save = new SaveManager();
-        Yeil = new YeilManager();
+        //Yeil = new YeilManager();
         Spawn = new SpawnManager();
         Scene = new MySceneManager();
 
