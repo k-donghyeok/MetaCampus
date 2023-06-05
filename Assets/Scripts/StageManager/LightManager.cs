@@ -4,14 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class LightManager : MonoBehaviour
 {
-    [Header("Skybox")]
+    [Header("Volume Profiles")]
     [SerializeField]
-    private Skybox skyboxDay;
+    private VolumeProfile profileDay;
     [SerializeField]
-    private Skybox skyboxNight;
+    private VolumeProfile profileNight;
+
+    [Header("Skyboxes")]
+    [SerializeField]
+    private Material skyboxDay;
+    [SerializeField]
+    private Material skyboxNight;
 
     [Header("Directional Lights")]
     [SerializeField]
@@ -21,15 +28,28 @@ public class LightManager : MonoBehaviour
 
     public void Initialize(bool day)
     {
-        if (day)
+        // 후처리 필터 Volume Profile 설정
+        transform.parent.GetComponent<Volume>().profile
+            = day ? profileDay : profileNight;
+
+        // Skybox 설정
+        RenderSettings.skybox
+            = day ? skyboxDay : skyboxNight;
+
+        ChangeDirectionalLight(day);
+
+        void ChangeDirectionalLight(bool day)
         {
-            dirLightDay.SetActive(true);
-            dirLightNight.SetActive(false);
-        }
-        else
-        {
-            dirLightDay.SetActive(false);
-            dirLightNight.SetActive(true);
+            if (day)
+            {
+                dirLightDay.SetActive(true);
+                dirLightNight.SetActive(false);
+            }
+            else
+            {
+                dirLightDay.SetActive(false);
+                dirLightNight.SetActive(true);
+            }
         }
     }
 }

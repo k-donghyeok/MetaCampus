@@ -46,8 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 798dde340aba7e54bbc7d357631e874a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skyboxDay: {fileID: 0}
-  skyboxNight: {fileID: 0}
+  profileDay: {fileID: 11400000, guid: 4a1df4903e205c94d81e5c411f79eea5, type: 2}
+  profileNight: {fileID: 11400000, guid: 8eedbbb904317ca4f8d7ecdb5a3e8305, type: 2}
+  skyboxDay: {fileID: 2100000, guid: 59573b088aaea0442bf29e0a0e9d1339, type: 2}
+  skyboxNight: {fileID: 2100000, guid: 09f670150b6789e419c9a5c0cb7d4248, type: 2}
   dirLightDay: {fileID: 6221743206991402376}
   dirLightNight: {fileID: 7302053983092710094}
 --- !u!1 &3754730937907888525
@@ -132,7 +134,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4755050721120219494
 Transform:
   m_ObjectHideFlags: 0
@@ -247,7 +249,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4882295401182475883
 Transform:
   m_ObjectHideFlags: 0
