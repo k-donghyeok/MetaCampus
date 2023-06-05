@@ -106,9 +106,8 @@ public class ElevatorController : MonoBehaviour
     }
     private int curIndex = -1;
 
-    private void CalculateStatusIndex()
+    private void CalculateCurIndex()
     {
-        // TODO: FIX
         float curHeight = chamberRbody.transform.localPosition.y;
 
         if (CurIndex > 0 && curHeight < floors[CurIndex].height)
@@ -116,7 +115,7 @@ public class ElevatorController : MonoBehaviour
             float mid = Mathf.Lerp(floors[CurIndex - 1].height, floors[CurIndex].height, 0.5f);
             if (curHeight < mid) --CurIndex;
         }
-        else if (CurIndex < floors.Length - 2 && curHeight > floors[CurIndex].height)
+        else if (CurIndex < floors.Length - 1 && curHeight > floors[CurIndex].height)
         {
             float mid = Mathf.Lerp(floors[CurIndex].height, floors[CurIndex + 1].height, 0.5f);
             if (curHeight > mid) ++CurIndex;
@@ -165,7 +164,7 @@ public class ElevatorController : MonoBehaviour
             chamberRbody.velocity = vel;
 
             yield return new WaitForFixedUpdate();
-            CalculateStatusIndex();
+            CalculateCurIndex();
         }
 
         // ¿Ãµø ≥°
