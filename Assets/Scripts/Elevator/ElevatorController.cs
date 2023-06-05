@@ -137,6 +137,21 @@ public class ElevatorController : MonoBehaviour
         RequestOpenDoor();
     }
 
+    private void Update()
+    {
+        if (isMoving) return;
+
+    }
+
+    /// <summary>
+    /// 문이 열려있는 정도
+    /// </summary>
+    private float doorOpen = 0f;
+    /// <summary>
+    /// 문이 얼마나 오래 열려있어야하는지
+    /// </summary>
+    private float doorOpenHang = 0f;
+
     public void RequestOpenDoor()
     {
         if (isMoving) return;
