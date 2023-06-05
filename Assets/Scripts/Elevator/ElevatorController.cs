@@ -33,6 +33,8 @@ public class ElevatorController : MonoBehaviour
     private Animator chamberAnim = null;
     [SerializeField, Range(1f, 4f)]
     private float doorCloseTime = 2f;
+    [SerializeField, Range(1f, 20f)]
+    private float doorOpenWaitTime = 8f;
     [SerializeField, Range(0.1f, 4.0f)]
     private float chamberSpeed = 1f;
 
@@ -106,6 +108,7 @@ public class ElevatorController : MonoBehaviour
 
     private void CalculateStatusIndex()
     {
+        // TODO: FIX
         float curHeight = chamberRbody.transform.localPosition.y;
 
         if (CurIndex > 0 && curHeight < floors[CurIndex].height)
@@ -136,7 +139,8 @@ public class ElevatorController : MonoBehaviour
     private IEnumerator MoveToFloor(int index)
     {
         // 문이 열려 있으면 대기
-        if (doorOpen > 0f) yield return new WaitForSeconds(0.5f);
+        while (doorOpen > 0f)
+            yield return new WaitForSeconds(0.5f);
         // 문이 닫혀 있으면 이동 시작
         isMoving = true;
 
@@ -145,6 +149,7 @@ public class ElevatorController : MonoBehaviour
         while (Mathf.Abs(chamberRbody.transform.localPosition.y - goalPos) > 0.001f // 원하는 위치에 도달
             || chamberRbody.velocity.magnitude > 0.01f) // 속도 멈춤
         {
+            // TODO: FIX
             var vel = chamberRbody.velocity;
             float dir = goalPos - chamberRbody.transform.localPosition.y;
             float acc = Mathf.Sign(dir) * Time.fixedDeltaTime * chamberSpeed;
@@ -210,7 +215,7 @@ public class ElevatorController : MonoBehaviour
     public void RequestOpenDoor()
     {
         if (isMoving) return;
-        doorOpenHang = 8f;
+        doorOpenHang = doorOpenWaitTime;
     }
 
     public void RequestCloseDoor()
