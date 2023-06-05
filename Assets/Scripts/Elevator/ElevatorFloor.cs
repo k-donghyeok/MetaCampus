@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class ElevatorFloor : MonoBehaviour
 {
     [SerializeField]
@@ -11,9 +12,10 @@ public class ElevatorFloor : MonoBehaviour
     [SerializeField]
     private TMP_Text txtName = null;
 
+    private ElevatorController owner = null;
     private int index = -1;
 
-    private ElevatorController owner = null;
+    private Animator animator = null;
 
     public void SetOwner(ElevatorController owner)
         => this.owner = owner;
@@ -27,6 +29,7 @@ public class ElevatorFloor : MonoBehaviour
         this.owner = owner;
         this.index = index;
         txtName.text = name;
+        animator = GetComponent<Animator>();
 
         this.owner.OnStatusUpdate += (status) => txtStatus.text = status;
     }
@@ -36,4 +39,8 @@ public class ElevatorFloor : MonoBehaviour
         owner.RequestMoveToFloor(index, true);
     }
 
+    public void UpdateAnim(float open)
+    {
+        animator.SetFloat(nameof(open), open);
+    }
 }

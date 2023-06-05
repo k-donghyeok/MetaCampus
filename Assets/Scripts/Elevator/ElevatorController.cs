@@ -29,6 +29,12 @@ public class ElevatorController : MonoBehaviour
     private TMP_Text chamberTxtStatus = null;
     [SerializeField]
     private Rigidbody chamberRbody = null;
+    [SerializeField]
+    private Animator chamberAnim = null;
+    [SerializeField, Range(1f, 4f)]
+    private float doorCloseTime = 2f;
+    [SerializeField, Range(0.1f, 4.0f)]
+    private float chamberSpeed = 1f;
 
     [Header("Prefabs")]
     [SerializeField]
@@ -42,9 +48,12 @@ public class ElevatorController : MonoBehaviour
 
     private ElevatorFloor[] elevFloors;
     private ElevatorButtonFloor[] elevButtons;
+    private float doorCloseSpeed = 1f;
 
     private void Start()
     {
+        doorCloseSpeed = 1f / doorCloseTime;
+
         List<ElevatorFloor> elevFloors = new();
         List<ElevatorButtonFloor> elevButtons = new();
         // floors의 개수만큼
@@ -78,42 +87,42 @@ public class ElevatorController : MonoBehaviour
 
         // 첫 번째 층으로 엘리베이터를 위치
         chamberRbody.transform.localPosition = new Vector3(0f, floors[0].height, 0f);
-        CurStatusIndex = 0;
+        CurIndex = 0;
     }
 
     private bool isMoving = false;
 
-    private int CurStatusIndex
+    private int CurIndex
     {
-        get => curStatusIndex;
+        get => curIndex;
         set
         {
-            if (curStatusIndex == value) return;
-            curStatusIndex = value;
-            OnStatusUpdate?.Invoke(floors[curStatusIndex].name);
+            if (curIndex == value) return;
+            curIndex = value;
+            OnStatusUpdate?.Invoke(floors[curIndex].name);
         }
     }
-    private int curStatusIndex = -1;
+    private int curIndex = -1;
 
     private void CalculateStatusIndex()
     {
         float curHeight = chamberRbody.transform.localPosition.y;
 
-        if (CurStatusIndex > 0 && curHeight < floors[CurStatusIndex].height)
+        if (CurIndex > 0 && curHeight < floors[CurIndex].height)
         {
-            float mid = Mathf.Lerp(floors[CurStatusIndex - 1].height, floors[CurStatusIndex].height, 0.5f);
-            if (curHeight < mid) --CurStatusIndex;
+            float mid = Mathf.Lerp(floors[CurIndex - 1].height, floors[CurIndex].height, 0.5f);
+            if (curHeight < mid) --CurIndex;
         }
-        else if (CurStatusIndex < floors.Length - 2 && curHeight > floors[CurStatusIndex].height)
+        else if (CurIndex < floors.Length - 2 && curHeight > floors[CurIndex].height)
         {
-            float mid = Mathf.Lerp(floors[CurStatusIndex].height, floors[CurStatusIndex + 1].height, 0.5f);
-            if (curHeight > mid) ++CurStatusIndex;
+            float mid = Mathf.Lerp(floors[CurIndex].height, floors[CurIndex + 1].height, 0.5f);
+            if (curHeight > mid) ++CurIndex;
         }
     }
 
     public void RequestMoveToFloor(int index, bool exterior)
     {
-        if (CurStatusIndex == index && !isMoving)
+        if (CurIndex == index && !isMoving)
         {
             if (exterior) RequestOpenDoor();
             return;
@@ -127,13 +136,36 @@ public class ElevatorController : MonoBehaviour
     private IEnumerator MoveToFloor(int index)
     {
         // 문이 열려 있으면 대기
-
+        if (doorOpen > 0f) yield return new WaitForSeconds(0.5f);
         // 문이 닫혀 있으면 이동 시작
         isMoving = true;
-        yield return null;
+
+        float goalPos = floors[index].height;
+
+        while (Mathf.Abs(chamberRbody.transform.localPosition.y - goalPos) > 0.001f // 원하는 위치에 도달
+            || chamberRbody.velocity.magnitude > 0.01f) // 속도 멈춤
+        {
+            var vel = chamberRbody.velocity;
+            float dir = goalPos - chamberRbody.transform.localPosition.y;
+            float acc = Mathf.Sign(dir) * Time.fixedDeltaTime * chamberSpeed;
+            if (Mathf.Abs(dir) < vel.y * vel.y / (chamberSpeed * 2f))
+            {
+                if (Mathf.Abs(vel.y) > Mathf.Abs(acc)) vel.y -= acc;
+                else vel.y = 0f;
+            }
+            else
+            {
+                vel.y = Mathf.Clamp(vel.y + acc, -chamberSpeed, chamberSpeed);
+            }
+            chamberRbody.velocity = vel;
+
+            yield return new WaitForFixedUpdate();
+            CalculateStatusIndex();
+        }
 
         // 이동 끝
         isMoving = false;
+        CurIndex = index;
         RequestOpenDoor();
     }
 
@@ -141,10 +173,33 @@ public class ElevatorController : MonoBehaviour
     {
         if (isMoving) return;
 
+        // doorOpen 계산
+        if (doorOpenHang > 0f)
+        {
+            if (doorOpen < 1f) // 문이 안 열린 상태면 문을 염
+            {
+                doorOpen += Time.deltaTime * doorCloseSpeed;
+                if (doorOpen > 1f) doorOpen = 1f;
+            }
+            else  // 문이 열린 상태의 대기시간 감소
+            {
+                doorOpenHang -= Time.deltaTime;
+                if (doorOpenHang < 0f) doorOpenHang = 0f;
+            }
+
+        }
+        else if (doorOpen > 0f) // 문이 닫힘
+        {
+            doorOpen -= Time.deltaTime * doorCloseSpeed;
+            if (doorOpen < 0f) doorOpen = 0f;
+        }
+        
+        chamberAnim.SetFloat("open", doorOpen);
+        elevFloors[CurIndex].UpdateAnim(doorOpen);
     }
 
     /// <summary>
-    /// 문이 열려있는 정도
+    /// 문이 열려있는 정도. 0: 닫힘, 1: 열림
     /// </summary>
     private float doorOpen = 0f;
     /// <summary>
@@ -155,13 +210,20 @@ public class ElevatorController : MonoBehaviour
     public void RequestOpenDoor()
     {
         if (isMoving) return;
-        // 문 열리는 애니메이션 재생
+        doorOpenHang = 8f;
     }
 
     public void RequestCloseDoor()
     {
-        // 문이 닫히는 애니메이션 재생
+        doorOpenHang = 0f;
     }
 
-
+    public void OnChamberCollision()
+    {
+        if (isMoving) return;
+        if (doorOpenHang == 0f && doorOpen > 0f) // 문이 닫히고 있는 중
+        {
+            RequestOpenDoor();
+        }
+    }
 }
