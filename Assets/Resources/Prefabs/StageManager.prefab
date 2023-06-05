@@ -52,6 +52,10 @@ MonoBehaviour:
   skyboxNight: {fileID: 2100000, guid: 09f670150b6789e419c9a5c0cb7d4248, type: 2}
   dirLightDay: {fileID: 6221743206991402376}
   dirLightNight: {fileID: 7302053983092710094}
+  lightmapsDayDir: []
+  lightmapsDayColor: []
+  lightmapsNightDir: []
+  lightmapsNightColor: []
 --- !u!1 &3754730937907888525
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,7 +138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4755050721120219494
 Transform:
   m_ObjectHideFlags: 0
@@ -249,7 +253,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4882295401182475883
 Transform:
   m_ObjectHideFlags: 0
