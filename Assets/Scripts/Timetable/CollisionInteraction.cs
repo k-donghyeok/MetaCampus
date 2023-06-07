@@ -9,7 +9,7 @@ public class CollisionInteraction : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Wall"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("시간표 확인");
             isColliding = true;
@@ -21,7 +21,7 @@ public class CollisionInteraction : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Wall"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             isColliding = false;
             uiObject.SetActive(false);
