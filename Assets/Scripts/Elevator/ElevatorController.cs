@@ -30,6 +30,8 @@ public class ElevatorController : MonoBehaviour
     [SerializeField]
     private Rigidbody chamberRbody = null;
     [SerializeField]
+    private Collider chamberTrigger = null;
+    [SerializeField]
     private Animator chamberAnim = null;
     [SerializeField, Range(1f, 4f)]
     private float doorCloseTime = 2f;
@@ -51,6 +53,8 @@ public class ElevatorController : MonoBehaviour
     private ElevatorFloor[] elevFloors;
     private ElevatorButtonFloor[] elevButtons;
     private float doorCloseSpeed = 1f;
+    private const float accelerationTime = 1f;
+    private float currentSpeed;
 
     private void Start()
     {
@@ -142,33 +146,51 @@ public class ElevatorController : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         // 문이 닫혀 있으면 이동 시작
         isMoving = true;
+        chamberRbody.isKinematic = false;
 
+        // 목표 높이
         float goalPos = floors[index].height;
+        // 높이까지 남은 거리 offset
+        float distance = goalPos - chamberRbody.transform.localPosition.y;
 
-        while (Mathf.Abs(chamberRbody.transform.localPosition.y - goalPos) > 0.001f // 원하는 위치에 도달
-            || chamberRbody.velocity.magnitude > 0.01f) // 속도 멈춤
+        // 엘리베이터 안에 있는 Rigidbody를 가져옴
+        Collider[] carriedColliders = Physics.OverlapBox(chamberTrigger.bounds.center, chamberTrigger.bounds.extents, chamberTrigger.transform.rotation, LayerMask.GetMask("Player") | LayerMask.GetMask("Item"));
+        List<Rigidbody> carriedRbodies = new();
+        foreach (var c in carriedColliders)
+            if (c.TryGetComponent<Rigidbody>(out var rigidbody)) carriedRbodies.Add(rigidbody);
+
+        while (Mathf.Abs(distance) > 0.001f)
         {
-            // TODO: FIX
-            var vel = chamberRbody.velocity;
-            float dir = goalPos - chamberRbody.transform.localPosition.y;
-            float acc = Mathf.Sign(dir) * Time.fixedDeltaTime * chamberSpeed;
-            if (Mathf.Abs(dir) < vel.y * vel.y / (chamberSpeed * 2f))
-            {
-                if (Mathf.Abs(vel.y) > Mathf.Abs(acc)) vel.y -= acc;
-                else vel.y = 0f;
-            }
-            else
-            {
-                vel.y = Mathf.Clamp(vel.y + acc, -chamberSpeed, chamberSpeed);
-            }
-            chamberRbody.velocity = vel;
+            // 남은 거리
+            distance = goalPos - chamberRbody.transform.localPosition.y;
+            // 이 물리프레임에 이동하는 거리
+            float moveDistance = currentSpeed * Time.fixedDeltaTime;
+            // 감속 시작 거리
+            float decelerationDistance = (currentSpeed * currentSpeed) / (2f * chamberSpeed);
+
+            if (Mathf.Abs(distance) <= decelerationDistance && currentSpeed != 0f) // 감속 거리 안이면 감속
+                currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, chamberSpeed * Time.fixedDeltaTime);
+            else if (Mathf.Abs(moveDistance) < Mathf.Abs(distance)) // 남은 거리가 있다면 가속 혹은 유지
+                currentSpeed = Mathf.MoveTowards(currentSpeed, Mathf.Sign(distance) * chamberSpeed, chamberSpeed * Time.fixedDeltaTime);
+            else currentSpeed = 0f;
+
+            // 엘리베이터 및 내부 Rigidbody에 속도 적용
+            chamberRbody.velocity = new Vector3(0f, currentSpeed, 0f);
+            foreach (var rb in carriedRbodies)
+                rb.velocity = new Vector3(rb.velocity.x, currentSpeed, rb.velocity.z);
 
             yield return new WaitForFixedUpdate();
-            CalculateCurIndex();
+            CalculateCurIndex(); // 실시간 층수 계산
         }
 
-        // 이동 끝
+        // 이동 끝: 엘리베이터를 목표 위치 및 속도로 리셋
         isMoving = false;
+        currentSpeed = 0f;
+        chamberRbody.velocity = Vector3.zero;
+        chamberRbody.transform.localPosition = new Vector3(0f, goalPos, 0f);
+        chamberRbody.isKinematic = true; // 엘리베이터의 물리 끄기
+
+        // 다른 변수들 리셋 및 도착 이벤트 (문 열기) 시행
         CurIndex = index;
         RequestOpenDoor();
     }
@@ -197,7 +219,7 @@ public class ElevatorController : MonoBehaviour
             doorOpen -= Time.deltaTime * doorCloseSpeed;
             if (doorOpen < 0f) doorOpen = 0f;
         }
-        
+
         chamberAnim.SetFloat("open", doorOpen);
         elevFloors[CurIndex].UpdateAnim(doorOpen);
     }
