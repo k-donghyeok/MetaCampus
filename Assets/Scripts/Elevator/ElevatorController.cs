@@ -45,6 +45,10 @@ public class ElevatorController : MonoBehaviour
     private GameObject floorPrefab = null;
     [SerializeField]
     private GameObject buttonPrefab = null;
+    [SerializeField]
+    private GameObject shaftPrefab = null;
+    [SerializeField]
+    private GameObject horzbarPrefab = null;
 
     public delegate void StatusUpdateHandler(string status);
 
