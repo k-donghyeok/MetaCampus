@@ -21,16 +21,14 @@ public class RemoteWheel : RemoteKeyBase
     [SerializeField]
     private TMP_Text txtLeft;
 
-    private int spinLeft;
-
     protected override void Start()
     {
         base.Start();
 
-        spinLeft = spinAmount;
-        txtLeft.text = spinLeft.ToString();
+        txtLeft.text = spinAmount.ToString();
     }
 
+    private int spinDone = 0;
     private float lastDeg = 0f;
 
     protected override void Update()
@@ -38,12 +36,28 @@ public class RemoteWheel : RemoteKeyBase
         if (!Held) return;
         var hand = interactable.firstInteractorSelecting;
         if (hand == null) return;
-        Vector2 dir = hand.transform.position - wheel.position;
+        Vector3 dir = hand.transform.position - wheel.position;
+        if ((hand.transform.position - (wheel.position + wheel.up * 0.45f)).magnitude > 0.6f) // Too far
+        { interactable.enabled = false; interactable.enabled = true; return; }
         float deg = Vector2.SignedAngle(transform.up, dir);
-        //deg = Mathf.Lerp(lastDeg, deg, 0.2f);
+        deg = Mathf.LerpAngle(lastDeg, deg, 0.5f);
         wheel.rotation = Quaternion.Euler(0f, 0f, deg);
 
         lastDeg = deg;
+        deg /= 360f;
+        int spin = Mathf.FloorToInt(deg) + (deg < 0 && deg != Mathf.Floor(deg) ? 1 : 0);
+        if (spinDone != spin)
+        {
+            spinDone = spin;
+            int spinLeft = spinAmount - Mathf.Abs(spinDone);
+            txtLeft.text = spinLeft.ToString();
+            if (spinLeft == 0)
+            {
+                txtLeft.color = LockManager.GetColor(LockColorID);
+                interactable.enabled = false;
+                OnUsed();
+            }
+        }
     }
 
     public override void OnHeldReleased()
