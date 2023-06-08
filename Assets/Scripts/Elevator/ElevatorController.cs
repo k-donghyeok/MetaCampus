@@ -188,6 +188,7 @@ public class ElevatorController : MonoBehaviour
         while (doorOpen > 0f)
             yield return new WaitForSeconds(0.5f);
         // 문이 닫혀 있으면 이동 시작
+        Debug.Log($"Elevator MoveToFloor {floors[index].name}({index}) (wasMoving: {isMoving}) {chamberRbody.transform.localPosition.y:0.0} > {floors[index].height:0.0}");
         isMoving = true;
         chamberRbody.isKinematic = false;
 
@@ -200,7 +201,8 @@ public class ElevatorController : MonoBehaviour
         Collider[] carriedColliders = Physics.OverlapBox(chamberTrigger.bounds.center, chamberTrigger.bounds.extents, chamberTrigger.transform.rotation, LayerMask.GetMask("Player") | LayerMask.GetMask("Item"));
         List<Rigidbody> carriedRbodies = new();
         foreach (var c in carriedColliders)
-            if (c.TryGetComponent<Rigidbody>(out var rigidbody)) carriedRbodies.Add(rigidbody);
+            if (c.TryGetComponent<Rigidbody>(out var rigidbody) && rigidbody != chamberRbody)
+                carriedRbodies.Add(rigidbody);
 
         while (Mathf.Abs(distance) > 0.001f)
         {
@@ -223,10 +225,12 @@ public class ElevatorController : MonoBehaviour
                 rb.velocity = new Vector3(rb.velocity.x, currentSpeed, rb.velocity.z);
 
             yield return new WaitForFixedUpdate();
+            //Debug.Log($"MoveToFloor curSpeed: {currentSpeed:0.0}, moveD: {moveDistance:0.0} / dist: {distance:0.0} {chamberRbody.transform.localPosition.y:0.0} > {floors[index].height:0.0}");
             CalculateCurIndex(); // 실시간 층수 계산
         }
 
         // 이동 끝: 엘리베이터를 목표 위치 및 속도로 리셋
+        Debug.Log($"Elevator MoveToFloor Finished at {floors[index].name}({index}) {chamberRbody.transform.localPosition.y:0.0} == {floors[index].height:0.0}");
         isMoving = false;
         currentSpeed = 0f;
         chamberRbody.velocity = Vector3.zero;
