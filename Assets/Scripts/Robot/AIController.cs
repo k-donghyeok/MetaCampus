@@ -18,10 +18,14 @@ public class AIController : MonoBehaviour
 
     public const string playerTag = "Player"; // Player의 태그
 
+    private Animator animator;
+
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.SetDestination(startPoint.position);
+
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -44,6 +48,8 @@ public class AIController : MonoBehaviour
 
             // Player 감지
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, visionRadius);
+            bool playerDetected = false;
+
             foreach (Collider collider in hitColliders)
             {
                 // Player인지 확인
@@ -68,16 +74,22 @@ public class AIController : MonoBehaviour
                             }
                         }
 
-                        // Player 감지 시 동작
-                        isPaused = true;
-                        pauseTimer = pauseDuration;
-                        agent.isStopped = true;
-                        Debug.Log("Player 감지됨!");
+                        // Player detected
+                        playerDetected = true;
                         break;
                     }
                 }
             }
 
+            if (playerDetected)
+            {
+                // Player detected action
+                isPaused = true;
+                pauseTimer = pauseDuration;
+                agent.isStopped = true;
+                animator.SetBool("DetectPlayer", true); // Trigger the animation state
+                Debug.Log("Player detected!");
+            }
         }
         else
         {
@@ -87,6 +99,7 @@ public class AIController : MonoBehaviour
                 // 멈춤 시간 종료 후 다시 이동
                 isPaused = false;
                 agent.isStopped = false;
+                animator.SetBool("DetectPlayer", false); // Revert the animation state
                 Debug.Log("이동 재개!");
             }
         }

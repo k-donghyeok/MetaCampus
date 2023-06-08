@@ -59,6 +59,8 @@ public class StageManager : MonoBehaviour
             InitiateExterior();
         }
 
+        GetComponentInChildren<LightManager>().Initialize(GameManager.Instance().IsDaytime());
+
         OnStageLoad?.Invoke(this);
     }
 
