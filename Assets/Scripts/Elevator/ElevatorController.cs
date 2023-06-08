@@ -22,6 +22,9 @@ public class ElevatorController : MonoBehaviour
     [SerializeField]
     private FloorData[] floors = new FloorData[1];
 
+    [SerializeField]
+    private Transform shaftHolder = null;
+
     [Header("Chamber")]
     [SerializeField]
     private RectTransform chamberPanel = null;
@@ -77,6 +80,42 @@ public class ElevatorController : MonoBehaviour
                 var floor = go.GetComponent<ElevatorFloor>();
                 floor.Initiate(this, i, floors[i].name);
                 elevFloors.Add(floor);
+            }
+
+            if (i > 0)
+            {
+                float offset = floors[i].height - floors[i - 1].height;
+                if (offset > 3f)
+                {
+                    var shaft = Instantiate(shaftPrefab, shaftHolder);
+                    shaft.name = $"Shaft {floors[i].name}";
+                    shaft.transform.localPosition = new Vector3(0f, floors[i - 1].height + 3f, 0f);
+                    shaft.transform.localScale = new Vector3(1f, offset - 3f, 1f);
+                    for (float b = floors[i - 1].height + 3.5f; b < floors[i].height - 0.2f; ++b)
+                    {
+                        var beam = Instantiate(horzbarPrefab, shaftHolder);
+                        beam.name = $"Beam {floors[i - 1].name} - {Mathf.FloorToInt(b)}";
+                        beam.transform.localPosition = new Vector3(0f, b, 0f);
+                    }
+                }
+            }
+            else
+            {
+                var shaft = Instantiate(shaftPrefab, shaftHolder);
+                shaft.name = "Shaft Root";
+                shaft.transform.localPosition = new Vector3(0f, -1f, 0f);
+                var beam = Instantiate(horzbarPrefab, shaftHolder);
+                beam.name = "Beam Root";
+                beam.transform.localPosition = new Vector3(0f, -0.8f, 0f);
+            }
+            if (i == floors.Length - 1)
+            {
+                var shaft = Instantiate(shaftPrefab, shaftHolder);
+                shaft.name = "Shaft Cap";
+                shaft.transform.localPosition = new Vector3(0f, floors[i].height + 3f, 0f);
+                var beam = Instantiate(horzbarPrefab, shaftHolder);
+                beam.name = "Beam Cap";
+                beam.transform.localPosition = new Vector3(0f, floors[i].height + 3.8f, 0f);
             }
 
             // chamber 내부에 층별로 가는 버튼을 만든다
