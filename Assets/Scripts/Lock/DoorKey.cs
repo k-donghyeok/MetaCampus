@@ -51,7 +51,7 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
         {
             if (held == value) return;
             held = value;
-            GetComponent<CapsuleCollider>().enabled = !held;
+            if (TryGetComponent<CapsuleCollider>(out var itemCollider)) itemCollider.enabled = !held;
             if (groundModel) groundModel.gameObject.SetActive(!held);
             if (heldModel) heldModel.gameObject.SetActive(held);
         }
@@ -66,7 +66,7 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
     public virtual void OnHeldReleased()
     {
         Held = false;
-        transform.rotation = Quaternion.identity;
+        if (groundModel) transform.rotation = Quaternion.identity;
         FloatUpdate();
     }
 

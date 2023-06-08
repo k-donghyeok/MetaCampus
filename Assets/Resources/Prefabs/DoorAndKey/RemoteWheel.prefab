@@ -318,8 +318,9 @@ MonoBehaviour:
   lockColorID: 0
   dyeRenderers:
   - {fileID: 7364787441784484513}
-  groundModel: {fileID: 4945547299457637249}
+  groundModel: {fileID: 0}
   heldModel: {fileID: 0}
+  wheel: {fileID: 4945547299317367282}
   spinAmount: 5
   txtLeft: {fileID: 7164258381023068051}
 --- !u!114 &462571897140024119
