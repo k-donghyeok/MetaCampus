@@ -122,7 +122,7 @@ public class ElevatorController : MonoBehaviour
             {
                 var go = Instantiate(buttonPrefab, chamberPanel);
                 go.name = $"Button {floors[i].name}";
-                go.transform.localPosition = new Vector2(0f, 400f - 110f * (floors.Length - 1 - i));
+                go.transform.localPosition = new Vector2(0f, 280f - 110f * (floors.Length - 1 - i));
                 var button = go.GetComponent<ElevatorButtonFloor>();
                 button.Initiate(this, i, floors[i].name);
                 elevButtons.Add(button);
