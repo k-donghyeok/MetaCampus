@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 using static IHaveLockID;
 
 public abstract class DoorKey : MonoBehaviour, IHaveLockID
@@ -60,6 +61,16 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
 
     public virtual void OnHeld()
     {
+        var player = PlayerManager.InstanceOrigin();
+        if (player)
+        {
+            if (Vector3.Distance(player.position, transform.position) > 0.5f || Physics.Raycast(player.position, transform.position + transform.up, 1f, LayerMask.GetMask("Obstacle")))
+            {
+                var i = GetComponentInChildren<XRBaseInteractable>();
+                if (i) { i.enabled = false; i.enabled = true; }
+                return;
+            }
+        }
         Held = true;
     }
 
