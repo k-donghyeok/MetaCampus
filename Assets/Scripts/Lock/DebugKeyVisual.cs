@@ -7,6 +7,9 @@ using UnityEngine;
 [RequireComponent(typeof(DoorKey))]
 public class DebugKeyVisual : MonoBehaviour
 {
+    [SerializeField]
+    private bool show = true;
+
     //private void Start()
     //{
     //    if (Application.isPlaying) Destroy(this); 
@@ -15,6 +18,7 @@ public class DebugKeyVisual : MonoBehaviour
 #if UNITY_EDITOR
     private void Update()
     {
+        if (!show) return;
         var key = GetComponent<DoorKey>();
         if (!key) return;
         const float S = 0.5f;

@@ -7,9 +7,13 @@ using UnityEngine;
 [RequireComponent(typeof(DoorLock))]
 public class DebugDoorVisual : MonoBehaviour
 {
+    [SerializeField]
+    private bool show = true;
+
 #if UNITY_EDITOR
     private void Update()
     {
+        if (!show) return;
         var door = GetComponent<DoorLock>();
         if (!door) return;
         const float S = 0.9f, A = 0.7f;
