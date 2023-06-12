@@ -350,6 +350,7 @@ GameObject:
   - component: {fileID: 336439129}
   - component: {fileID: 336439131}
   - component: {fileID: 336439130}
+  - component: {fileID: 336439132}
   m_Layer: 7
   m_Name: Object057
   m_TagString: Wall
@@ -421,6 +422,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 336439128}
+  m_Mesh: {fileID: -8233853958292350519, guid: 42483fbd98b8b2b4e8ff30a6b82c6d94, type: 3}
+--- !u!64 &336439132
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336439128}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: -8233853958292350519, guid: 42483fbd98b8b2b4e8ff30a6b82c6d94, type: 3}
 --- !u!1 &363500371
 GameObject:

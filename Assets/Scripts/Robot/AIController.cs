@@ -22,11 +22,16 @@ public class AIController : MonoBehaviour
 
     private void Start()
     {
-        if (waypoints.Length < 1) Destroy(this);
+        if (waypoints.Length < 1 || GameManager.Instance().IsDaytime())
+        {
+            Destroy(this);
+            return;
+        }
         agent = GetComponent<NavMeshAgent>();
         agent.SetDestination(waypoints[nextWaypoint].position);
 
         animator = GetComponent<Animator>();
+        spotLight.gameObject.SetActive(true);
         spotLight.spotAngle = visionAngle;
         spotLight.range = visionRadius;
     }
