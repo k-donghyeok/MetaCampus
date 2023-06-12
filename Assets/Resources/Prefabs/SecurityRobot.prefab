@@ -141,12 +141,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waypoints: []
-  visionRadius: 10
+  visionRadius: 8
   visionAngle: 60
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
   pauseDuration: 5
+  spotLight: {fileID: 605695196499649519}
 --- !u!195 &605695195417621893
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -215,7 +216,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_Intensity: 1000
-  m_Range: 10
+  m_Range: 8
   m_SpotAngle: 60
   m_InnerSpotAngle: 60
   m_CookieSize: 10

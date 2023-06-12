@@ -8,6 +8,7 @@ public class AIController : MonoBehaviour
     public float visionAngle = 60f; // 시야 각도
     public LayerMask playerLayer; // Player 레이어
     public float pauseDuration = 5f; // 멈추는 시간
+    public Light spotLight;
 
     private NavMeshAgent agent;
     private int nextWaypoint = 0;
@@ -26,6 +27,8 @@ public class AIController : MonoBehaviour
         agent.SetDestination(waypoints[nextWaypoint].position);
 
         animator = GetComponent<Animator>();
+        spotLight.spotAngle = visionAngle;
+        spotLight.range = visionRadius;
     }
 
     private void Update()
