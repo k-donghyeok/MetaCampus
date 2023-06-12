@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/StageScenes/TutorialScene.unity
     guid: 60a8b664a4e6e204e9d3eafc1c0e5a2c
+  - enabled: 1
+    path: Assets/StageScenes/MedicalScene.unity
+    guid: 9a2aa59deac75414b99692a1e2f167fc
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: bfa1182bd221b4ca89619141f66f1260,
       type: 2}

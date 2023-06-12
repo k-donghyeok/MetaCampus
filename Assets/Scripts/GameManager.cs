@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static GameManager Instance() => instance;
 
+    public bool Initialized { get; private set; } = false;
+
     private void Awake()
     {
         if (instance == null)
@@ -20,11 +22,8 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else if (instance != this) Destroy(gameObject);
-    }
+        else if (instance != this) { Destroy(gameObject); return; }
 
-    private void Start()
-    {
         Initiate();
     }
 
@@ -65,6 +64,8 @@ public class GameManager : MonoBehaviour
 
         Save.LoadFromPrefs();
         //Scene.MovePlayerToSpawn();
+
+        Initialized = true;
     }
 
     

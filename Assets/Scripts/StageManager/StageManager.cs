@@ -17,6 +17,8 @@ public class StageManager : MonoBehaviour
 
     public bool IsPlayerInServerRoom { get; set; } = false;
 
+    public bool Initialized { get; private set; } = false;
+
 
     private static StageManager instance = null;
 
@@ -62,6 +64,7 @@ public class StageManager : MonoBehaviour
         GetComponentInChildren<LightManager>().Initialize(GameManager.Instance().IsDaytime());
 
         OnStageLoad?.Invoke(this);
+        Initialized = true;
     }
 
     private void OnDestroy()
@@ -84,6 +87,7 @@ public class StageManager : MonoBehaviour
 
     private void Update()
     {
+        if (!Initialized) return;
         if (IsExterior()) return;
 
         if (!IsPlayerInServerRoom)
