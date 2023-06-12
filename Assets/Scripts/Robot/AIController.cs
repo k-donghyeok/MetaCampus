@@ -63,7 +63,7 @@ public class AIController : MonoBehaviour
                     {
                         // Player와 AI 사이에 장애물이 있는지 확인
                         RaycastHit hit;
-                        if (Physics.Linecast(transform.position, collider.transform.position, out hit))
+                        if (Physics.Raycast(transform.position, directionToPlayer, out hit, visionRadius))
                         {
                             // 장애물이 벽인지 확인
                             if (hit.collider.CompareTag("Wall"))
