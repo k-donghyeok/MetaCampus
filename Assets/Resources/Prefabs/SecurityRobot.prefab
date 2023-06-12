@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 605695195417621892}
   - component: {fileID: 605695195417621893}
   m_Layer: 0
-  m_Name: SecurityRobot 1
+  m_Name: SecurityRobot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,9 +29,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 335154524711996506}
-  m_LocalRotation: {x: 0.000000005962442, y: -0.00000004371139, z: -0.00000004371139,
-    w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 16.37}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -67,12 +66,12 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1129096729504132133, guid: 3244e4c55a4e1474fa3f122b457e4286, type: 3}
-  - {fileID: -3683653601302683008, guid: 3244e4c55a4e1474fa3f122b457e4286, type: 3}
-  - {fileID: -8699436558653759460, guid: 3244e4c55a4e1474fa3f122b457e4286, type: 3}
-  - {fileID: -3444799932627526061, guid: 3244e4c55a4e1474fa3f122b457e4286, type: 3}
-  - {fileID: 2357661299591120934, guid: 3244e4c55a4e1474fa3f122b457e4286, type: 3}
-  - {fileID: -3433415496115725582, guid: 3244e4c55a4e1474fa3f122b457e4286, type: 3}
+  - {fileID: 2100000, guid: 558650595e72b9e4abfa86b304cb2ce1, type: 2}
+  - {fileID: -7486735901978387675, guid: 29185dfd01fc7f14f849b3bca293e08a, type: 3}
+  - {fileID: -7486735901978387675, guid: 29185dfd01fc7f14f849b3bca293e08a, type: 3}
+  - {fileID: 2100000, guid: 0ddef3340b3c54e46b1a2baee74bc2d8, type: 2}
+  - {fileID: 2100000, guid: 0ddef3340b3c54e46b1a2baee74bc2d8, type: 2}
+  - {fileID: -7486735901978387675, guid: 29185dfd01fc7f14f849b3bca293e08a, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -141,8 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d820fc1ba4856924aa85274409aaa2a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPoint: {fileID: 0}
-  endPoint: {fileID: 0}
+  waypoints: []
   visionRadius: 10
   visionAngle: 60
   playerLayer:
@@ -196,14 +194,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 605695196499649516}
-  m_LocalRotation: {x: -0.024170391, y: -0, z: 2.5425105e-16, w: 0.9997079}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.34, z: -0.19}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1147685557973980896}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -2.77, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &605695196499649519
 Light:
   m_ObjectHideFlags: 0
@@ -216,7 +214,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 0, b: 0, a: 1}
-  m_Intensity: 4000
+  m_Intensity: 1000
   m_Range: 10
   m_SpotAngle: 60
   m_InnerSpotAngle: 60
@@ -259,7 +257,7 @@ Light:
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_ColorTemperature: 1874
+  m_ColorTemperature: 3000
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0

@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 8513946127154922795}
   - component: {fileID: 8785121762654860193}
   - component: {fileID: 8874522531963184975}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: innerdoor1
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -226,9 +226,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8274771485141614542}
   - component: {fileID: 164482048232007483}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FrontR
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -273,9 +273,9 @@ GameObject:
   - component: {fileID: 4503607524007079555}
   - component: {fileID: 2730186277884847701}
   - component: {fileID: 7012059124455087498}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: innerdoor2
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -370,9 +370,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7647064123371337743}
   - component: {fileID: 7318766072376382070}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FrontL
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1193,9 +1193,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8982857276538527638}
   - component: {fileID: 8982857276538527637}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bottom
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1238,9 +1238,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8982857276684221348}
   - component: {fileID: 8982857276684221371}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Right
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1363,9 +1363,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8982857277278639793}
   - component: {fileID: 8982857277278639792}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Left
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1408,9 +1408,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8982857277328844011}
   - component: {fileID: 8982857277328844010}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Back
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1452,9 +1452,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8982857277355150740}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Colliders
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1744,9 +1744,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8982857277897217014}
   - component: {fileID: 8982857277897217013}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Top
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1912,7 +1912,7 @@ GameObject:
   - component: {fileID: 8982857278283979261}
   m_Layer: 7
   m_Name: Door
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

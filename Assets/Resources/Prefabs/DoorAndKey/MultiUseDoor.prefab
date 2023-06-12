@@ -88,9 +88,9 @@ GameObject:
   - component: {fileID: 3781989884680080510}
   - component: {fileID: 8353081351343343358}
   - component: {fileID: 8304846266441296876}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plank
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -391,6 +391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f171b4591b7841a4ba75defeff9ac9e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  show: 1
 --- !u!114 &3095168364238845489
 MonoBehaviour:
   m_ObjectHideFlags: 0

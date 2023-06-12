@@ -3,26 +3,27 @@ using UnityEngine.AI;
 
 public class AIController : MonoBehaviour
 {
-    public Transform startPoint; // 시작 지점
-    public Transform endPoint; // 도착 지점
+    public Transform[] waypoints;
     public float visionRadius = 10f; // 시야 반경
     public float visionAngle = 60f; // 시야 각도
     public LayerMask playerLayer; // Player 레이어
     public float pauseDuration = 5f; // 멈추는 시간
 
     private NavMeshAgent agent;
-    private bool isMovingToStartPoint = true;
+    private int nextWaypoint = 0;
     private bool isPaused = false;
     private float pauseTimer = 0f;
 
     public const string playerTag = "Player"; // Player의 태그
+    public const string wallTag = "Wall"; // 장애물의 태그
 
     private Animator animator;
 
     private void Start()
     {
+        if (waypoints.Length < 1) Destroy(this);
         agent = GetComponent<NavMeshAgent>();
-        agent.SetDestination(startPoint.position);
+        agent.SetDestination(waypoints[nextWaypoint].position);
 
         animator = GetComponent<Animator>();
     }
@@ -33,16 +34,8 @@ public class AIController : MonoBehaviour
         {
             if (agent.remainingDistance <= agent.stoppingDistance)
             {
-                if (isMovingToStartPoint)
-                {
-                    agent.SetDestination(endPoint.position);
-                    isMovingToStartPoint = false;
-                }
-                else
-                {
-                    agent.SetDestination(startPoint.position);
-                    isMovingToStartPoint = true;
-                }
+                nextWaypoint = (nextWaypoint + 1) % waypoints.Length;
+                agent.SetDestination(waypoints[nextWaypoint].position);
             }
 
             // Player 감지
@@ -66,7 +59,7 @@ public class AIController : MonoBehaviour
                         if (Physics.Raycast(transform.position, directionToPlayer, out hit, visionRadius))
                         {
                             // 장애물이 벽인지 확인
-                            if (hit.collider.CompareTag("Wall"))
+                            if (hit.collider.CompareTag(wallTag))
                             {
                                 // 벽 뒤에 있는 경우 감지하지 않음
                                 continue;
