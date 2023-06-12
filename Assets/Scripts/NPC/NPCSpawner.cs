@@ -1,9 +1,9 @@
 using UnityEngine;
 using AdvancedPeopleSystem;
 
-public class NPCSpawner : MonoBehaviour
+public class NPCPawner : MonoBehaviour
 {
-    public GameObject npcPrefab;  // 생성할 NPC 프리팹
+    public GameObject npcPrefab; // 생성할 NPC 프리팹
     public Transform[] waypoints; // NPC가 따라갈 웨이포인트 배열
     public int totalNumberOfNPCs; // 생성할 NPC의 총 수
     public float spawnInterval = 1f; // NPC 생성 간격 (초)
@@ -19,19 +19,19 @@ public class NPCSpawner : MonoBehaviour
     {
         if (spawnedNPCs >= totalNumberOfNPCs)
         {
-            CancelInvoke("SpawnNPC"); // 원하는 NPC 수가 생성되면 NPC 생성 반복 호출 중지
+            CancelInvoke("SpawnNPC"); // 원하는 수의 NPC가 생성되면 NPC 생성 반복 호출 중단
             return;
         }
 
         GameObject npc = Instantiate(npcPrefab, transform.position, Quaternion.identity); // NPC 생성
 
         CharacterCustomization characterCustomization = npc.GetComponent<CharacterCustomization>();
-        characterCustomization.SwitchCharacterSettings(Random.Range(0, 2) == 0 ? "Male" : "Female"); // Randomize gender
-        characterCustomization.Randomize(); // Randomize appearance
-        
-        NPCMovement npcMovement = npc.GetComponent<NPCMovement>();
-        npcMovement.InitializeMovement(waypoints); // Initialize the NPCMovement component
+        characterCustomization.SwitchCharacterSettings(Random.Range(0, 2) == 0 ? "Male" : "Female"); // 랜덤으로 성별 선택
+        characterCustomization.Randomize(); // 외모 랜덤화
 
-        spawnedNPCs++; // Increase the number of spawned NPCs
+        NPCMovement npcMovement = npc.GetComponent<NPCMovement>();
+        npcMovement.InitializeMovement(waypoints); // NPCMovement 컴포넌트 초기화
+
+        spawnedNPCs++; // 생성된 NPC 수 증가
     }
 }
