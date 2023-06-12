@@ -5,7 +5,6 @@ public class AIController : MonoBehaviour
 {
     public Transform startPoint; // 시작 지점
     public Transform endPoint; // 도착 지점
-
     public float visionRadius = 10f; // 시야 반경
     public float visionAngle = 60f; // 시야 각도
     public LayerMask playerLayer; // Player 레이어
@@ -64,7 +63,7 @@ public class AIController : MonoBehaviour
                     {
                         // Player와 AI 사이에 장애물이 있는지 확인
                         RaycastHit hit;
-                        if (Physics.Linecast(transform.position, collider.transform.position, out hit))
+                        if (Physics.Raycast(transform.position, directionToPlayer, out hit, visionRadius))
                         {
                             // 장애물이 벽인지 확인
                             if (hit.collider.CompareTag("Wall"))
@@ -87,8 +86,8 @@ public class AIController : MonoBehaviour
                 isPaused = true;
                 pauseTimer = pauseDuration;
                 agent.isStopped = true;
-                animator.SetBool("DetectPlayer", true); // Trigger the animation state
-                Debug.Log("Player detected!");
+                animator.SetBool("DetectPlayer", true); // 애니메이션 상태 변경
+                Debug.Log("Player 감지!");
             }
         }
         else
@@ -99,7 +98,7 @@ public class AIController : MonoBehaviour
                 // 멈춤 시간 종료 후 다시 이동
                 isPaused = false;
                 agent.isStopped = false;
-                animator.SetBool("DetectPlayer", false); // Revert the animation state
+                animator.SetBool("DetectPlayer", false); // 애니메이션 상태 복원
                 Debug.Log("이동 재개!");
             }
         }
@@ -141,5 +140,4 @@ public class AIController : MonoBehaviour
         Gizmos.DrawLine(transform.position, transform.position + rightConeDirection * visionRadius);
         Gizmos.DrawLine(transform.position + leftConeDirection * visionRadius, transform.position + rightConeDirection * visionRadius);
     }
-
 }
