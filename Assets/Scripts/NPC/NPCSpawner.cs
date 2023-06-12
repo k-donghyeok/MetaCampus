@@ -24,9 +24,14 @@ public class NPCSpawner : MonoBehaviour
         }
 
         GameObject npc = Instantiate(npcPrefab, transform.position, Quaternion.identity); // NPC 생성
-        npc.GetComponent<CharacterCustomization>().Randomize();
-        npc.GetComponent<NPCMovement>().InitializeMovement(waypoints); // NPCMovement 컴포넌트 초기화
 
-        spawnedNPCs++; // 생성된 NPC 수 증가
+        CharacterCustomization characterCustomization = npc.GetComponent<CharacterCustomization>();
+        characterCustomization.SwitchCharacterSettings(Random.Range(0, 2) == 0 ? "Male" : "Female"); // Randomize gender
+        characterCustomization.Randomize(); // Randomize appearance
+        
+        NPCMovement npcMovement = npc.GetComponent<NPCMovement>();
+        npcMovement.InitializeMovement(waypoints); // Initialize the NPCMovement component
+
+        spawnedNPCs++; // Increase the number of spawned NPCs
     }
 }
