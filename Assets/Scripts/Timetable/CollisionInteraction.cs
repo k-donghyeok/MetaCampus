@@ -2,36 +2,23 @@ using UnityEngine;
 
 public class CollisionInteraction : MonoBehaviour
 {
-    public GameObject uiObject;
-    public GameObject uiObject2;
+    public GameObject[] toggleObjects;
     private bool isColliding = false;
-    
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Debug.Log("시간표 확인");
-            isColliding = true;
-            uiObject.SetActive(true);
-            uiObject2.SetActive(true);
-            
-        }
+        if (!other.transform.root.CompareTag("Player")) return;
+        if (isColliding) return;
+        Debug.Log("시간표 확인");
+        foreach (var obj in toggleObjects) obj.SetActive(true);
+        isColliding = true;
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            isColliding = false;
-            uiObject.SetActive(false);
-            uiObject2.SetActive(false);
-        }
-
-        if (!isColliding)
-        {
-            uiObject.SetActive(false);
-            uiObject2.SetActive(false);
-        }
+        if (!isColliding) return;
+        if (!other.transform.root.CompareTag("Player")) return;
+        isColliding = false;
+        foreach (var obj in toggleObjects) obj.SetActive(false);
     }
 }
