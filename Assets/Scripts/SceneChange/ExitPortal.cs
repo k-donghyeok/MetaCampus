@@ -6,7 +6,7 @@ public class ExitPortal : MonoBehaviour
     [SerializeField]
     private SCENENAME targetScene = 0;
 
-    protected virtual void PassThrough()
+    private void PassThrough()
     {
         if (!StageManager.Instance().IsExterior()) // 내부일 때
         {
@@ -20,9 +20,7 @@ public class ExitPortal : MonoBehaviour
 
     private void OnTriggerEnter(Collider _other)
     {
-        Debug.Log("충돌");
         if (!_other.transform.root.CompareTag("Player")) return;
-        Debug.Log("플레이어 맞음");
         PassThrough();
     }
 }
