@@ -23,7 +23,9 @@ public class NPCSpawner : MonoBehaviour
             return;
         }
 
-        GameObject npc = Instantiate(npcPrefab, transform.position, Quaternion.identity); // NPC 생성
+        var spawnPos = waypoints[Random.Range(0, waypoints.Length)];
+
+        GameObject npc = Instantiate(npcPrefab, spawnPos.position, Quaternion.identity); // NPC 생성
 
         CharacterCustomization characterCustomization = npc.GetComponent<CharacterCustomization>();
         characterCustomization.SwitchCharacterSettings(Random.Range(0, 2) == 0 ? "Male" : "Female"); // 랜덤으로 성별 선택

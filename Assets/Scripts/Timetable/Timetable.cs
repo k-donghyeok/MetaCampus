@@ -6,7 +6,7 @@ using System.Linq;
 public class Timetable : MonoBehaviour
 {
     // CSV 파일 이름을 저장할 문자열 변수와 CSV 파일 데이터를 저장할 리스트 변수를 선언
-    public string csvFileName = "TimetableTest";
+    public string csvFileName = "Engineering";
     private List<Dictionary<string, object>> csvData;
 
     [SerializeField]

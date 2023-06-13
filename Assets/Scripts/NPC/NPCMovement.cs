@@ -1,71 +1,42 @@
+using System.Linq;
 using UnityEngine;
-using System.Collections;
+using UnityEngine.AI;
 
 public class NPCMovement : MonoBehaviour
 {
-    private Transform[] waypoints; // array of waypoints
-    private int currentWaypointIndex; // current waypoint index
-    private float walkingSpeed; // NPC movement speed
-    private float distanceToTarget; // distance to target waypoint
-
+    private Transform[] waypoints; // 웨이포인트 배열
+    private int currentWaypointIndex; // 현재 웨이포인트 인덱스
+    private NavMeshAgent agent; // NavMeshAgent 컴포넌트
     public void InitializeMovement(Transform[] waypoints)
     {
-        this.waypoints = waypoints; // Initialize with the given waypoint array
-        currentWaypointIndex = 0; // Initialize the current waypoint index
-        walkingSpeed = Random.Range(1.5f, 2.5f); // set random movement speed between 1.5 and 2.5
-        MoveToNextWaypoint(); // go to next waypoint
+        this.waypoints = Random.value > 0.5f ?
+            waypoints : waypoints.Reverse().ToArray(); // 주어진 웨이포인트 배열로 초기화
+        currentWaypointIndex = 0; // 현재 웨이포인트 인덱스 초기화
+        agent = GetComponent<NavMeshAgent>(); // NavMeshAgent 컴포넌트 가져오기
+        MoveToNextWaypoint(); // 다음 웨이포인트로 이동
     }
 
     private void MoveToNextWaypoint()
     {
         if (currentWaypointIndex >= waypoints.Length)
         {
-            currentWaypointIndex = 0; // When the last waypoint is reached, go to the first waypoint
+            currentWaypointIndex = 0; // 마지막 웨이포인트에 도달했을 때, 첫 번째 웨이포인트로 이동
         }
 
-        Transform targetWaypoint = waypoints[currentWaypointIndex]; // Get the current target waypoint
-        distanceToTarget = Vector3.Distance(transform.position, targetWaypoint.position); // Calculate the distance between the current position and the target waypoint
+        Transform targetWaypoint = waypoints[currentWaypointIndex]; // 현재 목표 웨이포인트 가져오기
+        agent.SetDestination(targetWaypoint.position); // NavMeshAgent에 목적지 설정
 
-        float movementDuration = distanceToTarget / walkingSpeed; // Calculate time needed to move based on distance and speed of movement
+        float walkingSpeed = Random.Range(1.5f, 2.5f); // 1.5에서 2.5 사이의 무작위 이동 속도 설정
+        agent.speed = walkingSpeed; // NPC의 이동 속도 설정
 
-        StartCoroutine(MoveTowardsWaypoint(targetWaypoint, movementDuration)); // start a coroutine that moves to the target waypoint
+        currentWaypointIndex++; // 다음 웨이포인트 인덱스로 업데이트
     }
 
-    private IEnumerator MoveTowardsWaypoint(Transform targetWaypoint, float duration)
+    private void Update()
     {
-        Vector3 startPosition = transform.position; // save the move start position
-        float elapsedTime = 0f; // reset elapsed time
-
-        while (elapsedTime < duration)
+        if (agent != null && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
-            elapsedTime += Time.deltaTime; // update elapsed time
-            float t = elapsedTime / duration; // Calculate the interpolation rate for elapsed time
-
-            // Calculate the desired position based on the target waypoint
-            Vector3 desiredPosition = Vector3.Lerp(startPosition, targetWaypoint.position, t);
-
-            // Check for obstacles and perform avoidance
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, desiredPosition - transform.position, out hit, distanceToTarget))
-            {
-                // Calculate a new desired position to avoid the obstacle
-                desiredPosition = hit.point + hit.normal * 0.5f; // Adjust the desired position by adding the normal of the hit point multiplied by a factor
-
-                // Calculate a new movement duration based on the adjusted desired position
-                float newDistanceToTarget = Vector3.Distance(transform.position, desiredPosition);
-                float newMovementDuration = newDistanceToTarget / walkingSpeed;
-
-                // Update the movement duration and start the coroutine with the adjusted desired position
-                duration = newMovementDuration;
-                StartCoroutine(MoveTowardsWaypoint(targetWaypoint, duration));
-                yield break; // Exit the current coroutine iteration
-            }
-
-            transform.position = desiredPosition; // move the current position to the desired position
-            yield return null; // wait until next frame
+            MoveToNextWaypoint(); // 다음 웨이포인트로 이동
         }
-
-        currentWaypointIndex++; // update to next waypoint index
-        MoveToNextWaypoint(); // go to next waypoint
     }
 }
