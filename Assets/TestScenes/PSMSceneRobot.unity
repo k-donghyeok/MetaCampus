@@ -223,7 +223,7 @@ Transform:
   m_GameObject: {fileID: 149082006}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 7, y: 7, z: 7}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1642,14 +1642,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d820fc1ba4856924aa85274409aaa2a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPoint: {fileID: 0}
-  endPoint: {fileID: 0}
+  waypoints: []
   visionRadius: 10
   visionAngle: 60
   playerLayer:
     serializedVersion: 2
     m_Bits: 0
   pauseDuration: 5
+  spotLight: {fileID: 0}
 --- !u!54 &1619713130
 Rigidbody:
   m_ObjectHideFlags: 0

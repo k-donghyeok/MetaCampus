@@ -1,7 +1,7 @@
 using UnityEngine;
 using AdvancedPeopleSystem;
 
-public class NPCPawner : MonoBehaviour
+public class NPCSpawner : MonoBehaviour
 {
     public GameObject npcPrefab; // 생성할 NPC 프리팹
     public Transform[] waypoints; // NPC가 따라갈 웨이포인트 배열
