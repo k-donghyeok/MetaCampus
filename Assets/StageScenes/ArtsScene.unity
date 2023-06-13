@@ -1623,8 +1623,8 @@ Transform:
   - {fileID: 213744698}
   - {fileID: 41060185}
   - {fileID: 729874486}
-  - {fileID: 629178375}
   - {fileID: 1458184591}
+  - {fileID: 629178375}
   - {fileID: 1657086851}
   - {fileID: 1679485588}
   m_Father: {fileID: 99736500}
@@ -17789,7 +17789,7 @@ PrefabInstance:
     - target: {fileID: 7947138811517074377, guid: 4570ce152e9a1e04d9e26193c24f0050,
         type: 3}
       propertyPath: countdownDuration
-      value: 360
+      value: 480
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4570ce152e9a1e04d9e26193c24f0050, type: 3}

@@ -1073,6 +1073,11 @@ PrefabInstance:
       propertyPath: skyboxDay
       value: 
       objectReference: {fileID: 2100000, guid: 0e9cc8ad0724b48428eaf58b0a134d99, type: 2}
+    - target: {fileID: 7947138811517074377, guid: 4570ce152e9a1e04d9e26193c24f0050,
+        type: 3}
+      propertyPath: countdownDuration
+      value: 599
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4570ce152e9a1e04d9e26193c24f0050, type: 3}
 --- !u!1 &760790085
