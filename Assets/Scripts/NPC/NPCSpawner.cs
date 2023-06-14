@@ -12,7 +12,8 @@ public class NPCSpawner : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating("SpawnNPC", 0f, spawnInterval); // 시작 시 NPC 생성 반복 호출 시작
+        if (!GameManager.Instance().IsDaytime()) totalNumberOfNPCs /= 6; // 밤에는 사람을 줄임
+        InvokeRepeating("SpawnNPC", 1f, spawnInterval); // 시작 시 NPC 생성 반복 호출 시작
     }
 
     private void SpawnNPC()
@@ -25,7 +26,9 @@ public class NPCSpawner : MonoBehaviour
 
         var spawnPos = waypoints[Random.Range(0, waypoints.Length)];
 
-        GameObject npc = Instantiate(npcPrefab, spawnPos.position, Quaternion.identity); // NPC 생성
+        GameObject npc = Instantiate(npcPrefab, spawnPos.position + NPCMovement.RNV(), Quaternion.identity); // NPC 생성
+        npc.transform.SetParent(transform);
+        npc.name = $"NPC {spawnedNPCs}";
 
         CharacterCustomization characterCustomization = npc.GetComponent<CharacterCustomization>();
         characterCustomization.SwitchCharacterSettings(Random.Range(0, 2) == 0 ? "Male" : "Female"); // 랜덤으로 성별 선택
