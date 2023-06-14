@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7290610609690546387}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
 --- !u!33 &6762732884229691023
 MeshFilter:
@@ -562,7 +562,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7290610609690546387
 Transform:
   m_ObjectHideFlags: 0
@@ -575,8 +575,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5029877543580018096}
-  - {fileID: 825354687451598007}
   - {fileID: 5979588820571918226}
   m_Father: {fileID: 6437176899818999821}
   m_RootOrder: 2
@@ -759,7 +757,7 @@ GameObject:
   - component: {fileID: 5402853887611586322}
   - component: {fileID: 6798874354455427854}
   - component: {fileID: 965387574612999563}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -983,7 +981,7 @@ GameObject:
   - component: {fileID: 4791349356010045824}
   - component: {fileID: 6689235446433945745}
   - component: {fileID: 2489100686748599158}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1461,6 +1459,8 @@ Transform:
   - {fileID: 6437176898967953011}
   - {fileID: 2949777774763813380}
   - {fileID: 7290610609690546387}
+  - {fileID: 5029877543580018096}
+  - {fileID: 825354687451598007}
   - {fileID: 3877361940909372732}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -2021,14 +2021,15 @@ GameObject:
   - component: {fileID: 4034173899549394357}
   - component: {fileID: 4146056009728875476}
   - component: {fileID: 1565021927586539998}
-  - component: {fileID: 2432315563272873282}
-  m_Layer: 0
+  - component: {fileID: 4185465685704877267}
+  - component: {fileID: 149596940650128438}
+  m_Layer: 5
   m_Name: RightStretcher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &825354687451598007
 Transform:
   m_ObjectHideFlags: 0
@@ -2036,13 +2037,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8852842210364014459}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.12}
   m_LocalScale: {x: 0.03, y: 0.03, z: 0.03}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7290610609690546387}
-  m_RootOrder: 1
+  m_Father: {fileID: 6437176899818999821}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4167115414408482370
 MeshFilter:
@@ -2124,7 +2125,23 @@ MonoBehaviour:
   m_TintOnSelection: 1
   m_TintRenderers:
   - {fileID: 4034173899549394357}
---- !u!114 &2432315563272873282
+--- !u!54 &4185465685704877267
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8852842210364014459}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
+--- !u!114 &149596940650128438
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2133,7 +2150,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8852842210364014459}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a35f6cfbfba9b548aaa00d52cfe8a50, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
@@ -2180,7 +2197,7 @@ MonoBehaviour:
         m_MethodName: OnStretcherHeld
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 2432315563272873282}
+          m_ObjectArgument: {fileID: 149596940650128438}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.XR.Interaction.Toolkit.XRBaseInteractable,
             Unity.XR.Interaction.Toolkit
           m_IntArgument: 0
@@ -2239,6 +2256,52 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
+  m_AttachTransform: {fileID: 0}
+  m_SecondaryAttachTransform: {fileID: 0}
+  m_UseDynamicAttach: 0
+  m_MatchAttachPosition: 1
+  m_MatchAttachRotation: 1
+  m_SnapToColliderVolume: 1
+  m_ReinitializeDynamicAttachEverySingleGrab: 1
+  m_AttachEaseInTime: 0.15
+  m_MovementType: 2
+  m_VelocityDamping: 1
+  m_VelocityScale: 1
+  m_AngularVelocityDamping: 1
+  m_AngularVelocityScale: 1
+  m_TrackPosition: 1
+  m_SmoothPosition: 0
+  m_SmoothPositionAmount: 5
+  m_TightenPosition: 0.5
+  m_TrackRotation: 1
+  m_SmoothRotation: 0
+  m_SmoothRotationAmount: 5
+  m_TightenRotation: 0.5
+  m_ThrowOnDetach: 1
+  m_ThrowSmoothingDuration: 0.25
+  m_ThrowSmoothingCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_ThrowVelocityScale: 1.5
+  m_ThrowAngularVelocityScale: 1
+  m_ForceGravityOnDetach: 0
+  m_RetainTransformParent: 1
+  m_AttachPointCompatibilityMode: 0
+  m_StartingSingleGrabTransformers: []
+  m_StartingMultipleGrabTransformers: []
+  m_AddDefaultGrabTransformers: 1
 --- !u!1 &8940933730947855006
 GameObject:
   m_ObjectHideFlags: 0
@@ -2252,14 +2315,15 @@ GameObject:
   - component: {fileID: 6521080202184804798}
   - component: {fileID: 1483836938808839772}
   - component: {fileID: 6179767038178539210}
-  - component: {fileID: 2011591412027239781}
-  m_Layer: 0
+  - component: {fileID: 99998009045799920}
+  - component: {fileID: 6343761565860677049}
+  m_Layer: 5
   m_Name: LeftStretcher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5029877543580018096
 Transform:
   m_ObjectHideFlags: 0
@@ -2267,13 +2331,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8940933730947855006}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.14}
   m_LocalScale: {x: 0.03, y: 0.03, z: 0.03}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7290610609690546387}
-  m_RootOrder: 0
+  m_Father: {fileID: 6437176899818999821}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2350873756813860150
 MeshFilter:
@@ -2355,7 +2419,23 @@ MonoBehaviour:
   m_TintOnSelection: 1
   m_TintRenderers:
   - {fileID: 6521080202184804798}
---- !u!114 &2011591412027239781
+--- !u!54 &99998009045799920
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8940933730947855006}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
+--- !u!114 &6343761565860677049
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2364,7 +2444,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8940933730947855006}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a35f6cfbfba9b548aaa00d52cfe8a50, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
@@ -2411,7 +2491,7 @@ MonoBehaviour:
         m_MethodName: OnStretcherHeld
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 2011591412027239781}
+          m_ObjectArgument: {fileID: 6343761565860677049}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.XR.Interaction.Toolkit.XRBaseInteractable,
             Unity.XR.Interaction.Toolkit
           m_IntArgument: 0
@@ -2470,6 +2550,52 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
+  m_AttachTransform: {fileID: 0}
+  m_SecondaryAttachTransform: {fileID: 0}
+  m_UseDynamicAttach: 0
+  m_MatchAttachPosition: 1
+  m_MatchAttachRotation: 1
+  m_SnapToColliderVolume: 1
+  m_ReinitializeDynamicAttachEverySingleGrab: 1
+  m_AttachEaseInTime: 0.15
+  m_MovementType: 2
+  m_VelocityDamping: 1
+  m_VelocityScale: 1
+  m_AngularVelocityDamping: 1
+  m_AngularVelocityScale: 1
+  m_TrackPosition: 1
+  m_SmoothPosition: 0
+  m_SmoothPositionAmount: 5
+  m_TightenPosition: 0.5
+  m_TrackRotation: 1
+  m_SmoothRotation: 0
+  m_SmoothRotationAmount: 5
+  m_TightenRotation: 0.5
+  m_ThrowOnDetach: 1
+  m_ThrowSmoothingDuration: 0.25
+  m_ThrowSmoothingCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_ThrowVelocityScale: 1.5
+  m_ThrowAngularVelocityScale: 1
+  m_ForceGravityOnDetach: 0
+  m_RetainTransformParent: 1
+  m_AttachPointCompatibilityMode: 0
+  m_StartingSingleGrabTransformers: []
+  m_StartingMultipleGrabTransformers: []
+  m_AddDefaultGrabTransformers: 1
 --- !u!1 &8942515805290797144
 GameObject:
   m_ObjectHideFlags: 0
@@ -2649,7 +2775,7 @@ GameObject:
   - component: {fileID: 6181190235593346068}
   - component: {fileID: 7138282022227753140}
   - component: {fileID: 4261193084596924628}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2672,7 +2798,7 @@ RectTransform:
   - {fileID: 918709399877610565}
   - {fileID: 6819251538292645241}
   m_Father: {fileID: 6437176899818999821}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
