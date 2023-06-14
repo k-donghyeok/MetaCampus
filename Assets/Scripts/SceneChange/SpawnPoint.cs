@@ -8,7 +8,7 @@ public class SpawnPoint : MonoBehaviour
     [SerializeField]
     private Transform spawnPoint = null;
 
-    public Vector3 GetSpawnPos() => spawnPoint.position;
+    public Transform GetSpawn() => spawnPoint;
 
     public int GetID() => myID;
     

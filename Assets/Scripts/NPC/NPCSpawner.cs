@@ -1,7 +1,7 @@
 using UnityEngine;
 using AdvancedPeopleSystem;
 
-public class NPCPawner : MonoBehaviour
+public class NPCSpawner : MonoBehaviour
 {
     public GameObject npcPrefab; // 생성할 NPC 프리팹
     public Transform[] waypoints; // NPC가 따라갈 웨이포인트 배열
@@ -12,7 +12,8 @@ public class NPCPawner : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating("SpawnNPC", 0f, spawnInterval); // 시작 시 NPC 생성 반복 호출 시작
+        if (!GameManager.Instance().IsDaytime()) totalNumberOfNPCs /= 6; // 밤에는 사람을 줄임
+        InvokeRepeating("SpawnNPC", 1f, spawnInterval); // 시작 시 NPC 생성 반복 호출 시작
     }
 
     private void SpawnNPC()
@@ -23,7 +24,11 @@ public class NPCPawner : MonoBehaviour
             return;
         }
 
-        GameObject npc = Instantiate(npcPrefab, transform.position, Quaternion.identity); // NPC 생성
+        var spawnPos = waypoints[Random.Range(0, waypoints.Length)];
+
+        GameObject npc = Instantiate(npcPrefab, spawnPos.position + NPCMovement.RNV(), Quaternion.identity); // NPC 생성
+        npc.transform.SetParent(transform);
+        npc.name = $"NPC {spawnedNPCs}";
 
         CharacterCustomization characterCustomization = npc.GetComponent<CharacterCustomization>();
         characterCustomization.SwitchCharacterSettings(Random.Range(0, 2) == 0 ? "Male" : "Female"); // 랜덤으로 성별 선택
