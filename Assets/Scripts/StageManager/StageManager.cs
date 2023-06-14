@@ -90,7 +90,7 @@ public class StageManager : MonoBehaviour
         if (!Initialized) return;
         if (IsExterior()) return;
 
-        if (!IsPlayerInServerRoom)
+        if (!GameManager.Instance().IsDaytime() && !IsPlayerInServerRoom)
             Time.UpdateCountdown();
     }
 
