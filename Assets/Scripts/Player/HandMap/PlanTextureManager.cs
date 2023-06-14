@@ -15,13 +15,13 @@ public class PlanTextureManager
     {
         this.owner = owner;
         PlanTexture = new Texture2D(2048, 2048, TextureFormat.ARGB32, false);
-        LoadPlan(StageManager.Instance().GetName());
+        LoadPlan(StageManager.Instance().GetID());
 
         owner.UpdateTexture(PlanTexture);
         GameManager.Instance().Save.OnSaveToPref += SavePlanWithPrefSave;
         StageManager.Instance().OnStageUnload += (stage) =>
         {
-            SavePlan(stage.GetName());
+            SavePlan(stage.GetID());
             GameManager.Instance().Save.OnSaveToPref -= SavePlanWithPrefSave;
         };
     }
@@ -55,7 +55,7 @@ public class PlanTextureManager
     }
 
     private void SavePlanWithPrefSave(SaveManager save)
-        => SavePlan(StageManager.Instance().GetName());
+        => SavePlan(StageManager.Instance().GetID());
 
     private void SavePlan(string name)
     {

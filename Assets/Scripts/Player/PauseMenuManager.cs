@@ -10,7 +10,7 @@ public class PauseMenuManager : MonoBehaviour
 
     private void Start()
     {
-        
+        txtStage.text = $"~ {MySceneManager.GetDisplaySceneName(MySceneManager.GetCurrentSceneName())} ~";
     }
 
 }

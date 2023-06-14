@@ -9,7 +9,7 @@ public class TimeDisplay : MonoBehaviour
     private void Start()
     {
         if (StageManager.Instance().IsExterior()
-            || StageManager.Instance().GetName().StartsWith("Tutorial"))
+            || MySceneManager.GetCurrentSceneName() == MySceneManager.SCENENAME.Tutorial)
         {
             text.gameObject.SetActive(false);
             Destroy(this);
