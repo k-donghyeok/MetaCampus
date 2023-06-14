@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -22,6 +20,6 @@ public class TimeDisplay : MonoBehaviour
     private void Update()
     {
         int time = Mathf.CeilToInt(StageManager.Instance().Time.RemainingTime);
-        text.text = $"{time / 60}:{time % 60}";
+        text.text = $"{time / 60:0}:{time % 60:00}";
     }
 }

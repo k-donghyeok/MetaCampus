@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class PasswordKey : DoorKey
@@ -16,13 +17,14 @@ public class PasswordKey : DoorKey
     protected override void Start()
     {
         base.Start();
-        StageManager.Instance().OnStageLoad += (stage) => DisplayPassword(stage);
+        if (StageManager.Instance().Initialized) DisplayPassword(StageManager.Instance());
+        else StageManager.Instance().OnStageLoad += (stage) => DisplayPassword(stage);
     }
 
     private void DisplayPassword(StageManager stage)
     {
         var pw = stage.Lock.GetPassword(LockColorID);
-        //Debug.Log($"{gameObject.name}({LockColorID}) 비밀번호: [{pw}]");
+        Debug.Log($"{gameObject.name}({LockColorID}) 비밀번호: [{pw}]");
         foreach (var text in texts) text.SetText(pw.ToString());
     }
 

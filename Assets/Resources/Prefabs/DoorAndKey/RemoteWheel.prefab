@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 520560560018794408}
   - component: {fileID: 520560560018794409}
   m_Layer: 0
-  m_Name: Cylinder
+  m_Name: Axis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 520560560018794404}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1.2, z: 0.1}
+  m_LocalPosition: {x: 0, y: 1.2, z: -0.1}
   m_LocalScale: {x: 0.1, y: 0.2, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -110,7 +110,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1981817856608284823}
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0.33}
+  m_LocalPosition: {x: 0, y: 0, z: 0.13}
   m_LocalScale: {x: 0.001, y: 0.001, z: 0.001}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 4651731903210831347}
   - component: {fileID: 926193152783842216}
   m_Layer: 0
-  m_Name: Cylinder (1)
+  m_Name: Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -210,7 +210,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3326104668441295939}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1.2, z: 0.3}
+  m_LocalPosition: {x: 0, y: 1.2, z: 0.1}
   m_LocalScale: {x: 0.16, y: 0.02, z: 0.16}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -356,6 +356,7 @@ GameObject:
   - component: {fileID: 4945547299317367282}
   - component: {fileID: 4945547299317367285}
   - component: {fileID: 7291098434331133471}
+  - component: {fileID: 7192171878646085475}
   m_Layer: 0
   m_Name: Wheel
   m_TagString: Untagged
@@ -371,7 +372,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4945547299317367283}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.2, z: 0.2}
+  m_LocalPosition: {x: 0, y: 1.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -507,6 +508,23 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7192171878646085475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4945547299317367283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 991c69b8a1b6a444a9177914f77cf7d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TintColor: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 0.39215687}
+  m_TintOnHover: 1
+  m_TintOnSelection: 0
+  m_TintRenderers:
+  - {fileID: 926193152783842216}
 --- !u!1 &4945547299457637254
 GameObject:
   m_ObjectHideFlags: 0
