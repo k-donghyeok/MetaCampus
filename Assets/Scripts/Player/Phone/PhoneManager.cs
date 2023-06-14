@@ -1,6 +1,6 @@
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.XR;
+using UnityEngine.XR.Interaction.Toolkit;
 
 /// <summary>
 /// 사진기의 전반적인 행동 관리
@@ -101,7 +101,9 @@ public class PhoneManager : MonoBehaviour
             case Mode.Attach:
                 AttachBehav.Update(heldDevice); break;
             case Mode.Capture:
-                CaptureBehav.Update(heldDevice); break;
+                CaptureBehav.Update(heldDevice);
+                if (stretched) attachGO.transform.localScale = Vector3.one * GetStretch();
+                break;
         }
 
     }
@@ -132,14 +134,16 @@ public class PhoneManager : MonoBehaviour
                 Map.LaydownMap();
                 attachGO.SetActive(true);
                 attachGO.transform.localScale = Vector3.one;
+                stretchers[0].transform.localPosition = new Vector3(0f, 0f, -0.14f);
+                stretchers[1].transform.localPosition = new Vector3(0f, 0f, 0.12f);
                 foreach (var s in stretchers) s.gameObject.SetActive(false);
+                //Debug.Log($"heldDevice {heldDevice.isValid}: characteristics {heldDevice.characteristics}");
                 if (heldDevice.isValid)
-                {
-                    if (heldDevice.characteristics == InputDeviceCharacteristics.Left)
-                        stretchers[1].gameObject.SetActive(true);
-                    else if (heldDevice.characteristics == InputDeviceCharacteristics.Right)
-                        stretchers[0].gameObject.SetActive(true);
-                }
+                    switch (GrabActionHandler.GetHand(heldDevice))
+                    {
+                        case 0: stretchers[1].gameObject.SetActive(true); break;
+                        case 1: stretchers[0].gameObject.SetActive(true); break;
+                    }
                 break;
         }
 
@@ -151,4 +155,30 @@ public class PhoneManager : MonoBehaviour
         Capture,
         Attach
     }
+
+    #region AttachStretch
+
+    public void OnStretcherHeld(XRBaseInteractable stretcher)
+    {
+        stretched = true;
+        stretchHand = stretcher.firstInteractorSelecting.transform;
+    }
+
+    public void OnStretcherUnheld()
+    {
+        stretched = false;
+        stretchHand = null;
+    }
+
+    private float GetStretch()
+    {
+        float dist = Vector3.Distance(transform.position, stretchHand.position);
+        return dist / 0.26f;
+    }
+
+    private bool stretched = false;
+
+    private Transform stretchHand = null;
+
+    #endregion AttachStretch
 }

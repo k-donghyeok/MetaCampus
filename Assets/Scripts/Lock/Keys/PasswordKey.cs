@@ -24,7 +24,7 @@ public class PasswordKey : DoorKey
     private void DisplayPassword(StageManager stage)
     {
         var pw = stage.Lock.GetPassword(LockColorID);
-        Debug.Log($"{gameObject.name}({LockColorID}) 비밀번호: [{pw}]");
+        //Debug.Log($"{gameObject.name}({LockColorID}) 비밀번호: [{pw}]");
         foreach (var text in texts) text.SetText(pw.ToString());
     }
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.XR;
 
@@ -50,8 +51,6 @@ public class AttachBehaviour
             else lastTrigger = false;
         }
         else lastTrigger = false;
-
-        // allow stretch
 
     }
 
