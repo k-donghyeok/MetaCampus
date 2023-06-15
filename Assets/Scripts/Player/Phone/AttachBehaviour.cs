@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.XR;
 
@@ -30,7 +31,7 @@ public class AttachBehaviour
 
     public void Update(InputDevice device)
     {
-        owner.Map.UpdatePhotoProjection(owner.transform);
+        owner.Map.UpdatePhotoProjection(owner.attachGO.transform);
 
         if (device.TryGetFeatureValue(CommonUsages.trigger, out var triggerValue))
         {
@@ -51,11 +52,9 @@ public class AttachBehaviour
         }
         else lastTrigger = false;
 
-        // allow stretch
-
     }
 
     public bool AttemptAttach(float leniency)
-        => owner.Map.RequestPhotoAttach(photo, owner.transform, leniency);
+        => owner.Map.RequestPhotoAttach(photo, owner.attachGO.transform, leniency);
 
 }

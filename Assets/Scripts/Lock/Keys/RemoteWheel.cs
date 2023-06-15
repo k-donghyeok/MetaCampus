@@ -60,6 +60,11 @@ public class RemoteWheel : RemoteKeyBase
         }
     }
 
+    public override void OnHeld()
+    {
+        base.OnHeld();
+    }
+
     public override void OnHeldReleased()
     {
         base.OnHeldReleased();

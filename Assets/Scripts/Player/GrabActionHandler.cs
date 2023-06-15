@@ -111,4 +111,16 @@ public class GrabActionHandler : MonoBehaviour
     /// </summary>
     public void RequestHandAnimation(bool left, HandAnimator.SpecialAnimation anim)
         => RequestHandAnimation(left ? 0 : 1, anim);
+
+    /// <summary>
+    /// <see cref="InputDevice"/>가 어느 손인지 확인
+    /// </summary>
+    public static int GetHand(InputDevice device)
+    {
+        if (((uint)device.characteristics & (uint)InputDeviceCharacteristics.Left) > 0)
+            return 0;
+        if (((uint)device.characteristics & (uint)InputDeviceCharacteristics.Right) > 0)
+            return 1;
+        return -1;
+    }
 }

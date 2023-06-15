@@ -146,14 +146,14 @@ public class ElevatorController : MonoBehaviour
         get => curIndex;
         set
         {
-            if (curIndex == value) return;
+            //if (curIndex == value) return;
             curIndex = value;
             OnStatusUpdate?.Invoke(floors[curIndex].name);
         }
     }
     private int curIndex = -1;
 
-    private void CalculateCurIndex()
+    private void CalculateCurIndex(bool upward)
     {
         float curHeight = chamberRbody.transform.localPosition.y;
 
@@ -196,6 +196,7 @@ public class ElevatorController : MonoBehaviour
         float goalPos = floors[index].height;
         // 높이까지 남은 거리 offset
         float distance = goalPos - chamberRbody.transform.localPosition.y;
+        bool upward = distance > 0f;
 
         // 엘리베이터 안에 있는 Rigidbody를 가져옴
         Collider[] carriedColliders = Physics.OverlapBox(chamberTrigger.bounds.center, chamberTrigger.bounds.extents, chamberTrigger.transform.rotation, LayerMask.GetMask("Player") | LayerMask.GetMask("Item"));
@@ -226,7 +227,9 @@ public class ElevatorController : MonoBehaviour
 
             yield return new WaitForFixedUpdate();
             //Debug.Log($"MoveToFloor curSpeed: {currentSpeed:0.0}, moveD: {moveDistance:0.0} / dist: {distance:0.0} {chamberRbody.transform.localPosition.y:0.0} > {floors[index].height:0.0}");
-            CalculateCurIndex(); // 실시간 층수 계산
+            CalculateCurIndex(upward); // 실시간 층수 계산
+
+            if (Mathf.FloorToInt(Time.time) % 2 == 0) OnStatusUpdate?.Invoke(upward ? "▲" : "▼"); // 방향 깜빡이
         }
 
         // 이동 끝: 엘리베이터를 목표 위치 및 속도로 리셋

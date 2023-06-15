@@ -9,15 +9,7 @@ public class StereoscopicCapture : MonoBehaviour
     public RenderTexture cubeMapRenderTextureRight;
     public RenderTexture equirectRenderTexture;
 
-    void Start()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Capture();
-        }
-    }
-
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
