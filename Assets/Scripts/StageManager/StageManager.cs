@@ -9,7 +9,7 @@ public class StageManager : MonoBehaviour
     private bool exterior = true;
 
     [SerializeField]
-    private float countdownDuration = 70f;
+    private float countdownDuration = 180f;
 
     public bool IsExterior() => exterior;
 
