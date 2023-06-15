@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class TimeManager
@@ -45,5 +46,8 @@ public class TimeManager
     private void TimeOver()
     {
         Debug.Log("시간초과");
+        OnTimeOver?.Invoke();
     }
+
+    public Action OnTimeOver = null;
 }
