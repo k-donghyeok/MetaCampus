@@ -39,6 +39,19 @@ public class MySceneManager
         SceneManager.LoadScene((int)_name);
     }
 
+    public static void SaveClear(SCENENAME name)
+    {
+        GameManager.Instance().Save.SaveValue(GetClearID(name), true);
+    }
+
+    private static string GetClearID(SCENENAME name)
+        => $"Cleared{name}";
+
+    public static bool GetCleared(SCENENAME name)
+    {
+        return GameManager.Instance().Save.LoadValue(GetClearID(name), false);
+    }
+
     /// <summary>
     /// 플레이어를 저장된 스폰 포인트로 이동
     /// </summary>

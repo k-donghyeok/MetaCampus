@@ -13,16 +13,15 @@ public class ExitPortal : MonoBehaviour
             bool tutorial = GetCurrentSceneName() == SCENENAME.Tutorial;
             if (!tutorial)
             {
-                if(!GameManager.Instance().IsDaytime())
+                if (!GameManager.Instance().IsDaytime())
                     StageManager.Instance().ClearValidate(); // 밤이면 클리어 확인 및 처리
                 GameManager.Instance().ToggleDaytime(); // 밤낮 전환
             }
             else
             {
-                string buildingName = StageManager.Instance().GetID();
-                if (!GameManager.Instance().Save.LoadValue(buildingName, false)) // 깬 적 없음: 인트로
+                if (!GetCleared(SCENENAME.Tutorial)) // 깬 적 없음: 인트로
                 {
-                    StageManager.Instance().SaveClear(); // 무조건 깬 것으로 처리
+                    SaveClear(SCENENAME.Tutorial); // 무조건 깬 것으로 처리
                     GameManager.Instance().ToggleDaytime(); // 밤낮 전환
                 }
             }

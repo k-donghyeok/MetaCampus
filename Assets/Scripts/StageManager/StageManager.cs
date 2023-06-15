@@ -119,13 +119,7 @@ public class StageManager : MonoBehaviour
         //StartCoroutine(UploadScoreCoroutine(GameManager.Instance().UserID, score));
 
         // 진행도 저장
-        SaveClear();
-    }
-
-    public void SaveClear()
-    {
-        string buildingName = GetID();
-        GameManager.Instance().Save.SaveValue(buildingName, true);
+        MySceneManager.SaveClear(MySceneManager.GetCurrentSceneName());
     }
 
     private IEnumerator UploadScoreCoroutine(string _id, int _score)
