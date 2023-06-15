@@ -33,11 +33,6 @@ public class AIController : MonoBehaviour
 
     private void Start()
     {
-        //if (waypoints.Length < 1 || GameManager.Instance().IsDaytime())
-        //{
-        //    Destroy(this);
-        //    return;
-        //}
         agent = GetComponent<NavMeshAgent>();
         agent.SetDestination(waypoints[nextWaypoint].position);
 
@@ -46,12 +41,12 @@ public class AIController : MonoBehaviour
         spotLight.spotAngle = visionAngle;
         spotLight.range = visionRadius;
 
-        timeManager = new TimeManager(70f); // 시간 관리자 초기화
+        timeManager = new TimeManager(180f); // Initialize the time manager
     }
 
     private void Update()
     {
-        timeManager.UpdateCountdown(); // 시간 관리자 업데이트
+        timeManager.UpdateCountdown(); // Update the time manager
 
         switch (currentState)
         {
@@ -110,6 +105,7 @@ public class AIController : MonoBehaviour
             if (playerDetected)
             {
                 SetDetectedState();
+                return; // Exit the method to prevent further state transition in the same frame
             }
         }
         else
@@ -120,7 +116,7 @@ public class AIController : MonoBehaviour
                 isPaused = false;
                 agent.isStopped = false;
                 animator.SetBool("DetectPlayer", false);
-                Debug.Log("이동 재개!");
+                Debug.Log("Resuming movement!");
             }
         }
     }
@@ -131,7 +127,14 @@ public class AIController : MonoBehaviour
         {
             if (agent.remainingDistance <= agent.stoppingDistance)
             {
-                SetLostState();
+                isPaused = true;
+                pauseTimer = pauseDuration;
+                agent.isStopped = true;
+                animator.SetBool("DetectPlayer", true);
+                Debug.Log("Player detected!");
+
+                // Stay paused for the specified duration and then transition to alarm state
+                Invoke(nameof(SetAlarmState), pauseDuration);
             }
         }
         else
@@ -166,7 +169,9 @@ public class AIController : MonoBehaviour
     private void UpdateAlarmState()
     {
         StageManager.Instance().Time.DecreaseTimeByOneMinute();
-        Debug.Log("알람 상태입니다. 시간을 1분 감소시키고 로봇 작동을 중지합니다.");
+        Debug.Log("Alarm state activated. Decreasing time by 1 minute and halting robot operations.");
+
+        // Additional logic for the alarm state can be added here
     }
 
     private void SetDetectedState()
@@ -176,7 +181,7 @@ public class AIController : MonoBehaviour
         pauseTimer = pauseDuration;
         agent.isStopped = true;
         animator.SetBool("DetectPlayer", true);
-        Debug.Log("Player 감지!");
+        Debug.Log("Player detected!");
     }
 
     private void SetLostState()
@@ -186,7 +191,7 @@ public class AIController : MonoBehaviour
         pauseTimer = pauseDuration;
         agent.isStopped = true;
         animator.SetBool("DetectPlayer", true);
-        Debug.Log("플레이어를 놓침");
+        Debug.Log("Player lost");
     }
 
     private void SetNormalState()
@@ -195,6 +200,14 @@ public class AIController : MonoBehaviour
         isPaused = false;
         agent.isStopped = false;
         animator.SetBool("DetectPlayer", false);
-        Debug.Log("평시 상태로 전환");
+        Debug.Log("Switching to normal state");
+    }
+
+    private void SetAlarmState()
+    {
+        currentState = AIState.Alarm;
+        Debug.Log("Switching to alarm state");
+
+        // Additional logic for the alarm state can be added here
     }
 }
