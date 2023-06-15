@@ -100,5 +100,6 @@ public class GameManager : MonoBehaviour
     public void StartIntro()
     {
         Scene.ChangeScene(MySceneManager.SCENENAME.Tutorial);
+        GameUnpause();
     }
 }

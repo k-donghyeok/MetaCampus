@@ -1,11 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class PauseMenuManager : MonoBehaviour
 {
+    [SerializeField]
+    private InputActionReference input;
+
     [SerializeField]
     private GameObject menuObject;
 
@@ -27,37 +29,33 @@ public class PauseMenuManager : MonoBehaviour
 
         popup.gameObject.SetActive(false);
         menuObject.SetActive(false);
+        input.action.started += ToggleMenu;
     }
 
-    private bool lastMenuButton = false;
-
-    private void Update()
+    private void OnDestroy()
     {
-        if (Input.GetButton("XRI_Left_MenuButton"))
+        input.action.started -= ToggleMenu;
+    }
+
+    private void ToggleMenu(InputAction.CallbackContext context)
+    {
+        if (!GameManager.Instance().Paused)
         {
-            if (!lastMenuButton)
-            {
-                if (!GameManager.Instance().Paused)
-                {
-                    ActivateMenu();
-                    GameManager.Instance().GamePause();
-                }
-                else
-                {
-                    OnButtonResumePressed();
-                }
-            }
-            lastMenuButton = true;
+            ActivateMenu();
+            GameManager.Instance().GamePause();
         }
-        else lastMenuButton = false;
+        else
+        {
+            OnButtonResumePressed();
+        }
     }
 
     private void ActivateMenu()
     {
         popup.gameObject.SetActive(false);
         menuObject.SetActive(true);
-        menuObject.transform.SetParent(PlayerManager.InstanceOrigin());
-        menuObject.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        transform.SetParent(PlayerManager.InstanceOrigin());
+        transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
     }
 
     public void OnButtonResumePressed()
@@ -65,8 +63,8 @@ public class PauseMenuManager : MonoBehaviour
         if (popup.gameObject.activeSelf) return; // ¹«½Ã
         popup.gameObject.SetActive(false);
         menuObject.SetActive(false);
-        menuObject.transform.SetParent(transform);
-        menuObject.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        transform.SetParent(PlayerManager.Instance().transform);
+        transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
         GameManager.Instance().GameUnpause();
     }
 

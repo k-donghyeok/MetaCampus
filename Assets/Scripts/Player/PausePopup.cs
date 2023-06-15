@@ -47,8 +47,9 @@ public class PausePopup : MonoBehaviour
                 break;
             case PopupAction.Reset:
                 GameManager.Instance().Save.Reset();
-                break;
+                return;
         }
+        GameManager.Instance().GameUnpause();
 
         static void SaveGame()
             => GameManager.Instance().Save.SaveToPrefs();
