@@ -10,10 +10,22 @@ public class ExitPortal : MonoBehaviour
     {
         if (!StageManager.Instance().IsExterior()) // 내부일 때
         {
-            if (!GameManager.Instance().IsDaytime())
-                StageManager.Instance().ClearValidate(); // 밤이면 클리어 확인 및 처리
-
-            GameManager.Instance().ToggleDaytime(); // 밤낮 전환
+            bool tutorial = GetCurrentSceneName() == SCENENAME.Tutorial;
+            if (!tutorial)
+            {
+                if(!GameManager.Instance().IsDaytime())
+                    StageManager.Instance().ClearValidate(); // 밤이면 클리어 확인 및 처리
+                GameManager.Instance().ToggleDaytime(); // 밤낮 전환
+            }
+            else
+            {
+                string buildingName = StageManager.Instance().GetID();
+                if (!GameManager.Instance().Save.LoadValue(buildingName, false)) // 깬 적 없음: 인트로
+                {
+                    StageManager.Instance().SaveClear(); // 무조건 깬 것으로 처리
+                    GameManager.Instance().ToggleDaytime(); // 밤낮 전환
+                }
+            }
         }
         GameManager.Instance().Scene.ChangeScene(targetScene);
     }
