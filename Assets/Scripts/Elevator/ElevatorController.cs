@@ -63,6 +63,21 @@ public class ElevatorController : MonoBehaviour
     private const float accelerationTime = 1f;
     private float currentSpeed;
 
+    [Header("Audio")]
+    [SerializeField]
+    private AudioClip doorOpenSound;
+    [SerializeField]
+    private AudioClip doorCloseSound;
+    [SerializeField]
+    private AudioClip floorArrivalSound;
+    [SerializeField]
+    private AudioClip doorOpenButtonSound;
+    [SerializeField]
+    private AudioClip doorCloseButtonSound;
+    [SerializeField]
+    private AudioClip doorAutoCloseSound;
+
+
     private void Start()
     {
         doorCloseSpeed = 1f / doorCloseTime;
@@ -133,6 +148,7 @@ public class ElevatorController : MonoBehaviour
 
         // 엘리베이터 상태가 변경될때 칸 안의 상태 텍스트를 바꾼다
         OnStatusUpdate += (status) => chamberTxtStatus.text = status;
+
 
         // 첫 번째 층으로 엘리베이터를 위치
         chamberRbody.transform.localPosition = new Vector3(0f, floors[0].height, 0f);
@@ -243,6 +259,8 @@ public class ElevatorController : MonoBehaviour
         // 다른 변수들 리셋 및 도착 이벤트 (문 열기) 시행
         CurIndex = index;
         RequestOpenDoor();
+
+        AudioSource.PlayClipAtPoint(floorArrivalSound, transform.position); // 도착 소리 재생
     }
 
     private void Update()
@@ -272,6 +290,16 @@ public class ElevatorController : MonoBehaviour
 
         chamberAnim.SetFloat("open", doorOpen);
         elevFloors[CurIndex].UpdateAnim(doorOpen);
+
+        if (doorOpenHang == 0f && doorOpen > 0f)
+        {
+            if (doorOpen == 1f)
+            {
+                AudioSource.PlayClipAtPoint(doorAutoCloseSound, transform.position);
+            }
+
+        }
+
     }
 
     /// <summary>
@@ -287,11 +315,17 @@ public class ElevatorController : MonoBehaviour
     {
         if (isMoving) return;
         doorOpenHang = doorOpenWaitTime;
+
+        AudioSource.PlayClipAtPoint(doorOpenSound, transform.position);
+        AudioSource.PlayClipAtPoint(doorOpenButtonSound, transform.position);
     }
 
     public void RequestCloseDoor()
     {
         doorOpenHang = 0f;
+
+        AudioSource.PlayClipAtPoint(doorCloseSound, transform.position);
+        AudioSource.PlayClipAtPoint(doorCloseButtonSound, transform.position);
     }
 
     public void OnDoorCollision()
