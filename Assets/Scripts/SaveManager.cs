@@ -43,6 +43,8 @@ public class SaveManager
         SaveValue(SAVESEED, (int)DateTime.Now.Ticks);
         OnSaveReset?.Invoke(this);
         SaveToPrefs();
+
+        GameManager.Instance().StartIntro();
     }
 
     public delegate void SaveEventHandler(SaveManager save);

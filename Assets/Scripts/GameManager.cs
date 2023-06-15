@@ -96,4 +96,9 @@ public class GameManager : MonoBehaviour
         var playerMove = PlayerManager.InstanceOrigin().GetComponent<DynamicMoveProvider>();
         if (playerMove) playerMove.moveSpeed = StageManager.Instance().IsExterior() ? 5f : 3f;
     }
+
+    public void StartIntro()
+    {
+        Scene.ChangeScene(MySceneManager.SCENENAME.Tutorial);
+    }
 }
