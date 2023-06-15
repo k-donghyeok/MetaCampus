@@ -41,12 +41,12 @@ public class AIController : MonoBehaviour
         spotLight.spotAngle = visionAngle;
         spotLight.range = visionRadius;
 
-        timeManager = new TimeManager(180f); // Initialize the time manager
+        timeManager = new TimeManager(180f);
     }
 
     private void Update()
     {
-        timeManager.UpdateCountdown(); // Update the time manager
+        timeManager.UpdateCountdown();
 
         switch (currentState)
         {
@@ -105,7 +105,7 @@ public class AIController : MonoBehaviour
             if (playerDetected)
             {
                 SetDetectedState();
-                return; // Exit the method to prevent further state transition in the same frame
+                return;
             }
         }
         else
@@ -133,7 +133,6 @@ public class AIController : MonoBehaviour
                 animator.SetBool("DetectPlayer", true);
                 Debug.Log("Player detected!");
 
-                // Stay paused for the specified duration and then transition to alarm state
                 Invoke(nameof(SetAlarmState), pauseDuration);
             }
         }
@@ -171,7 +170,6 @@ public class AIController : MonoBehaviour
         StageManager.Instance().Time.DecreaseTimeByOneMinute();
         Debug.Log("Alarm state activated. Decreasing time by 1 minute and halting robot operations.");
 
-        // Additional logic for the alarm state can be added here
     }
 
     private void SetDetectedState()
@@ -208,6 +206,5 @@ public class AIController : MonoBehaviour
         currentState = AIState.Alarm;
         Debug.Log("Switching to alarm state");
 
-        // Additional logic for the alarm state can be added here
     }
 }
