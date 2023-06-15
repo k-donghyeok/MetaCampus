@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EngineeringTutorial : MonoBehaviour
@@ -18,8 +16,16 @@ public class EngineeringTutorial : MonoBehaviour
         if (failed || !GameManager.Instance().IsDaytime()) firstDay.SetActive(false);
         if (!failed) afterFail.SetActive(false);
 
-        StageManager.Instance().Time.OnTimeOver
+        if (StageManager.Instance().Initialized)
+            AppendFailCheckEvent();
+        else
+            StageManager.Instance().OnStageLoad += (stage) => { AppendFailCheckEvent(); };
+
+        void AppendFailCheckEvent()
+        {
+            StageManager.Instance().Time.OnTimeOver
             += () => { GameManager.Instance().Save.SaveValue(FAIL_CHECK, true); };
+        }
     }
 
 }
