@@ -11,9 +11,16 @@ public class FreeDoor : DoorLock
     [SerializeField]
     private Rigidbody doorBody;
 
+    [SerializeField]
+    private AudioClip openSound;
+    private AudioSource audioSource;
+
+
     protected override void Start()
     {
         base.Start();
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = openSound;
         if (!Clockwise)
         {
             var limits = joint.limits;
@@ -22,6 +29,7 @@ public class FreeDoor : DoorLock
             joint.limits = limits;
         }
         IsUnlocked = true;
+
     }
 
     private void Update()
@@ -54,6 +62,13 @@ public class FreeDoor : DoorLock
     public void OnGrabbed()
     {
         interactor = interactable.firstInteractorSelecting;
+        PlayOpenSound();
+    }
+
+    private void PlayOpenSound()
+    {
+        if (openSound != null)
+            audioSource.PlayOneShot(openSound);
     }
 
     public void OnGrabReleased()

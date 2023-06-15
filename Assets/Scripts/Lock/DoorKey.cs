@@ -20,6 +20,10 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
     [SerializeField]
     protected Transform heldModel = null;
 
+    [SerializeField]
+    private AudioClip heldSound;
+    private AudioSource audioSource;
+
     protected virtual void Start()
     {
         LockManager.DyeRenderers(LockColorID, dyeRenderers);
@@ -27,6 +31,8 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
         if (heldModel) heldModel.gameObject.SetActive(false);
 
         FloatUpdate();
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     protected virtual void Update()
@@ -72,6 +78,8 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
             }
         }
         Held = true;
+
+        PlayHeldSound();
     }
 
     public virtual void OnHeldReleased()
@@ -93,5 +101,13 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
     protected virtual void OnUsed()
     {
 
+    }
+
+    private void PlayHeldSound()
+    {
+        if (heldSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(heldSound);
+        }
     }
 }

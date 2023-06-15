@@ -2,9 +2,18 @@ using UnityEngine;
 
 public class MultiUseDoor : DoorLock
 {
+    [SerializeField]
+    private AudioClip openSound;
+    private AudioSource audioSource;
+
     protected void Awake()
     {
         lockTypeID = IHaveLockID.TypeID.MultiUse;
+    }
+
+    protected override void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
     }
 
     public override bool TryUnlock(DoorKey key)
@@ -21,7 +30,17 @@ public class MultiUseDoor : DoorLock
         //문이열린다
         IsUnlocked = true;
         PlayOpenAnimation();
+        PlayOpenSound();
         //Debug.Log("카드키 사용 문열림");
         return true;
+    }
+
+    private void PlayOpenSound()
+    {
+        if (openSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(openSound);
+        }
+
     }
 }

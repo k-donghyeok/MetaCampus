@@ -8,6 +8,13 @@ public class PasswordDoor : DoorLock
     [SerializeField]
     private TMP_Text[] texts = new TMP_Text[2];
 
+    [SerializeField]
+    private AudioClip buttonClickSound;
+    [SerializeField]
+    private AudioClip openSound;
+    private AudioSource audioSource;
+
+
     protected void Awake()
     {
         lockTypeID = IHaveLockID.TypeID.Password;
@@ -16,7 +23,8 @@ public class PasswordDoor : DoorLock
     protected override void Start()
     {
         base.Start();
-
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = openSound;
         if (StageManager.Instance().Initialized) SavePassword(StageManager.Instance());
         else StageManager.Instance().OnStageLoad += (stage) => SavePassword(stage);
 
@@ -48,6 +56,14 @@ public class PasswordDoor : DoorLock
         if (curInput >= 1000) CheckPassword();
         foreach (var text in texts)
             text.SetText(curInput == 0 ? PW_EMPTY : curInput.ToString());
+
+        PlayButtonClickSound();
+    }
+
+    private void PlayButtonClickSound()
+    {
+        if (buttonClickSound != null)
+            audioSource.PlayOneShot(buttonClickSound);
     }
 
     private void CheckPassword()
@@ -58,6 +74,7 @@ public class PasswordDoor : DoorLock
             var buttons = GetComponentsInChildren<Button>();
             foreach (var b in buttons) b.interactable = false;
             PlayOpenAnimation();
+            PlayOpenSound();
         }
         else
         {
@@ -65,4 +82,9 @@ public class PasswordDoor : DoorLock
         }
     }
 
+    private void PlayOpenSound()
+    {
+        if (openSound != null)
+            audioSource.PlayOneShot(openSound);
+    }
 }
