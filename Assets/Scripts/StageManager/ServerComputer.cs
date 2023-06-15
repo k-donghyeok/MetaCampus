@@ -28,6 +28,11 @@ public class ServerComputer : MonoBehaviour
     {
         if (GameManager.Instance().IsDaytime()) return;
         if (StageManager.Instance().IsClear) return;
+        if (StageManager.Instance().Time.IsCountdownComplete)
+        {
+            monitorText.text = "Too late! x(";
+            return;
+        }
         StageManager.Instance().IsClear = true;
         monitorCanvas.color = new Color(0.2f, 0.2f, 1f);
         monitorText.text = "Input Received!";
