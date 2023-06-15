@@ -37,11 +37,19 @@ public class RemoteWheel : RemoteKeyBase
         var hand = interactable.firstInteractorSelecting;
         if (hand == null) return;
         Vector3 dir = hand.transform.position - wheel.position;
-        if ((hand.transform.position - (wheel.position + wheel.up * 0.45f)).magnitude > 0.6f) // Too far
+        if ((hand.transform.position - (wheel.position + wheel.up * 0.45f)).magnitude > 0.4f) // Too far
         { interactable.enabled = false; interactable.enabled = true; return; }
-        float deg = Vector2.SignedAngle(transform.up, dir);
+        //float deg = Vector2.SignedAngle(transform.up, dir);
+        //deg = Mathf.LerpAngle(lastDeg, deg, 0.5f);
+        //wheel.rotation = Quaternion.Euler(0f, 0f, deg);
+        Quaternion parentRotation = transform.rotation;
+        Vector3 localDir = Quaternion.Inverse(parentRotation) * dir; // Transform dir to local space
+
+        float deg = Vector2.SignedAngle(transform.up, localDir);
         deg = Mathf.LerpAngle(lastDeg, deg, 0.5f);
-        wheel.rotation = Quaternion.Euler(0f, 0f, deg);
+
+        // Apply the rotation with parent's rotation taken into account
+        wheel.rotation = parentRotation * Quaternion.Euler(0f, 0f, deg);
 
         lastDeg = deg;
         deg /= 360f;
