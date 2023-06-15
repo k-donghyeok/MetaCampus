@@ -30,6 +30,7 @@ public class AIController : MonoBehaviour
     }
 
     private AIState currentState = AIState.Normal;
+    private bool isAlarmActivated = false;
 
     private void Start()
     {
@@ -38,6 +39,7 @@ public class AIController : MonoBehaviour
         //    Destroy(this);
         //    return;
         //}
+
         agent = GetComponent<NavMeshAgent>();
         agent.SetDestination(waypoints[nextWaypoint].position);
 
@@ -46,12 +48,12 @@ public class AIController : MonoBehaviour
         spotLight.spotAngle = visionAngle;
         spotLight.range = visionRadius;
 
-        timeManager = new TimeManager(70f); // 시간 관리자 초기화
+        timeManager = new TimeManager(180f);
     }
 
     private void Update()
     {
-        timeManager.UpdateCountdown(); // 시간 관리자 업데이트
+        timeManager.UpdateCountdown();
 
         switch (currentState)
         {
@@ -72,86 +74,54 @@ public class AIController : MonoBehaviour
 
     private void UpdateNormalState()
     {
-        if (!isPaused)
+        if (currentState != AIState.Normal)
+            return;
+
+        if (agent.remainingDistance <= agent.stoppingDistance)
         {
-            if (agent.remainingDistance <= agent.stoppingDistance)
-            {
-                nextWaypoint = (nextWaypoint + 1) % waypoints.Length;
-                agent.SetDestination(waypoints[nextWaypoint].position);
-            }
-
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position, visionRadius);
-            bool playerDetected = false;
-
-            foreach (Collider collider in hitColliders)
-            {
-                if (collider.transform.root.CompareTag(playerTag))
-                {
-                    Vector3 directionToPlayer = collider.transform.position - transform.position;
-                    directionToPlayer.y = 0f;
-
-                    if (Vector3.Angle(transform.forward, directionToPlayer) <= visionAngle / 2f)
-                    {
-                        RaycastHit hit;
-                        if (Physics.Raycast(transform.position, directionToPlayer, out hit, visionRadius))
-                        {
-                            if (hit.collider.CompareTag(wallTag))
-                            {
-                                continue;
-                            }
-                        }
-
-                        playerDetected = true;
-                        break;
-                    }
-                }
-            }
-
-            if (playerDetected)
-            {
-                SetDetectedState();
-            }
+            nextWaypoint = (nextWaypoint + 1) % waypoints.Length;
+            agent.SetDestination(waypoints[nextWaypoint].position);
         }
-        else
+
+        if (IsPlayerDetected())
         {
-            pauseTimer -= Time.deltaTime;
-            if (pauseTimer <= 0f)
-            {
-                isPaused = false;
-                agent.isStopped = false;
-                animator.SetBool("DetectPlayer", false);
-                Debug.Log("이동 재개!");
-            }
+            SetDetectedState();
         }
     }
 
     private void UpdateDetectedState()
     {
-        if (!isPaused)
+        if (currentState != AIState.Detected)
+            return;
+
+        if (agent.remainingDistance <= agent.stoppingDistance)
         {
-            if (agent.remainingDistance <= agent.stoppingDistance)
-            {
-                SetLostState();
-            }
+            SetLostState();
         }
-        else
+        else if (!IsPlayerDetected())
+        {
+            SetLostState();
+        }
+        else if (isPaused)
         {
             pauseTimer -= Time.deltaTime;
             if (pauseTimer <= 0f)
             {
-                SetLostState();
+                SetAlarmState();
             }
         }
     }
 
     private void UpdateLostState()
     {
-        if (!isPaused)
+        if (currentState != AIState.Lost)
+            return;
+
+        if (IsPlayerDetected())
         {
-            if (agent.remainingDistance <= agent.stoppingDistance)
-            {
-                SetNormalState();
-            }
+            SetDetectedState();
+            Debug.Log("재발견");
+            return;
         }
         else
         {
@@ -163,10 +133,16 @@ public class AIController : MonoBehaviour
         }
     }
 
+
+
     private void UpdateAlarmState()
     {
-        StageManager.Instance().Time.DecreaseTimeByOneMinute();
-        Debug.Log("알람 상태입니다. 시간을 1분 감소시키고 로봇 작동을 중지합니다.");
+        if (!isAlarmActivated)
+        {
+            isAlarmActivated = true;
+            StageManager.Instance().Time.DecreaseTimeByOneMinute();
+            Debug.Log("경보 상태가 활성화되었습니다. 타이머 1분 감소");
+        }
     }
 
     private void SetDetectedState()
@@ -175,8 +151,9 @@ public class AIController : MonoBehaviour
         isPaused = true;
         pauseTimer = pauseDuration;
         agent.isStopped = true;
+        animator.SetBool("LostState", false);
         animator.SetBool("DetectPlayer", true);
-        Debug.Log("Player 감지!");
+        Debug.Log("플레이어 발견!");
     }
 
     private void SetLostState()
@@ -185,7 +162,8 @@ public class AIController : MonoBehaviour
         isPaused = true;
         pauseTimer = pauseDuration;
         agent.isStopped = true;
-        animator.SetBool("DetectPlayer", true);
+        animator.SetBool("LostState", true);
+        animator.SetBool("DetectPlayer", false);
         Debug.Log("플레이어를 놓침");
     }
 
@@ -194,7 +172,45 @@ public class AIController : MonoBehaviour
         currentState = AIState.Normal;
         isPaused = false;
         agent.isStopped = false;
+        animator.SetBool("LostState", false);
         animator.SetBool("DetectPlayer", false);
         Debug.Log("평시 상태로 전환");
+
+    }
+
+    private void SetAlarmState()
+    {
+        currentState = AIState.Alarm;
+        Debug.Log("알람 상태로 전환");
+    }
+
+    private bool IsPlayerDetected()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, visionRadius);
+
+        foreach (Collider collider in hitColliders)
+        {
+            if (collider.transform.root.CompareTag(playerTag))
+            {
+                Vector3 directionToPlayer = collider.transform.position - transform.position;
+                directionToPlayer.y = 0f;
+
+                if (Vector3.Angle(transform.forward, directionToPlayer) <= visionAngle / 2f)
+                {
+                    RaycastHit hit;
+                    if (Physics.Raycast(transform.position, directionToPlayer, out hit, visionRadius))
+                    {
+                        if (hit.collider.CompareTag(wallTag))
+                        {
+                            continue;
+                        }
+                    }
+
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
