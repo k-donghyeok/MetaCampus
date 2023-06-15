@@ -21,6 +21,11 @@ public class AIController : MonoBehaviour
     private Animator animator;
     private TimeManager timeManager;
 
+    public AudioClip detectionSound;
+    public AudioClip alarmSound;
+    public AudioClip lostSound;
+    private AudioSource audioSource;
+
     private enum AIState
     {
         Normal,
@@ -49,6 +54,15 @@ public class AIController : MonoBehaviour
         spotLight.range = visionRadius;
 
         timeManager = new TimeManager(180f);
+
+        audioSource = GetComponent<AudioSource>();
+        audioSource.playOnAwake = false;
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        audioSource.clip = clip;
+        audioSource.Play();
     }
 
     private void Update()
@@ -142,6 +156,8 @@ public class AIController : MonoBehaviour
             isAlarmActivated = true;
             StageManager.Instance().Time.DecreaseTimeByOneMinute();
             Debug.Log("경보 상태가 활성화되었습니다. 타이머 1분 감소");
+
+            PlaySound(alarmSound);
         }
     }
 
@@ -154,6 +170,8 @@ public class AIController : MonoBehaviour
         animator.SetBool("LostState", false);
         animator.SetBool("DetectPlayer", true);
         Debug.Log("플레이어 발견!");
+
+        PlaySound(detectionSound);
     }
 
     private void SetLostState()
@@ -165,6 +183,8 @@ public class AIController : MonoBehaviour
         animator.SetBool("LostState", true);
         animator.SetBool("DetectPlayer", false);
         Debug.Log("플레이어를 놓침");
+
+        PlaySound(lostSound);
     }
 
     private void SetNormalState()
@@ -213,4 +233,6 @@ public class AIController : MonoBehaviour
 
         return false;
     }
+
+
 }
