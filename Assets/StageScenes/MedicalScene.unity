@@ -2975,7 +2975,7 @@ PrefabInstance:
     - target: {fileID: 8497475860645080020, guid: 5bb4fd96a85349a4dbdb707c47e14230,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13
+      value: -10.32
       objectReference: {fileID: 0}
     - target: {fileID: 8497475860645080020, guid: 5bb4fd96a85349a4dbdb707c47e14230,
         type: 3}
@@ -2985,7 +2985,7 @@ PrefabInstance:
     - target: {fileID: 8497475860645080020, guid: 5bb4fd96a85349a4dbdb707c47e14230,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11
+      value: 12.43
       objectReference: {fileID: 0}
     - target: {fileID: 8497475860645080020, guid: 5bb4fd96a85349a4dbdb707c47e14230,
         type: 3}
@@ -7368,17 +7368,17 @@ PrefabInstance:
     - target: {fileID: 3133313999888065872, guid: 76733adc1ad797f4cbed9c52347031ab,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.331
       objectReference: {fileID: 0}
     - target: {fileID: 3133313999888065872, guid: 76733adc1ad797f4cbed9c52347031ab,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.101
+      value: 0.104
       objectReference: {fileID: 0}
     - target: {fileID: 3133313999888065872, guid: 76733adc1ad797f4cbed9c52347031ab,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.099
+      value: 8.464
       objectReference: {fileID: 0}
     - target: {fileID: 3133313999888065872, guid: 76733adc1ad797f4cbed9c52347031ab,
         type: 3}
@@ -11234,6 +11234,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5957045401499320545, guid: 29419658052549a4aa3261d72db2d5d3,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 79bf5a2e88c4467408a3421539339f5a, type: 2}
     - target: {fileID: -2045978970610658213, guid: 29419658052549a4aa3261d72db2d5d3,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -11249,6 +11254,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MedicalScene
       objectReference: {fileID: 0}
+    - target: {fileID: 3802386937758030258, guid: 29419658052549a4aa3261d72db2d5d3,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 79bf5a2e88c4467408a3421539339f5a, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29419658052549a4aa3261d72db2d5d3, type: 3}
 --- !u!1 &1919219351
