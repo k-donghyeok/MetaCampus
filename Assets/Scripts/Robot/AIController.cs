@@ -30,9 +30,16 @@ public class AIController : MonoBehaviour
     }
 
     private AIState currentState = AIState.Normal;
+    private bool isAlarmActivated = false;
 
     private void Start()
     {
+        //if (waypoints.Length < 1 || GameManager.Instance().IsDaytime())
+        //{
+        //    Destroy(this);
+        //    return;
+        //}
+
         agent = GetComponent<NavMeshAgent>();
         agent.SetDestination(waypoints[nextWaypoint].position);
 
@@ -75,37 +82,9 @@ public class AIController : MonoBehaviour
                 agent.SetDestination(waypoints[nextWaypoint].position);
             }
 
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position, visionRadius);
-            bool playerDetected = false;
-
-            foreach (Collider collider in hitColliders)
-            {
-                if (collider.transform.root.CompareTag(playerTag))
-                {
-                    Vector3 directionToPlayer = collider.transform.position - transform.position;
-                    directionToPlayer.y = 0f;
-
-                    if (Vector3.Angle(transform.forward, directionToPlayer) <= visionAngle / 2f)
-                    {
-                        RaycastHit hit;
-                        if (Physics.Raycast(transform.position, directionToPlayer, out hit, visionRadius))
-                        {
-                            if (hit.collider.CompareTag(wallTag))
-                            {
-                                continue;
-                            }
-                        }
-
-                        playerDetected = true;
-                        break;
-                    }
-                }
-            }
-
-            if (playerDetected)
+            if (IsPlayerDetected())
             {
                 SetDetectedState();
-                return;
             }
         }
         else
@@ -116,7 +95,7 @@ public class AIController : MonoBehaviour
                 isPaused = false;
                 agent.isStopped = false;
                 animator.SetBool("DetectPlayer", false);
-                Debug.Log("Resuming movement!");
+                Debug.Log("이동 재개!");
             }
         }
     }
@@ -127,13 +106,7 @@ public class AIController : MonoBehaviour
         {
             if (agent.remainingDistance <= agent.stoppingDistance)
             {
-                isPaused = true;
-                pauseTimer = pauseDuration;
-                agent.isStopped = true;
-                animator.SetBool("DetectPlayer", true);
-                Debug.Log("Player detected!");
-
-                Invoke(nameof(SetAlarmState), pauseDuration);
+                SetLostState();
             }
         }
         else
@@ -141,7 +114,13 @@ public class AIController : MonoBehaviour
             pauseTimer -= Time.deltaTime;
             if (pauseTimer <= 0f)
             {
-                SetLostState();
+                if (!IsPlayerDetected())
+                {
+                    SetLostState();
+                    return;
+                }
+
+                SetAlarmState();
             }
         }
     }
@@ -167,9 +146,12 @@ public class AIController : MonoBehaviour
 
     private void UpdateAlarmState()
     {
-        StageManager.Instance().Time.DecreaseTimeByOneMinute();
-        Debug.Log("Alarm state activated. Decreasing time by 1 minute and halting robot operations.");
-
+        if (!isAlarmActivated)
+        {
+            isAlarmActivated = true;
+            StageManager.Instance().Time.DecreaseTimeByOneMinute();
+            Debug.Log("경보 상태가 활성화되었습니다. 타이머 1분 감소");
+        }
     }
 
     private void SetDetectedState()
@@ -179,7 +161,7 @@ public class AIController : MonoBehaviour
         pauseTimer = pauseDuration;
         agent.isStopped = true;
         animator.SetBool("DetectPlayer", true);
-        Debug.Log("Player detected!");
+        Debug.Log("플레이어 발견!");
     }
 
     private void SetLostState()
@@ -189,7 +171,7 @@ public class AIController : MonoBehaviour
         pauseTimer = pauseDuration;
         agent.isStopped = true;
         animator.SetBool("DetectPlayer", true);
-        Debug.Log("Player lost");
+        Debug.Log("플레이어를 놓침");
     }
 
     private void SetNormalState()
@@ -198,13 +180,42 @@ public class AIController : MonoBehaviour
         isPaused = false;
         agent.isStopped = false;
         animator.SetBool("DetectPlayer", false);
-        Debug.Log("Switching to normal state");
+        Debug.Log("평시 상태로 전환");
     }
 
     private void SetAlarmState()
     {
         currentState = AIState.Alarm;
-        Debug.Log("Switching to alarm state");
+        Debug.Log("알람 상태로 전환");
+    }
 
+    private bool IsPlayerDetected()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, visionRadius);
+
+        foreach (Collider collider in hitColliders)
+        {
+            if (collider.transform.root.CompareTag(playerTag))
+            {
+                Vector3 directionToPlayer = collider.transform.position - transform.position;
+                directionToPlayer.y = 0f;
+
+                if (Vector3.Angle(transform.forward, directionToPlayer) <= visionAngle / 2f)
+                {
+                    RaycastHit hit;
+                    if (Physics.Raycast(transform.position, directionToPlayer, out hit, visionRadius))
+                    {
+                        if (hit.collider.CompareTag(wallTag))
+                        {
+                            continue;
+                        }
+                    }
+
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
