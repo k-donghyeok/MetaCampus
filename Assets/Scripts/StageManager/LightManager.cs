@@ -49,6 +49,10 @@ public class LightManager : MonoBehaviour
         // Lightmap 설정
         LightMapSetup(day);
 
+        // ReflectionProbe 다시 베이크
+        var probes = GetComponents<ReflectionProbe>();
+        foreach (var probe in probes) probe.RenderProbe();
+
         void LightMapSetup(bool day)
         {
             List<LightmapData> lData = new();

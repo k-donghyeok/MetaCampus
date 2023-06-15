@@ -8,14 +8,18 @@ public class RemoteDoor : DoorLock
     protected override void Start()
     {
         base.Start();
-        StageManager.Instance().OnStageLoad += (stage) =>
+
+        if (StageManager.Instance().Initialized) AppendEventToLock(StageManager.Instance());
+        else StageManager.Instance().OnStageLoad += (stage) => AppendEventToLock(stage);
+    }
+
+    private void AppendEventToLock(StageManager stage)
+    {
+        stage.Lock.OnRemoteOpened += (color) =>
         {
-            stage.Lock.OnRemoteOpened += (color) =>
-            {
-                if (LockColorID != color) return;
-                IsUnlocked = true;
-                PlayOpenAnimation();
-            };
+            if (LockColorID != color) return;
+            IsUnlocked = true;
+            PlayOpenAnimation();
         };
     }
 }

@@ -1,6 +1,6 @@
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.XR;
+using UnityEngine.XR.Interaction.Toolkit;
 
 /// <summary>
 /// 사진기의 전반적인 행동 관리
@@ -21,7 +21,7 @@ public class PhoneManager : MonoBehaviour
 
     [Header("Attach")]
     [SerializeField]
-    private GameObject attachGO = null;
+    internal GameObject attachGO = null;
     [SerializeField]
     internal Transform[] stretchers = new Transform[2];
     [SerializeField]
@@ -75,6 +75,7 @@ public class PhoneManager : MonoBehaviour
         if (held) ChangeMode(Mode.Capture);
         else if (CurMode == Mode.Attach)
         {
+            foreach (var s in stretchers) s.gameObject.SetActive(false);
             Map.RequestFoldLaydownMap(0f);
         }
     }
@@ -98,10 +99,18 @@ public class PhoneManager : MonoBehaviour
 
         switch (CurMode)
         {
-            case Mode.Attach:
-                AttachBehav.Update(heldDevice); break;
             case Mode.Capture:
-                CaptureBehav.Update(heldDevice); break;
+                CaptureBehav.Update(heldDevice);
+                break;
+            case Mode.Attach:
+                AttachBehav.Update(heldDevice);
+                if (stretched)
+                {
+                    attachGO.transform.localScale = Vector3.one * GetStretch();
+                    attachGO.transform.position = Vector3.Lerp(stretchers[0].position, stretchers[1].position, 0.53846f);
+                    //attachGO.transform.localRotation = Vector3.MoveTowards(stretchers[0].position, stretchers[1].position, 1f);
+                }
+                break;
         }
 
     }
@@ -122,6 +131,7 @@ public class PhoneManager : MonoBehaviour
                 attachGO.SetActive(false);
                 break;
         }
+        foreach (var s in stretchers) s.gameObject.SetActive(false);
         switch (newMode)
         {
             case Mode.Capture:
@@ -132,14 +142,16 @@ public class PhoneManager : MonoBehaviour
                 Map.LaydownMap();
                 attachGO.SetActive(true);
                 attachGO.transform.localScale = Vector3.one;
-                foreach (var s in stretchers) s.gameObject.SetActive(false);
+                attachGO.transform.localPosition = Vector3.zero;
+                stretchers[0].transform.localPosition = new Vector3(0f, 0f, -0.14f);
+                stretchers[1].transform.localPosition = new Vector3(0f, 0f, 0.12f);
+                //Debug.Log($"heldDevice {heldDevice.isValid}: characteristics {heldDevice.characteristics}");
                 if (heldDevice.isValid)
-                {
-                    if (heldDevice.characteristics == InputDeviceCharacteristics.Left)
-                        stretchers[1].gameObject.SetActive(true);
-                    else if (heldDevice.characteristics == InputDeviceCharacteristics.Right)
-                        stretchers[0].gameObject.SetActive(true);
-                }
+                    switch (GrabActionHandler.GetHand(heldDevice))
+                    {
+                        case 0: stretchers[1].gameObject.SetActive(true); break;
+                        case 1: stretchers[0].gameObject.SetActive(true); break;
+                    }
                 break;
         }
 
@@ -151,4 +163,30 @@ public class PhoneManager : MonoBehaviour
         Capture,
         Attach
     }
+
+    #region AttachStretch
+
+    public void OnStretcherHeld(XRBaseInteractable stretcher)
+    {
+        stretched = true;
+        //this.stretcher = stretcher.transform;
+    }
+
+    public void OnStretcherUnheld()
+    {
+        stretched = false;
+        //stretcher = null;
+    }
+
+    private float GetStretch()
+    {
+        float dist = Vector3.Distance(stretchers[0].position, stretchers[1].position);
+        return dist / 0.26f;
+    }
+
+    private bool stretched = false;
+
+    //private Transform stretcher = null;
+
+    #endregion AttachStretch
 }

@@ -219,12 +219,12 @@
             {
                 "type": "UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                 "key": "ShapeBuilder.LastPivotPosition",
-                "value": "{\"m_Value\":{\"x\":-0.2500000596046448,\"y\":-0.12500004470348359,\"z\":-0.625}}"
+                "value": "{\"m_Value\":{\"x\":-0.05000023916363716,\"y\":-2.0000016689300539,\"z\":-3.2500007152557375}}"
             },
             {
                 "type": "UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                 "key": "ShapeBuilder.LastSize",
-                "value": "{\"m_Value\":{\"x\":0.5000000596046448,\"y\":0.2500000298023224,\"z\":1.25}}"
+                "value": "{\"m_Value\":{\"x\":0.10000038146972656,\"y\":4.0,\"z\":6.5}}"
             },
             {
                 "type": "UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
@@ -289,6 +289,11 @@
             {
                 "type": "UnityEngine.ProBuilder.Shapes.Shape, Unity.ProBuilder, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                 "key": "ShapeBuilder.Sprite",
+                "value": "{}"
+            },
+            {
+                "type": "UnityEngine.ProBuilder.Shapes.Shape, Unity.ProBuilder, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "key": "ShapeBuilder.Cylinder",
                 "value": "{}"
             },
             {

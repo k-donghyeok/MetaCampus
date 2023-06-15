@@ -125,9 +125,9 @@ MonoBehaviour:
   m_CameraTransform: {fileID: 0}
   m_KeyboardTranslateSpace: 0
   m_MouseTranslateSpace: 2
-  m_KeyboardXTranslateSpeed: 0.2
-  m_KeyboardYTranslateSpeed: 0.2
-  m_KeyboardZTranslateSpeed: 0.2
+  m_KeyboardXTranslateSpeed: 0.3
+  m_KeyboardYTranslateSpeed: 0.3
+  m_KeyboardZTranslateSpeed: 0.3
   m_KeyboardBodyTranslateMultiplier: 10
   m_MouseXTranslateSensitivity: 0.0004
   m_MouseYTranslateSensitivity: 0.0004

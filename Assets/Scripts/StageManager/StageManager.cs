@@ -9,7 +9,7 @@ public class StageManager : MonoBehaviour
     private bool exterior = true;
 
     [SerializeField]
-    private float countdownDuration = 70f;
+    private float countdownDuration = 180f;
 
     public bool IsExterior() => exterior;
 
@@ -25,9 +25,9 @@ public class StageManager : MonoBehaviour
     public static StageManager Instance() => instance;
 
     /// <summary>
-    /// 이 스테이지의 씬 이름을 반환
+    /// 계산에 사용되는 이 스테이지의 씬 이름을 반환
     /// </summary>
-    public string GetName() => gameObject.scene.name;
+    public string GetID() => MySceneManager.GetCurrentSceneName().ToString();
 
     /// <summary>
     /// 타이머 관리
@@ -90,7 +90,7 @@ public class StageManager : MonoBehaviour
         if (!Initialized) return;
         if (IsExterior()) return;
 
-        if (!IsPlayerInServerRoom)
+        if (!GameManager.Instance().IsDaytime() && !IsPlayerInServerRoom)
             Time.UpdateCountdown();
     }
 
@@ -119,7 +119,7 @@ public class StageManager : MonoBehaviour
         StartCoroutine(UploadScoreCoroutine(GameManager.Instance().UserID, score));
 
         // 진행도 저장
-        string buildingName = GetName();
+        string buildingName = GetID();
         bool isClear = true;
         GameManager.Instance().Save.SaveValue(buildingName, isClear);
     }

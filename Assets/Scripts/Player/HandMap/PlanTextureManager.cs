@@ -1,7 +1,6 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using UnityEngine;
-using System.IO;
-using UnityEditor.SceneManagement;
 
 public class PlanTextureManager
 {
@@ -16,13 +15,13 @@ public class PlanTextureManager
     {
         this.owner = owner;
         PlanTexture = new Texture2D(2048, 2048, TextureFormat.ARGB32, false);
-        LoadPlan(StageManager.Instance().GetName());
+        LoadPlan(StageManager.Instance().GetID());
 
         owner.UpdateTexture(PlanTexture);
         GameManager.Instance().Save.OnSaveToPref += SavePlanWithPrefSave;
         StageManager.Instance().OnStageUnload += (stage) =>
         {
-            SavePlan(stage.GetName());
+            SavePlan(stage.GetID());
             GameManager.Instance().Save.OnSaveToPref -= SavePlanWithPrefSave;
         };
     }
@@ -56,7 +55,7 @@ public class PlanTextureManager
     }
 
     private void SavePlanWithPrefSave(SaveManager save)
-        => SavePlan(StageManager.Instance().GetName());
+        => SavePlan(StageManager.Instance().GetID());
 
     private void SavePlan(string name)
     {
@@ -81,14 +80,11 @@ public class PlanTextureManager
     /// </summary>
     public void PastePhoto(Texture2D photo, PhotoTransform transform)
     {
-        int photoWidth = photo.width;
-        int photoHeight = photo.height;
+        int planWidth = PlanTexture.width;
+        int planHeight = PlanTexture.height;
 
         Color32[] planPixels = PlanTexture.GetPixels32();
         Color32[] photoPixels = photo.GetPixels32();
-
-        int planWidth = PlanTexture.width;
-        int planHeight = PlanTexture.height;
 
         transform.offset += new Vector2(planWidth, planHeight) * 0.5f;
 
@@ -99,39 +95,49 @@ public class PlanTextureManager
         float cosAngle = Mathf.Cos(rotationRad);
         float sinAngle = Mathf.Sin(rotationRad);
 
-        for (int y = 0; y < photoHeight; y++)
+        float invScale = 1f / transform.scale;
+
+        // Get the entire pixel array of the photo texture
+        int photoWidth = photo.width;
+        int photoHeight = photo.height;
+
+        for (int planY = 0; planY < planHeight; planY++)
         {
-            for (int x = 0; x < photoWidth; x++)
+            for (int planX = 0; planX < planWidth; planX++)
             {
-                // Calculate transformed coordinates based on offset, rotation, and scale
-                float transformedX = (x - (photoWidth / 2)) * cosAngle - (y - (photoHeight / 2)) * sinAngle;
-                float transformedY = (x - (photoWidth / 2)) * sinAngle + (y - (photoHeight / 2)) * cosAngle;
-                transformedX = transformedX * transform.scale + transform.offset.x;
-                transformedY = transformedY * transform.scale + transform.offset.y;
+                // Calculate the inverse transformation to get the corresponding pixel in the photoTexture
+                float transformedX = ((planX - transform.offset.x) * invScale) * cosAngle + ((planY - transform.offset.y) * invScale) * sinAngle + (photoWidth * 0.5f);
+                float transformedY = -((planX - transform.offset.x) * invScale) * sinAngle + ((planY - transform.offset.y) * invScale) * cosAngle + (photoHeight * 0.5f);
 
-                // Convert transformed coordinates to integer values
-                int planX = Mathf.RoundToInt(transformedX);
-                int planY = Mathf.RoundToInt(transformedY);
+                // Calculate the normalized texture coordinates in the range of [0, 1]
+                float normalizedX = transformedX / photoWidth;
+                float normalizedY = 1f - (transformedY / photoHeight); // Invert Y-axis
 
-                // Ensure the transformed coordinates are within the bounds of the PlanTexture
-                if (planX >= 0 && planX < planWidth && planY >= 0 && planY < planHeight)
+                // Convert normalized coordinates to pixel coordinates in the range of [0, photoWidth-1] and [0, photoHeight-1]
+                int photoX = Mathf.RoundToInt((1f - normalizedX) * (photoWidth - 1)); // Fix horizontal flipping
+                int photoY = Mathf.RoundToInt(normalizedY * (photoHeight - 1));
+
+                // Check if the transformed coordinates are within the bounds of the photoTexture
+                if (photoX >= 0 && photoX < photoWidth && photoY >= 0 && photoY < photoHeight)
                 {
                     // Calculate the index of the pixel in the PlanTexture and photoTexture
                     int planIndex = planY * planWidth + planX;
-                    int photoIndex = y * photoWidth + x;
+                    int photoIndex = photoY * photoWidth + photoX;
 
-                    // Set the pixel color in the PlanTexture based on the corresponding pixel color in the photoTexture
+                    // Set the pixel color in the planPixels array
                     planPixels[planIndex] = photoPixels[photoIndex];
                 }
             }
         }
 
-        // Apply the modified pixels back to the PlanTexture
+        // Set the entire planPixels array to the plan texture
         PlanTexture.SetPixels32(planPixels);
         PlanTexture.Apply();
 
         owner.UpdateTexture(PlanTexture);
     }
+
+
 
     /// <summary>
     /// offset만 사용해 텍스쳐를 그림.

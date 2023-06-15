@@ -83,9 +83,10 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
 
     public virtual void OnTrigger()
     {
-        if (!Physics.SphereCast(transform.position, 0.3f, transform.forward, out var info, 0.2f, 1 << 7)) return;
-        if (!info.transform.TryGetComponent<DoorLock>(out var door)) return;
-        Debug.Log($"열쇠 {gameObject.name} > {info.transform.gameObject.name} 개방 시도");
+        if (!Physics.Raycast(transform.position, transform.forward, out var info, 0.3f, 1 << 7)) return;
+        var door = info.transform.GetComponentInParent<DoorLock>();
+        if (!door) return;
+        Debug.Log($"열쇠 {gameObject.name} > {door.gameObject.name} 개방 시도");
         if (door.TryUnlock(this)) OnUsed();
     }
 

@@ -5631,6 +5631,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6598815579406187026, guid: 117bbe0ffca2fc7408d7f992829acf51,
+        type: 3}
+      propertyPath: m_KeyboardXTranslateSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187026, guid: 117bbe0ffca2fc7408d7f992829acf51,
+        type: 3}
+      propertyPath: m_KeyboardYTranslateSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187026, guid: 117bbe0ffca2fc7408d7f992829acf51,
+        type: 3}
+      propertyPath: m_KeyboardZTranslateSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6598815579406187027, guid: 117bbe0ffca2fc7408d7f992829acf51,
         type: 3}
       propertyPath: m_RootOrder
@@ -5864,6 +5879,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7434560259166207618, guid: 4f87504e9e62a3440a8bf96a719fc17f,
+        type: 3}
+      propertyPath: m_MoveSpeed
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8442991377406544493, guid: 4f87504e9e62a3440a8bf96a719fc17f,
         type: 3}

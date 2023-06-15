@@ -19,17 +19,21 @@ public class MySceneManager
         Boss = 5
     }
 
-    private int currentSceneID;
+    public static SCENENAME GetCurrentSceneName()
+        => (SCENENAME)SceneManager.GetActiveScene().buildIndex;
 
-    /// <summary>
-    /// 현재 씬 ID
-    /// </summary>
-    public int CurrentSceneID
+    public static string GetDisplaySceneName(SCENENAME scene)
     {
-        get { return currentSceneID; }
-
-        private set { currentSceneID = value; } 
-    } 
+        return scene switch
+        {
+            SCENENAME.Tutorial => "인문대학",
+            SCENENAME.Engineering => "공가대학",
+            SCENENAME.Medical => "의과대학",
+            SCENENAME.Arts => "예술대학",
+            SCENENAME.Boss => "대학본부",
+            _ => "캠퍼스",
+        };
+    }
 
     /// <summary>
     /// 씬 전환
@@ -38,11 +42,7 @@ public class MySceneManager
     {
         Debug.Log("씬변경");
 
-
-
         SceneManager.LoadScene((int)_name);
-
-
     }
 
     /// <summary>

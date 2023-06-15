@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +16,10 @@ public class PasswordDoor : DoorLock
     protected override void Start()
     {
         base.Start();
-        StageManager.Instance().OnStageLoad += (stage) => SavePassword(stage);
+
+        if (StageManager.Instance().Initialized) SavePassword(StageManager.Instance());
+        else StageManager.Instance().OnStageLoad += (stage) => SavePassword(stage);
+
         foreach (var text in texts) text.SetText(PW_EMPTY);
     }
 

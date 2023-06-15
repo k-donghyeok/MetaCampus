@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
 /// <summary>
 /// 싱글톤 게임매니저
@@ -74,5 +75,25 @@ public class GameManager : MonoBehaviour
     private Dictionary<string, bool> clearStatus
         = new Dictionary<string, bool>(); // 건물별 클리어 여부 저장
 
+    public bool Paused { get; private set; } = false;
 
+    public void GamePause()
+    {
+        if (Paused) return;
+        Debug.Log("게임 일시정지");
+        Paused = true;
+        Time.timeScale = 0f;
+        var playerMove = PlayerManager.InstanceOrigin().GetComponent<DynamicMoveProvider>();
+        if (playerMove) playerMove.moveSpeed = 0f;
+    }
+
+    public void GameUnpause()
+    {
+        if (!Paused) return;
+        Debug.Log("게임 재개");
+        Paused = false;
+        Time.timeScale = 1f;
+        var playerMove = PlayerManager.InstanceOrigin().GetComponent<DynamicMoveProvider>();
+        if (playerMove) playerMove.moveSpeed = StageManager.Instance().IsExterior() ? 5f : 3f;
+    }
 }
