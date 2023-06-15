@@ -112,16 +112,14 @@ public class StageManager : MonoBehaviour
         if (!IsClear || Time.IsCountdownComplete) return; // 클리어 실패
 
         //월드맵 지도 갱신
-        UpdateWorldMap();
+        //UpdateWorldMap();
         //로컬서버에 시간 올리기 
-        int score = Mathf.RoundToInt(Time.RemainingTime * 100f); // 100분의 1초 단위
-        Debug.Log("남은시간 : " + score);
-        StartCoroutine(UploadScoreCoroutine(GameManager.Instance().UserID, score));
+        //int score = Mathf.RoundToInt(Time.RemainingTime * 100f); // 100분의 1초 단위
+        //Debug.Log("남은시간 : " + score);
+        //StartCoroutine(UploadScoreCoroutine(GameManager.Instance().UserID, score));
 
         // 진행도 저장
-        string buildingName = GetID();
-        bool isClear = true;
-        GameManager.Instance().Save.SaveValue(buildingName, isClear);
+        MySceneManager.SaveClear(MySceneManager.GetCurrentSceneName());
     }
 
     private IEnumerator UploadScoreCoroutine(string _id, int _score)

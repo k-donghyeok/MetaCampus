@@ -1,11 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using Unity.XR.Oculus;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.XR;
-using UnityEngine.XR.Management;
 
 public class MySceneManager
 {
@@ -27,7 +21,7 @@ public class MySceneManager
         return scene switch
         {
             SCENENAME.Tutorial => "인문대학",
-            SCENENAME.Engineering => "공가대학",
+            SCENENAME.Engineering => "공과대학",
             SCENENAME.Medical => "의과대학",
             SCENENAME.Arts => "예술대학",
             SCENENAME.Boss => "대학본부",
@@ -40,9 +34,22 @@ public class MySceneManager
     /// </summary>
     public void ChangeScene(SCENENAME _name)
     {
-        Debug.Log("씬변경");
+        Debug.Log($"장면 전환: {GetCurrentSceneName()} => {_name}");
 
         SceneManager.LoadScene((int)_name);
+    }
+
+    public static void SaveClear(SCENENAME name)
+    {
+        GameManager.Instance().Save.SaveValue(GetClearID(name), true);
+    }
+
+    private static string GetClearID(SCENENAME name)
+        => $"Cleared{name}";
+
+    public static bool GetCleared(SCENENAME name)
+    {
+        return GameManager.Instance().Save.LoadValue(GetClearID(name), false);
     }
 
     /// <summary>
@@ -62,5 +69,5 @@ public class MySceneManager
 
 }
 
-    
+
 
