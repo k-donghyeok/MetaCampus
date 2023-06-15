@@ -6,10 +6,19 @@ public class ShortcutDoor : DoorLock
     [SerializeField]
     private Transform handles = null;
 
+    [SerializeField]
+    private AudioClip openSound;
+    private AudioSource audioSource;
+
     protected override void Start()
     {
         base.Start();
         if (!Clockwise) handles.transform.Rotate(0f, 180f, 0f, Space.Self);
+    }
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void TryOpen(XRBaseInteractable self)
@@ -21,6 +30,15 @@ public class ShortcutDoor : DoorLock
 
         IsUnlocked = true;
         PlayOpenAnimation();
+        PlayOpenSound();
         self.enabled = false;
+    }
+
+    private void PlayOpenSound()
+    {
+        if (openSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(openSound);
+        }
     }
 }
