@@ -74,52 +74,39 @@ public class AIController : MonoBehaviour
 
     private void UpdateNormalState()
     {
-        if (!isPaused)
-        {
-            if (agent.remainingDistance <= agent.stoppingDistance)
-            {
-                nextWaypoint = (nextWaypoint + 1) % waypoints.Length;
-                agent.SetDestination(waypoints[nextWaypoint].position);
-            }
+        if (currentState != AIState.Normal)
+            return;
 
-            if (IsPlayerDetected())
-            {
-                SetDetectedState();
-            }
-        }
-        else
+        if (agent.remainingDistance <= agent.stoppingDistance)
         {
-            pauseTimer -= Time.deltaTime;
-            if (pauseTimer <= 0f)
-            {
-                isPaused = false;
-                agent.isStopped = false;
-                animator.SetBool("DetectPlayer", false);
-                Debug.Log("이동 재개!");
-            }
+            nextWaypoint = (nextWaypoint + 1) % waypoints.Length;
+            agent.SetDestination(waypoints[nextWaypoint].position);
+        }
+
+        if (IsPlayerDetected())
+        {
+            SetDetectedState();
         }
     }
 
     private void UpdateDetectedState()
     {
-        if (!isPaused)
+        if (currentState != AIState.Detected)
+            return;
+
+        if (agent.remainingDistance <= agent.stoppingDistance)
         {
-            if (agent.remainingDistance <= agent.stoppingDistance)
-            {
-                SetLostState();
-            }
+            SetLostState();
         }
-        else
+        else if (!IsPlayerDetected())
+        {
+            SetLostState();
+        }
+        else if (isPaused)
         {
             pauseTimer -= Time.deltaTime;
             if (pauseTimer <= 0f)
             {
-                if (!IsPlayerDetected())
-                {
-                    SetLostState();
-                    return;
-                }
-
                 SetAlarmState();
             }
         }
@@ -127,12 +114,14 @@ public class AIController : MonoBehaviour
 
     private void UpdateLostState()
     {
-        if (!isPaused)
+        if (currentState != AIState.Lost)
+            return;
+
+        if (IsPlayerDetected())
         {
-            if (agent.remainingDistance <= agent.stoppingDistance)
-            {
-                SetNormalState();
-            }
+            SetDetectedState();
+            Debug.Log("재발견");
+            return;
         }
         else
         {
@@ -143,6 +132,8 @@ public class AIController : MonoBehaviour
             }
         }
     }
+
+
 
     private void UpdateAlarmState()
     {
@@ -160,6 +151,7 @@ public class AIController : MonoBehaviour
         isPaused = true;
         pauseTimer = pauseDuration;
         agent.isStopped = true;
+        animator.SetBool("LostState", false);
         animator.SetBool("DetectPlayer", true);
         Debug.Log("플레이어 발견!");
     }
@@ -170,7 +162,8 @@ public class AIController : MonoBehaviour
         isPaused = true;
         pauseTimer = pauseDuration;
         agent.isStopped = true;
-        animator.SetBool("DetectPlayer", true);
+        animator.SetBool("LostState", true);
+        animator.SetBool("DetectPlayer", false);
         Debug.Log("플레이어를 놓침");
     }
 
@@ -179,8 +172,10 @@ public class AIController : MonoBehaviour
         currentState = AIState.Normal;
         isPaused = false;
         agent.isStopped = false;
+        animator.SetBool("LostState", false);
         animator.SetBool("DetectPlayer", false);
         Debug.Log("평시 상태로 전환");
+
     }
 
     private void SetAlarmState()
