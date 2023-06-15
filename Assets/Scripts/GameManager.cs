@@ -99,7 +99,10 @@ public class GameManager : MonoBehaviour
 
     public void StartIntro()
     {
+        if (IsDaytime()) ToggleDaytime(); // 밤으로 설정
         Scene.ChangeScene(MySceneManager.SCENENAME.Tutorial);
         GameUnpause();
+        PlayerManager.InstanceOrigin().SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity); // 인트로 위치로 이동
+        
     }
 }
