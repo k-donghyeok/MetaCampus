@@ -4582,7 +4582,7 @@ PrefabInstance:
     - target: {fileID: 6128607227821559899, guid: 22481b7c77b75bc4486745a034c7d660,
         type: 3}
       propertyPath: m_Name
-      value: FenceGateSet (1)
+      value: FenceGateSet-Boss
       objectReference: {fileID: 0}
     - target: {fileID: 6793397880355965665, guid: 22481b7c77b75bc4486745a034c7d660,
         type: 3}
@@ -4647,6 +4647,24 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 905218900}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &905218902 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6128607227821559899, guid: 22481b7c77b75bc4486745a034c7d660,
+    type: 3}
+  m_PrefabInstance: {fileID: 905218900}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &905218903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905218902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 293d155b002a83244a186248853bd8eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &955766780
 GameObject:
   m_ObjectHideFlags: 0
@@ -8807,7 +8825,7 @@ PrefabInstance:
     - target: {fileID: 6128607227821559899, guid: 22481b7c77b75bc4486745a034c7d660,
         type: 3}
       propertyPath: m_Name
-      value: FenceGateSet
+      value: FenceGateSet-Tutorial
       objectReference: {fileID: 0}
     - target: {fileID: 6793397880355965665, guid: 22481b7c77b75bc4486745a034c7d660,
         type: 3}
@@ -8866,6 +8884,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22481b7c77b75bc4486745a034c7d660, type: 3}
+--- !u!1 &299702504720011334 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6128607227821559899, guid: 22481b7c77b75bc4486745a034c7d660,
+    type: 3}
+  m_PrefabInstance: {fileID: 299702504720011333}
+  m_PrefabAsset: {fileID: 0}
 --- !u!33 &302558631758827711
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -30273,6 +30297,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 299702504720011333}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6516214662267394725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299702504720011334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0a164eadc8a98f478465285a58e6455, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6517847774896359372
 GameObject:
   m_ObjectHideFlags: 0
