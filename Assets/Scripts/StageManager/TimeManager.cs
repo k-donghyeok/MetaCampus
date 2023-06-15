@@ -9,7 +9,7 @@ public class TimeManager
 
     private float currentTime = 0f;
 
-    private readonly float totalTime = 70f;
+    private readonly float totalTime = 180f;
 
     /// <summary>
     /// 남은 시간 (초)
@@ -31,6 +31,15 @@ public class TimeManager
 
         currentTime += Time.deltaTime;
         if (IsCountdownComplete) TimeOver();
+    }
+
+    public void DecreaseTimeByOneMinute()
+    {
+        currentTime -= 60f;
+        if (currentTime < 0f)
+        {
+            currentTime = 0f;
+        }
     }
 
     private void TimeOver()
