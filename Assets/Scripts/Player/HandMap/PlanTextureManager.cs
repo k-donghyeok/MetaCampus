@@ -58,6 +58,7 @@ public class PlanTextureManager
 
         Reset:
         ResetPlan();
+        GameManager.Instance().Save.SaveValue($"{name}MapUsed", true);
     }
 
     private void SavePlanWithPrefSave(SaveManager save)
