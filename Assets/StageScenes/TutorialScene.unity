@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 8900000, guid: dce0ae2038d69824e97d2b7fedb9396c, type: 3}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.10315908, g: 0.20773317, b: 0.3286725, a: 1}
+  m_IndirectSpecularColor: {r: 0.60104936, g: 0.9923713, b: 1.626771, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3402,6 +3402,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7632887912105668729, guid: 4570ce152e9a1e04d9e26193c24f0050,
+        type: 3}
+      propertyPath: skyboxDay
+      value: 
+      objectReference: {fileID: 2100000, guid: 2466f39a632f63448bd68ea3efb785a4, type: 2}
+    - target: {fileID: 7632887912105668729, guid: 4570ce152e9a1e04d9e26193c24f0050,
+        type: 3}
+      propertyPath: skyboxNight
+      value: 
+      objectReference: {fileID: 2100000, guid: 944aebab939832844943d68be522c67f, type: 2}
     - target: {fileID: 7947138811517074377, guid: 4570ce152e9a1e04d9e26193c24f0050,
         type: 3}
       propertyPath: countdownDuration
