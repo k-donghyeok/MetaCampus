@@ -210,8 +210,7 @@ public class AIController : MonoBehaviour
             if (collider.transform.root.CompareTag(playerTag))
             {
                 Vector3 directionToPlayer = collider.transform.position - transform.position;
-                float heightDifference = Mathf.Abs(directionToPlayer.y);
-                if (heightDifference > 2.4f) continue; // Different floor threshold
+                if (Mathf.Abs(directionToPlayer.y) > 2.0f) continue; // ´Ù¸¥ Ãþ
                 directionToPlayer.y = 0f;
 
                 if (Vector3.Angle(transform.forward, directionToPlayer) <= visionAngle / 2f)
@@ -232,4 +231,6 @@ public class AIController : MonoBehaviour
 
         return false;
     }
+
+
 }
