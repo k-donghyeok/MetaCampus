@@ -201,7 +201,7 @@ public class AIController : MonoBehaviour
 
     private bool IsPlayerDetected()
     {
-        if (GameManager.Instance().IsDaytime()) return false; // 낮에는 플레이어 무시
+        //if (GameManager.Instance().IsDaytime()) return false; // 낮에는 플레이어 무시
 
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, visionRadius);
 
@@ -210,7 +210,8 @@ public class AIController : MonoBehaviour
             if (collider.transform.root.CompareTag(playerTag))
             {
                 Vector3 directionToPlayer = collider.transform.position - transform.position;
-                if (Mathf.Abs(directionToPlayer.y) > 2.4f) continue; // 다른 층
+                float heightDifference = Mathf.Abs(directionToPlayer.y);
+                if (heightDifference > 2.4f) continue; // Different floor threshold
                 directionToPlayer.y = 0f;
 
                 if (Vector3.Angle(transform.forward, directionToPlayer) <= visionAngle / 2f)
@@ -231,6 +232,4 @@ public class AIController : MonoBehaviour
 
         return false;
     }
-
-
 }

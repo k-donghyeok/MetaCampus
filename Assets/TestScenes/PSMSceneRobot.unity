@@ -1725,6 +1725,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1192631665, guid: 74d9d0d4b521a8d4e8a68891e57308c5, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1192631665, guid: 74d9d0d4b521a8d4e8a68891e57308c5, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 335154524711996506, guid: 74d9d0d4b521a8d4e8a68891e57308c5,
         type: 3}
       propertyPath: m_Name
@@ -1740,6 +1748,11 @@ PrefabInstance:
       propertyPath: waypoints.Array.data[1]
       value: 
       objectReference: {fileID: 2006536}
+    - target: {fileID: 605695196499649516, guid: 74d9d0d4b521a8d4e8a68891e57308c5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1147685557973980896, guid: 74d9d0d4b521a8d4e8a68891e57308c5,
         type: 3}
       propertyPath: m_RootOrder
