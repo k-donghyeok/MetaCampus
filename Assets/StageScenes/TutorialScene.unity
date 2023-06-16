@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 8900000, guid: dce0ae2038d69824e97d2b7fedb9396c, type: 3}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3195183, g: 0.5259837, b: 0.86024785, a: 1}
+  m_IndirectSpecularColor: {r: 0.31918904, g: 0.5270066, b: 0.8638534, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -97,8 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 558f174c8bbe6034fa69ab4733045d73,
-    type: 2}
+  m_LightingDataAsset: {fileID: 0}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 1939989b44a653d489a00bc51952a5c1,
     type: 2}
 --- !u!196 &4
@@ -1746,7 +1745,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &933919783
 Transform:
@@ -2586,11 +2585,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: InteriorLightNight (13)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6069445548605409544, guid: 9df79d1aac0035547938ee1f5dd67894,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6069445548605409547, guid: 9df79d1aac0035547938ee1f5dd67894,
         type: 3}
@@ -4329,8 +4323,8 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
-  m_IsActive: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &1802621945
 Transform:
   m_ObjectHideFlags: 0
@@ -4547,7 +4541,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1941152948
 Transform:
