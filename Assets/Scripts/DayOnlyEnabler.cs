@@ -9,7 +9,7 @@ public class DayOnlyEnabler : MonoBehaviour
     [SerializeField]
     private GameObject[] nightOnlyObjects = new GameObject[0];
 
-    private void Awake()
+    private void Start()
     {
         bool day = GameManager.Instance().IsDaytime();
         if (day) foreach (var o in nightOnlyObjects) o.SetActive(false);
