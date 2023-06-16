@@ -46,6 +46,9 @@ public class LightManager : MonoBehaviour
         dirLightDay.SetActive(day);
         dirLightNight.SetActive(!day);
 
+        // Ambient Light 설정
+        RenderSettings.ambientSkyColor = day ? new Color(0.6f, 0.7f, 1.0f) : new Color(0.3f, 0.3f, 0.6f);
+
         // Lightmap 설정
         LightMapSetup(day);
 
