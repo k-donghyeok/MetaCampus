@@ -11,6 +11,9 @@ public class ElevatorButtonFloor : MonoBehaviour
     private ElevatorController owner;
     private int index;
 
+    [SerializeField]
+    private AudioClip buttonPressSound;
+
     public void Initiate(ElevatorController owner, int index, string name)
     {
         this.owner = owner;
@@ -20,6 +23,7 @@ public class ElevatorButtonFloor : MonoBehaviour
 
     public void OnPressed()
     {
+        AudioSource.PlayClipAtPoint(buttonPressSound, transform.position);
         owner.RequestMoveToFloor(index, false);
     }
 }

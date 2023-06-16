@@ -284,3 +284,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   txtName: {fileID: 7359631569465567867}
+  buttonPressSound: {fileID: 8300000, guid: e3c80afedc569d64fbc309d53b8d1b04, type: 3}

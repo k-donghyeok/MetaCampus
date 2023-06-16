@@ -1500,6 +1500,9 @@ MonoBehaviour:
     m_Bits: 0
   pauseDuration: 5
   spotLight: {fileID: 0}
+  detectionSound: {fileID: 0}
+  alarmSound: {fileID: 0}
+  lostSound: {fileID: 0}
 --- !u!54 &1619713130
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1729,31 +1732,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 605695195417621892, guid: 74d9d0d4b521a8d4e8a68891e57308c5,
         type: 3}
-      propertyPath: endPoint
-      value: 
-      objectReference: {fileID: 2006536}
-    - target: {fileID: 605695195417621892, guid: 74d9d0d4b521a8d4e8a68891e57308c5,
-        type: 3}
-      propertyPath: alarmSound
-      value: 
-      objectReference: {fileID: 8300000, guid: d2a97d0922e0d304289adce4df64ae4e, type: 3}
-    - target: {fileID: 605695195417621892, guid: 74d9d0d4b521a8d4e8a68891e57308c5,
-        type: 3}
-      propertyPath: startPoint
-      value: 
-      objectReference: {fileID: 1246414806}
-    - target: {fileID: 605695195417621892, guid: 74d9d0d4b521a8d4e8a68891e57308c5,
-        type: 3}
-      propertyPath: audioSource
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 605695195417621892, guid: 74d9d0d4b521a8d4e8a68891e57308c5,
-        type: 3}
-      propertyPath: waypoints.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 605695195417621892, guid: 74d9d0d4b521a8d4e8a68891e57308c5,
-        type: 3}
       propertyPath: waypoints.Array.data[0]
       value: 
       objectReference: {fileID: 1246414806}
@@ -1762,11 +1740,6 @@ PrefabInstance:
       propertyPath: waypoints.Array.data[1]
       value: 
       objectReference: {fileID: 2006536}
-    - target: {fileID: 605695196499649516, guid: 74d9d0d4b521a8d4e8a68891e57308c5,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1147685557973980896, guid: 74d9d0d4b521a8d4e8a68891e57308c5,
         type: 3}
       propertyPath: m_RootOrder
@@ -1822,34 +1795,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2280590746865986959, guid: 74d9d0d4b521a8d4e8a68891e57308c5,
-        type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: -7486735901978387675, guid: 29185dfd01fc7f14f849b3bca293e08a,
-        type: 3}
-    - target: {fileID: 2280590746865986959, guid: 74d9d0d4b521a8d4e8a68891e57308c5,
-        type: 3}
-      propertyPath: m_Materials.Array.data[2]
-      value: 
-      objectReference: {fileID: -7486735901978387675, guid: 29185dfd01fc7f14f849b3bca293e08a,
-        type: 3}
-    - target: {fileID: 2280590746865986959, guid: 74d9d0d4b521a8d4e8a68891e57308c5,
-        type: 3}
-      propertyPath: m_Materials.Array.data[3]
-      value: 
-      objectReference: {fileID: 2100000, guid: 0ddef3340b3c54e46b1a2baee74bc2d8, type: 2}
-    - target: {fileID: 2280590746865986959, guid: 74d9d0d4b521a8d4e8a68891e57308c5,
-        type: 3}
-      propertyPath: m_Materials.Array.data[4]
-      value: 
-      objectReference: {fileID: 2100000, guid: 0ddef3340b3c54e46b1a2baee74bc2d8, type: 2}
-    - target: {fileID: 2280590746865986959, guid: 74d9d0d4b521a8d4e8a68891e57308c5,
-        type: 3}
-      propertyPath: m_Materials.Array.data[5]
-      value: 
-      objectReference: {fileID: -7486735901978387675, guid: 29185dfd01fc7f14f849b3bca293e08a,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74d9d0d4b521a8d4e8a68891e57308c5, type: 3}
 --- !u!1001 &7746356653512666777

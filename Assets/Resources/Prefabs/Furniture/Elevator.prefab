@@ -1124,6 +1124,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8982857276509955749}
   - component: {fileID: 8982857276509955750}
+  - component: {fileID: 1323918277}
   m_Layer: 0
   m_Name: Elevator
   m_TagString: Untagged
@@ -1166,6 +1167,12 @@ MonoBehaviour:
     height: 0
   - name: 2F
     height: 4
+  - name: 3F
+    height: 9
+  - name: 4F
+    height: 15
+  - name: 5F
+    height: 20
   shaftHolder: {fileID: 8982857277884422763}
   chamberPanel: {fileID: 8982857277068865347}
   chamberTxtStatus: {fileID: 8982857276394679849}
@@ -1173,7 +1180,7 @@ MonoBehaviour:
   chamberTrigger: {fileID: 4259179205491831269}
   chamberAnim: {fileID: 8982857277649046121}
   doorCloseTime: 2
-  doorOpenWaitTime: 8
+  doorOpenWaitTime: 3
   chamberSpeed: 1
   floorPrefab: {fileID: 4529034124819526247, guid: 23db3958d2bbb9d4596958ffdf73cf89,
     type: 3}
@@ -1183,6 +1190,109 @@ MonoBehaviour:
     type: 3}
   horzbarPrefab: {fileID: 8639709799699655707, guid: 533bbc0ec5e039049af854eca54a0af2,
     type: 3}
+  doorOpenSound: {fileID: 8300000, guid: 9739ca2597a1c824ebd47480fa38fdaa, type: 3}
+  doorCloseSound: {fileID: 8300000, guid: 9739ca2597a1c824ebd47480fa38fdaa, type: 3}
+  floorArrivalSound: {fileID: 8300000, guid: efc61d74fb4d5ec4bbd1b32b10b2731f, type: 3}
+  doorOpenButtonSound: {fileID: 8300000, guid: e3c80afedc569d64fbc309d53b8d1b04, type: 3}
+  doorCloseButtonSound: {fileID: 8300000, guid: e3c80afedc569d64fbc309d53b8d1b04,
+    type: 3}
+  doorAutoCloseSound: {fileID: 8300000, guid: 9739ca2597a1c824ebd47480fa38fdaa, type: 3}
+--- !u!82 &1323918277
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8982857276509955751}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &8982857276538527639
 GameObject:
   m_ObjectHideFlags: 0
