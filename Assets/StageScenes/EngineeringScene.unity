@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.30661017, g: 0.39862546, b: 0.55962163, a: 1}
+  m_IndirectSpecularColor: {r: 0.6898433, g: 1.1176243, b: 1.7640148, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2584,6 +2584,11 @@ PrefabInstance:
       propertyPath: skyboxDay
       value: 
       objectReference: {fileID: 2100000, guid: 0e9cc8ad0724b48428eaf58b0a134d99, type: 2}
+    - target: {fileID: 7632887912105668729, guid: 4570ce152e9a1e04d9e26193c24f0050,
+        type: 3}
+      propertyPath: skyboxNight
+      value: 
+      objectReference: {fileID: 2100000, guid: 7bd12cb34524241498581bcd570b512f, type: 2}
     - target: {fileID: 7947138811517074377, guid: 4570ce152e9a1e04d9e26193c24f0050,
         type: 3}
       propertyPath: countdownDuration
