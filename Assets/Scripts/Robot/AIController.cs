@@ -19,7 +19,6 @@ public class AIController : MonoBehaviour
     public const string wallTag = "Wall";
 
     private Animator animator;
-    private TimeManager timeManager;
 
     public AudioClip detectionSound;
     public AudioClip alarmSound;
@@ -53,8 +52,6 @@ public class AIController : MonoBehaviour
         spotLight.spotAngle = visionAngle;
         spotLight.range = visionRadius;
 
-        timeManager = new TimeManager(180f);
-
         audioSource = GetComponent<AudioSource>();
         audioSource.playOnAwake = false;
     }
@@ -67,8 +64,6 @@ public class AIController : MonoBehaviour
 
     private void Update()
     {
-        timeManager.UpdateCountdown();
-
         switch (currentState)
         {
             case AIState.Normal:
@@ -169,7 +164,7 @@ public class AIController : MonoBehaviour
         agent.isStopped = true;
         animator.SetBool("LostState", false);
         animator.SetBool("DetectPlayer", true);
-        Debug.Log("플레이어 발견!");
+        //Debug.Log("플레이어 발견!");
 
         PlaySound(detectionSound);
     }
@@ -182,7 +177,7 @@ public class AIController : MonoBehaviour
         agent.isStopped = true;
         animator.SetBool("LostState", true);
         animator.SetBool("DetectPlayer", false);
-        Debug.Log("플레이어를 놓침");
+        //Debug.Log("플레이어를 놓침");
 
         PlaySound(lostSound);
     }
@@ -194,18 +189,20 @@ public class AIController : MonoBehaviour
         agent.isStopped = false;
         animator.SetBool("LostState", false);
         animator.SetBool("DetectPlayer", false);
-        Debug.Log("평시 상태로 전환");
+        //Debug.Log("평시 상태로 전환");
 
     }
 
     private void SetAlarmState()
     {
         currentState = AIState.Alarm;
-        Debug.Log("알람 상태로 전환");
+        //Debug.Log("알람 상태로 전환");
     }
 
     private bool IsPlayerDetected()
     {
+        if (GameManager.Instance().IsDaytime()) return false; // 낮에는 플레이어 무시
+
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, visionRadius);
 
         foreach (Collider collider in hitColliders)
@@ -213,6 +210,7 @@ public class AIController : MonoBehaviour
             if (collider.transform.root.CompareTag(playerTag))
             {
                 Vector3 directionToPlayer = collider.transform.position - transform.position;
+                if (Mathf.Abs(directionToPlayer.y) > 2.4f) continue; // 다른 층
                 directionToPlayer.y = 0f;
 
                 if (Vector3.Angle(transform.forward, directionToPlayer) <= visionAngle / 2f)

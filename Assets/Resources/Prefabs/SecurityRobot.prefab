@@ -144,12 +144,12 @@ MonoBehaviour:
   waypoints:
   - {fileID: 0}
   - {fileID: 0}
-  visionRadius: 8
+  visionRadius: 10
   visionAngle: 60
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
-  pauseDuration: 5
+  pauseDuration: 3
   spotLight: {fileID: 605695196499649519}
   detectionSound: {fileID: 8300000, guid: 35ee6fceac9087c4a9fdc94f22c20d43, type: 3}
   alarmSound: {fileID: 8300000, guid: d2a97d0922e0d304289adce4df64ae4e, type: 3}
@@ -289,7 +289,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &605695196499649517
 Transform:
   m_ObjectHideFlags: 0

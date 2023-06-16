@@ -6,6 +6,8 @@ public class ExitPortal : MonoBehaviour
     [SerializeField]
     private SCENENAME targetScene = 0;
 
+    private bool activated = false;
+
     private void PassThrough()
     {
         if (!StageManager.Instance().IsExterior()) // 내부일 때
@@ -27,10 +29,12 @@ public class ExitPortal : MonoBehaviour
             }
         }
         GameManager.Instance().Scene.ChangeScene(targetScene);
+        activated = true;
     }
 
     private void OnTriggerEnter(Collider _other)
     {
+        if (activated) return;
         if (!_other.transform.root.CompareTag("Player")) return;
         PassThrough();
     }

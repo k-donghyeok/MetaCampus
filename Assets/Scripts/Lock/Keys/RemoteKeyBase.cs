@@ -8,6 +8,7 @@ public abstract class RemoteKeyBase : DoorKey
     private void Awake()
     {
         lockTypeID = IHaveLockID.TypeID.Remote;
+        sqrdInteractionDistance = 1.0f;
     }
 
     protected override void Update()

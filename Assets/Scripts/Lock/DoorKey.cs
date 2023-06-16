@@ -24,6 +24,8 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
     private AudioClip heldSound;
     private AudioSource audioSource;
 
+    protected float sqrdInteractionDistance = 0.36f; // 0.6f
+
     protected virtual void Start()
     {
         LockManager.DyeRenderers(LockColorID, dyeRenderers);
@@ -70,7 +72,8 @@ public abstract class DoorKey : MonoBehaviour, IHaveLockID
         var player = PlayerManager.InstanceOrigin();
         if (player)
         {
-            if (Vector3.Distance(player.position, transform.position) > 0.5f || Physics.Raycast(player.position, transform.position + transform.up, 1f, LayerMask.GetMask("Obstacle")))
+            if (Mathf.Pow(player.position.x - transform.position.x, 2f) + Mathf.Pow(player.position.z - transform.position.z, 2f) > sqrdInteractionDistance
+                || Physics.Raycast(player.position, transform.position + transform.up, 1f, LayerMask.GetMask("Obstacle")))
             {
                 var i = GetComponentInChildren<XRBaseInteractable>();
                 if (i) { i.enabled = false; i.enabled = true; }
