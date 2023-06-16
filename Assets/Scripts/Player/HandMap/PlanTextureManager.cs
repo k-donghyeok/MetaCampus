@@ -31,7 +31,7 @@ public class PlanTextureManager
         if (StageManager.Instance().IsExterior())
         {
             // 지정된 캠퍼스맵 텍스쳐를 사용
-            var canvasMap = Resources.Load("Textures/Test_CampusMap") as Texture2D;
+            var canvasMap = Resources.Load("Textures/Maps/Campus-map-text") as Texture2D;
             var colors = canvasMap.GetPixels32();
             PlanTexture.SetPixels32(colors);
         }
@@ -46,12 +46,18 @@ public class PlanTextureManager
 
     private void LoadPlan(string name)
     {
+        bool used = GameManager.Instance().Save.LoadValue($"{name}MapUsed", false);
+        if (!used) goto Reset;
         string path = GetPath(name);
-        if (!File.Exists(path)) { ResetPlan(); return; }
+        if (!File.Exists(path)) goto Reset;
 
         var bytes = File.ReadAllBytes(path);
         PlanTexture.LoadImage(bytes);
         PlanTexture.Apply();
+        return;
+
+        Reset:
+        ResetPlan();
     }
 
     private void SavePlanWithPrefSave(SaveManager save)
