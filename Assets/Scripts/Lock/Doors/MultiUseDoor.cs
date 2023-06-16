@@ -13,6 +13,7 @@ public class MultiUseDoor : DoorLock
 
     protected override void Start()
     {
+        base.Start();
         audioSource = GetComponent<AudioSource>();
     }
 
