@@ -48,6 +48,8 @@ public class StageManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        GetComponentInChildren<LightManager>().Initialize(GameManager.Instance().IsDaytime());
     }
 
     private void Start()
@@ -61,7 +63,6 @@ public class StageManager : MonoBehaviour
             InitiateExterior();
         }
 
-        GetComponentInChildren<LightManager>().Initialize(GameManager.Instance().IsDaytime());
 
         OnStageLoad?.Invoke(this);
         Initialized = true;

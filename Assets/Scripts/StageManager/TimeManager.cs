@@ -36,16 +36,18 @@ public class TimeManager
 
     public void DecreaseTimeByOneMinute()
     {
-        currentTime -= 60f;
-        if (currentTime < 0f)
+        currentTime += 60f;
+        if (currentTime > totalTime)
         {
-            currentTime = 0f;
+            currentTime = totalTime;
+            TimeOver();
         }
     }
 
     private void TimeOver()
     {
         Debug.Log("시간초과");
+        currentTime = totalTime;
         OnTimeOver?.Invoke();
     }
 
