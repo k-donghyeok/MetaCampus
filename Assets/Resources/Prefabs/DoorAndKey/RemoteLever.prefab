@@ -184,6 +184,7 @@ MonoBehaviour:
   - {fileID: 1785437627072777555}
   groundModel: {fileID: 0}
   heldModel: {fileID: 0}
+  heldSound: {fileID: 8300000, guid: b0dc1c2492732ca43a9738bdf0ccc9b7, type: 3}
 --- !u!114 &6766050815097537919
 MonoBehaviour:
   m_ObjectHideFlags: 0
