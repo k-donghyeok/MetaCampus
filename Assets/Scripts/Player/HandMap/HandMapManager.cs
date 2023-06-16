@@ -181,7 +181,7 @@ public class HandMapManager : MonoBehaviour
         Quaternion relativeRotation = projRot * photoRot;
 
         float projDegree = relativeRotation.eulerAngles.y;
-        photoTransform.rotation = Mathf.Repeat(projDegree + 90f, 360f) - 180f;
+        photoTransform.rotation = Mathf.Repeat(projDegree - 90f - handleLeft.rotation.eulerAngles.y, 360f) - 180f;
 
         photoOverlay.localRotation = Quaternion.Euler(0f, 0f, photoTransform.rotation);
         #endregion Rotation
