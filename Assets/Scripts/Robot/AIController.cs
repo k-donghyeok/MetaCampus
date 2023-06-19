@@ -201,7 +201,7 @@ public class AIController : MonoBehaviour
 
     private bool IsPlayerDetected()
     {
-        //if (GameManager.Instance().IsDaytime()) return false; // 낮에는 플레이어 무시
+        if (GameManager.Instance().IsDaytime()) return false; // 낮에는 플레이어 무시
 
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, visionRadius);
 
