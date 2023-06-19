@@ -2666,6 +2666,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 605695195417621892, guid: 74d9d0d4b521a8d4e8a68891e57308c5,
         type: 3}
+      propertyPath: visionRadius
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 605695195417621892, guid: 74d9d0d4b521a8d4e8a68891e57308c5,
+        type: 3}
+      propertyPath: pauseDuration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 605695195417621892, guid: 74d9d0d4b521a8d4e8a68891e57308c5,
+        type: 3}
       propertyPath: waypoints.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -8205,7 +8215,12 @@ PrefabInstance:
     - target: {fileID: 605695195417621892, guid: 74d9d0d4b521a8d4e8a68891e57308c5,
         type: 3}
       propertyPath: visionRadius
-      value: 6
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 605695195417621892, guid: 74d9d0d4b521a8d4e8a68891e57308c5,
+        type: 3}
+      propertyPath: pauseDuration
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 605695195417621892, guid: 74d9d0d4b521a8d4e8a68891e57308c5,
         type: 3}
