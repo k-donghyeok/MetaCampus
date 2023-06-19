@@ -24,7 +24,8 @@ public class ExitPortal : MonoBehaviour
                 if (!GetCleared(SCENENAME.Tutorial)) // 깬 적 없음: 인트로
                 {
                     SaveClear(SCENENAME.Tutorial); // 무조건 깬 것으로 처리
-                    GameManager.Instance().ToggleDaytime(); // 밤낮 전환
+                    if (!GameManager.Instance().IsDaytime())
+                        GameManager.Instance().ToggleDaytime(); // 낮으로 전환
                 }
             }
         }

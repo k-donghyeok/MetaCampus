@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
         Scene = new MySceneManager();
 
         Save.LoadFromPrefs();
+        if (!MySceneManager.GetCleared(MySceneManager.SCENENAME.Tutorial)) StartIntro();
         //Scene.MovePlayerToSpawn();
 
         Initialized = true;
