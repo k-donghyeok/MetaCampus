@@ -30,6 +30,10 @@ public class PausePopup : MonoBehaviour
                 txtAction.text = "세이브 초기화하겠습니까?";
                 txtMessage.text = "모든 진행사항이 삭제됩니다.";
                 break;
+            case PopupAction.Exit:
+                txtAction.text = "게임을 종료하시겠습니까?";
+                txtMessage.text = StageManager.Instance().IsExterior() ? "" : "내부에서 한 것은 저장되지 않습니다.";
+                break;
         }
     }
 
@@ -47,6 +51,13 @@ public class PausePopup : MonoBehaviour
                 break;
             case PopupAction.Reset:
                 GameManager.Instance().Save.Reset();
+                return;
+            case PopupAction.Exit:
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.ExitPlaymode();
+#else
+                Application.Quit();
+#endif
                 return;
         }
         GameManager.Instance().GameUnpause();

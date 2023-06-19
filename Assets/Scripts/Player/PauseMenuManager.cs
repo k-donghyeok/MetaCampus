@@ -71,6 +71,7 @@ public class PauseMenuManager : MonoBehaviour
     public void OnRetryButtonPressed() => OnButtonPopupRequested(PopupAction.Retry);
     public void OnEscapeButtonPressed() => OnButtonPopupRequested(PopupAction.Escape);
     public void OnResetButtonPressed() => OnButtonPopupRequested(PopupAction.Reset);
+    public void OnExitButtonPressed() => OnButtonPopupRequested(PopupAction.Exit);
 
 
     private void OnButtonPopupRequested(PopupAction action)
@@ -84,6 +85,7 @@ public class PauseMenuManager : MonoBehaviour
     {
         Retry,
         Escape,
-        Reset
+        Reset,
+        Exit
     }
 }
