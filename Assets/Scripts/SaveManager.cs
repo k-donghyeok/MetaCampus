@@ -21,6 +21,8 @@ public class SaveManager
         string json = PlayerPrefs.GetString(SAVEDATAONPREFS, string.Empty);
         if (string.IsNullOrEmpty(json)) { Reset(); return; }
         saveData = (Dictionary<string, object>)JsonConvert.DeserializeObject(json, typeof(Dictionary<string, object>));
+
+        if (!MySceneManager.GetCleared(MySceneManager.SCENENAME.Tutorial)) GameManager.Instance().StartIntro();
     }
 
     /// <summary>
