@@ -1965,7 +1965,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4842043523922113714}
         m_TargetAssemblyTypeName: PauseMenuManager, Assembly-CSharp
-        m_MethodName: OnResetButtonPressed
+        m_MethodName: OnExitButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
